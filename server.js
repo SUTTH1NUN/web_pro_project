@@ -14,8 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 const connectDB = require('./config/db');
 connectDB();
 
-// Serve static frontend files from 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
+// Frontend is now served by Nginx, so we don't serve static files here anymore
 
 // API Routes
 const usersRoutes = require('./routes/users');
