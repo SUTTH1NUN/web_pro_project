@@ -17,11 +17,13 @@ connectDB();
 // Frontend is now served by Nginx, so we don't serve static files here anymore
 
 // API Routes
+const authRoutes = require('./routes/auth');
 const usersRoutes = require('./routes/users');
 const evidenceRoutes = require('./routes/evidence');
 const badgesRoutes = require('./routes/badges');
 const testsRoutes = require('./routes/tests');
 
+app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/evidence', evidenceRoutes);
 app.use('/api/badges', badgesRoutes);
