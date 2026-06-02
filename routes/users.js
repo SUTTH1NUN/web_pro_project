@@ -1,7 +1,44 @@
 const express = require('express');
 const router = express.Router();
-
+const { protect } = require('../middleware/auth');
 const User = require('../models/User');
+
+// GET /api/users/me
+router.get('/me', protect, async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id).select('-password');
+        res.json({ user });
+    } catch (err) {
+        res.status(500).json({ error: 'Server Error' });
+    }
+});
+
+// PUT /api/users/me
+router.put('/me', protect, async (req, res) => {
+    try {
+        const { firstName, lastName, bio, jobTitle, organization, linkedinUrl, portfolioUrl } = req.body;
+        
+        const user = await User.findById(req.user._id);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        if (firstName !== undefined) user.firstName = firstName;
+        if (lastName !== undefined) user.lastName = lastName;
+        if (bio !== undefined) user.bio = bio;
+        if (jobTitle !== undefined) user.jobTitle = jobTitle;
+        if (organization !== undefined) user.organization = organization;
+        if (linkedinUrl !== undefined) user.linkedinUrl = linkedinUrl;
+        if (portfolioUrl !== undefined) user.portfolioUrl = portfolioUrl;
+
+        await user.save();
+
+        res.json({ message: 'Profile updated successfully', user });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server Error' });
+    }
+});
 
 // GET /api/users/:userId/stats
 router.get('/:userId/stats', async (req, res) => {

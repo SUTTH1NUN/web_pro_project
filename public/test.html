@@ -68,6 +68,7 @@
         .test-card.speaking::before { background: linear-gradient(90deg, #4299e1, #3182ce); }
         .test-card.reading::before { background: linear-gradient(90deg, #48bb78, #38a169); }
         .test-card.writing::before { background: linear-gradient(90deg, #ed8936, #dd6b20); }
+        .test-card.listening::before { background: linear-gradient(90deg, #9f7aea, #805ad5); }
 
         .test-icon {
             width: 60px;
@@ -82,6 +83,7 @@
         .test-card.speaking .test-icon { background: #ebf8ff; color: #3182ce; }
         .test-card.reading .test-icon { background: #f0fff4; color: #38a169; }
         .test-card.writing .test-icon { background: #fffaf0; color: #dd6b20; }
+        .test-card.listening .test-icon { background: #faf5ff; color: #805ad5; }
 
         .test-title {
             font-size: 1.5rem;
@@ -137,6 +139,7 @@
         .test-card.speaking .btn-start { background: #3182ce; }
         .test-card.reading .btn-start { background: #38a169; }
         .test-card.writing .btn-start { background: #dd6b20; }
+        .test-card.listening .btn-start { background: #805ad5; }
 
     </style>
 </head>
@@ -147,6 +150,7 @@
         <div class="nav-links">
             <a href="dashboard.html">Dashboard</a>
             <a href="test.html" class="active">Tests</a>
+            <a href="profile.html">Profile</a>
             <a href="#" onclick="logout()">Logout</a>
         </div>
     </nav>
@@ -234,6 +238,32 @@
 
                 <button class="btn-start" onclick="alert('Feature coming soon!')">
                     Start Writing Test
+                </button>
+            </div>
+
+            <!-- Listening Test Card -->
+            <div class="test-card listening">
+                <div class="test-icon">
+                    <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 18v-6a9 9 0 0118 0v6M3 18a2 2 0 002 2h2a2 2 0 002-2v-4a2 2 0 00-2-2H5m16 4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4a2 2 0 012-2h2"></path>
+                    </svg>
+                </div>
+                <h2 class="test-title">Listening Comprehension</h2>
+                <p class="test-desc">Listen to natural audio conversations and lectures, then answer questions to verify your listening skills.</p>
+                
+                <div class="test-meta">
+                    <div class="meta-item">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        25 Mins
+                    </div>
+                    <div class="meta-item">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+                        Intermediate
+                    </div>
+                </div>
+
+                <button class="btn-start" onclick="alert('Feature coming soon!')">
+                    Start Listening Test
                 </button>
             </div>
 

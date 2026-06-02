@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - SkillWallet</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .profile-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-header {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #edf2f7;
+            padding-bottom: 1.5rem;
+        }
+
+        .profile-header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-header p {
+            color: #718096;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #edf2f7;
+        }
+
+        .btn-save {
+            background: #3182ce;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 1rem;
+        }
+
+        .btn-save:hover {
+            background: #2b6cb0;
+        }
+
+        .btn-save:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #38a169;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">SkillWallet</div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="test.html">Tests</a>
+            <a href="profile.html" class="active">Profile</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
+    </nav>
+
+    <main class="container" style="padding: 2rem;">
+        <div class="profile-container">
+            <div class="profile-header">
+                <h1>My Profile</h1>
+                <p>Manage your personal and professional information to complete your portfolio.</p>
+            </div>
+
+            <form id="profileForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" placeholder="e.g. John">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" placeholder="e.g. Doe">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="jobTitle">Job Title / Role</label>
+                        <input type="text" id="jobTitle" name="jobTitle" placeholder="e.g. Software Engineer">
+                    </div>
+                    <div class="form-group">
+                        <label for="organization">Organization / University</label>
+                        <input type="text" id="organization" name="organization" placeholder="e.g. Google">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="bio">Bio</label>
+                    <textarea id="bio" name="bio" placeholder="Write a short introduction about yourself..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="linkedinUrl">LinkedIn Profile URL</label>
+                        <input type="url" id="linkedinUrl" name="linkedinUrl" placeholder="https://linkedin.com/in/username">
+                    </div>
+                    <div class="form-group">
+                        <label for="portfolioUrl">Personal Website / Portfolio URL</label>
+                        <input type="url" id="portfolioUrl" name="portfolioUrl" placeholder="https://yourwebsite.com">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-save" id="saveBtn">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <div class="toast" id="toast">Profile updated successfully!</div>
+
+    <script>
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = 'login.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = 'index.html';
+        }
+
+        // Fetch Profile Data on Load
+        async function fetchProfile() {
+            try {
+                const res = await fetch('/api/users/me', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (res.status === 401) {
+                    logout();
+                    return;
+                }
+
+                if (res.ok) {
+                    const data = await res.json();
+                    const user = data.user;
+                    document.getElementById('firstName').value = user.firstName || '';
+                    document.getElementById('lastName').value = user.lastName || '';
+                    document.getElementById('jobTitle').value = user.jobTitle || '';
+                    document.getElementById('organization').value = user.organization || '';
+                    document.getElementById('bio').value = user.bio || '';
+                    document.getElementById('linkedinUrl').value = user.linkedinUrl || '';
+                    document.getElementById('portfolioUrl').value = user.portfolioUrl || '';
+                }
+            } catch (err) {
+                console.error('Error fetching profile:', err);
+            }
+        }
+
+        // Handle Form Submission
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('saveBtn');
+            const originalText = btn.innerText;
+
+            btn.innerText = 'Saving...';
+            btn.disabled = true;
+
+            const payload = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                jobTitle: document.getElementById('jobTitle').value,
+                organization: document.getElementById('organization').value,
+                bio: document.getElementById('bio').value,
+                linkedinUrl: document.getElementById('linkedinUrl').value,
+                portfolioUrl: document.getElementById('portfolioUrl').value
+            };
+
+            try {
+                const res = await fetch('/api/users/me', {
+                    method: 'PUT',
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok) {
+                    showToast();
+                } else {
+                    const error = await res.json();
+                    alert(error.error || 'Failed to update profile');
+                }
+            } catch (err) {
+                console.error('Error updating profile:', err);
+                alert('An error occurred while saving.');
+            } finally {
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
+        });
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Init
+        fetchProfile();
+    </script>
+</body>
+</html>

@@ -27,6 +27,11 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: false, // Only for Google users
     },
+    bio: { type: String },
+    jobTitle: { type: String },
+    organization: { type: String },
+    linkedinUrl: { type: String },
+    portfolioUrl: { type: String },
     stats: {
         listening: { type: Number, default: 0 },
         speaking: { type: Number, default: 0 },

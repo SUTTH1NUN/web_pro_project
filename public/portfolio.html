@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export Portfolio - SkillWallet</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .export-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .export-header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1a202c;
+        }
+
+        .export-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #ccc;
+            color: #333;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-outline:hover {
+            background: #f0f0f0;
+        }
+
+        .btn-primary {
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* A4 Page Preview Style */
+        .a4-preview {
+            background: white;
+            width: 100%;
+            max-width: 800px; /* Approx A4 ratio */
+            margin: 0 auto;
+            min-height: 1131px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            padding: 3rem 4rem;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        /* Portfolio Content Styles */
+        .cv-header {
+            border-bottom: 2px solid #2b6cb0;
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .cv-name {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+        }
+
+        .cv-title {
+            font-size: 1.2rem;
+            color: #2b6cb0;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .cv-contact {
+            display: flex;
+            gap: 1.5rem;
+            color: #4a5568;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .cv-contact span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cv-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .cv-section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cv-bio {
+            color: #4a5568;
+            line-height: 1.7;
+        }
+
+        /* Verified Credentials List */
+        .credential-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            background: #fafcff;
+        }
+
+        .cred-left h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 0.25rem;
+        }
+
+        .cred-left p {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .cred-right {
+            text-align: right;
+        }
+
+        .cred-score {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #2b6cb0;
+        }
+
+        .cred-verified {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: #38a169;
+            font-size: 0.8rem;
+            font-weight: 700;
+            background: #f0fff4;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+
+        .cv-footer {
+            position: absolute;
+            bottom: 3rem;
+            left: 4rem;
+            right: 4rem;
+            text-align: center;
+            border-top: 1px solid #edf2f7;
+            padding-top: 1.5rem;
+            color: #a0aec0;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .a4-preview {
+                padding: 1.5rem;
+                min-height: auto;
+            }
+            .cv-footer {
+                position: relative;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin-top: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">SkillWallet</div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="test.html">Tests</a>
+            <a href="profile.html">Profile</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
+    </nav>
+
+    <main class="container" style="max-width: 1000px; padding: 2rem;">
+        
+        <div class="export-header">
+            <h1>Export Portfolio Preview</h1>
+            <div class="export-actions">
+                <button class="btn-outline" onclick="alert('Feature coming soon: Copy Link!')">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                    Copy Link
+                </button>
+                <button class="btn-primary" onclick="alert('Feature coming soon: Generate PDF!')">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Download PDF
+                </button>
+            </div>
+        </div>
+
+        <div class="a4-preview">
+            
+            <div class="cv-header">
+                <div class="cv-name" id="previewName">John Doe</div>
+                <div class="cv-title" id="previewJob">Software Engineer @ TechCorp</div>
+                <div class="cv-contact">
+                    <span>
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        <span id="previewEmail">johndoe@example.com</span>
+                    </span>
+                    <span>
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                        <span id="previewLinkedin">linkedin.com/in/johndoe</span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="cv-section">
+                <h2 class="cv-section-title">About Me</h2>
+                <p class="cv-bio" id="previewBio">Passionate software engineer with a strong foundation in modern web technologies. I specialize in building scalable applications and am constantly seeking to improve my language and communication skills to work effectively in global teams.</p>
+            </div>
+
+            <div class="cv-section">
+                <h2 class="cv-section-title">Verified Language Credentials</h2>
+                
+                <!-- Mock Credential 1 -->
+                <div class="credential-item">
+                    <div class="cred-left">
+                        <h3>TOEIC English Proficiency</h3>
+                        <p>Date Tested: Oct 15, 2025 • Code: TX-84920</p>
+                    </div>
+                    <div class="cred-right">
+                        <div class="cred-score">850 / 990</div>
+                        <div class="cred-verified">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            AI Verified
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mock Credential 2 -->
+                <div class="credential-item">
+                    <div class="cred-left">
+                        <h3>IELTS Academic</h3>
+                        <p>Date Tested: Jan 22, 2026 • Code: IL-11029</p>
+                    </div>
+                    <div class="cred-right">
+                        <div class="cred-score">7.5 / 9.0</div>
+                        <div class="cred-verified">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            AI Verified
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cv-footer">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                This document and its credentials have been digitally verified by SkillWallet.
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = 'login.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = 'index.html';
+        }
+
+        // Fetch user data to populate the preview
+        async function loadPreviewData() {
+            try {
+                const res = await fetch('/api/users/me', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (res.ok) {
+                    const data = await res.json();
+                    const user = data.user;
+                    
+                    const fullName = `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.username;
+                    document.getElementById('previewName').innerText = fullName;
+                    document.getElementById('previewEmail').innerText = user.email;
+                    
+                    if (user.jobTitle || user.organization) {
+                        document.getElementById('previewJob').innerText = `${user.jobTitle || 'Professional'} @ ${user.organization || 'Independent'}`;
+                    } else {
+                        document.getElementById('previewJob').style.display = 'none';
+                    }
+
+                    if (user.bio) {
+                        document.getElementById('previewBio').innerText = user.bio;
+                    }
+
+                    if (user.linkedinUrl) {
+                        // strip https://
+                        let disp = user.linkedinUrl.replace(/^https?:\/\/(www\.)?/, '');
+                        document.getElementById('previewLinkedin').innerText = disp;
+                    } else {
+                        document.getElementById('previewLinkedin').parentElement.style.display = 'none';
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        loadPreviewData();
+    </script>
+</body>
+</html>
