@@ -11,6 +11,24 @@ const EvidenceSchema = new mongoose.Schema({
         enum: ['certificate', 'speaking_sample'],
         required: true
     },
+    testType: {
+        type: String,
+        enum: ['TOEIC', 'Linguaskill', 'IELTS', 'TOEFL', 'Duolingo English Test', 'TETET', 'CU-TEP'],
+        required: function() { return this.type === 'certificate'; }
+    },
+    providedName: {
+        type: String,
+    },
+    extractedData: {
+        fullName: String,
+        testDate: Date,
+        verificationCode: String
+    },
+    verificationStatus: {
+        type: String,
+        enum: ['pending', 'verified', 'rejected'],
+        default: 'pending'
+    },
     filename: {
         type: String,
         required: true

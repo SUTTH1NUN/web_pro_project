@@ -146,6 +146,14 @@
             <div id="alertBox"></div>
 
             <form id="loginForm">
+                <div class="form-group signup-only" style="display: none;">
+                    <label>First Name</label>
+                    <input type="text" id="firstName" placeholder="John">
+                </div>
+                <div class="form-group signup-only" style="display: none;">
+                    <label>Last Name</label>
+                    <input type="text" id="lastName" placeholder="Doe">
+                </div>
                 <div class="form-group">
                     <label>Email Address</label>
                     <input type="email" id="email" required placeholder="you@example.com">
@@ -207,6 +215,10 @@
                 document.querySelector('h2').textContent = isLoginMode ? 'Welcome Back' : 'Create Account';
                 loginForm.querySelector('button[type="submit"]').textContent = isLoginMode ? 'Sign In' : 'Sign Up';
                 signupToggle.textContent = isLoginMode ? 'Sign up here' : 'Sign in instead';
+                
+                // Toggle extra fields
+                const signupOnlyFields = document.querySelectorAll('.signup-only');
+                signupOnlyFields.forEach(el => el.style.display = isLoginMode ? 'none' : 'block');
             });
 
             // Handle Form Submission
@@ -214,9 +226,11 @@
                 e.preventDefault();
                 const email = document.getElementById('email').value;
                 const password = document.getElementById('password').value;
+                const firstName = document.getElementById('firstName').value;
+                const lastName = document.getElementById('lastName').value;
                 
                 const endpoint = isLoginMode ? '/api/auth/signin' : '/api/auth/signup';
-                const body = isLoginMode ? { email, password } : { username: email.split('@')[0], email, password };
+                const body = isLoginMode ? { email, password } : { username: email.split('@')[0], email, password, firstName, lastName };
 
                 try {
                     const res = await fetch(endpoint, {

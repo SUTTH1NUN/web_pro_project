@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Language Certificate</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+        .result-box {
+            margin-top: 2rem;
+            padding: 1rem;
+            border-radius: 4px;
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+        }
+        .result-box.verified {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+        .result-box.rejected {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+        }
+        .loading {
+            display: none;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">SkillWallet</div>
+        <div class="nav-links">
+            <a href="index.html">Dashboard</a>
+            <a href="#" class="active">Evidence</a>
+            <a href="#">Tests</a>
+            <a href="#">Settings</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="card">
+            <h2>Upload Language Certificate</h2>
+            <p>Upload your English proficiency certificate for automatic verification.</p>
+            
+            <form id="uploadForm">
+                <div class="form-group">
+                    <label for="testType">Certificate Type</label>
+                    <select id="testType" name="testType" required>
+                        <option value="">Select a certificate type...</option>
+                        <option value="TOEIC">TOEIC</option>
+                        <option value="Linguaskill">Linguaskill</option>
+                        <option value="IELTS">IELTS</option>
+                        <option value="TOEFL">TOEFL</option>
+                        <option value="Duolingo English Test">Duolingo English Test</option>
+                        <option value="TETET">TETET</option>
+                        <option value="CU-TEP">CU-TEP</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="file">Upload Certificate (PDF, JPG, PNG)</label>
+                    <input type="file" id="file" name="file" accept=".pdf,.jpg,.jpeg,.png" required>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%">Upload and Verify</button>
+            </form>
+
+            <div id="loadingIndicator" class="loading">
+                Analyzing certificate with AI... Please wait.
+            </div>
+
+            <div id="resultContainer" style="display: none;">
+                <!-- Results will be injected here -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const form = e.target;
+            const formData = new FormData(form);
+            const loading = document.getElementById('loadingIndicator');
+            const resultContainer = document.getElementById('resultContainer');
+            const submitBtn = form.querySelector('button[type="submit"]');
+
+            // Reset UI
+            loading.style.display = 'block';
+            resultContainer.style.display = 'none';
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch('/api/evidence/upload-cert', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to upload certificate');
+                }
+
+                // Display result
+                const ev = data.evidence;
+                const statusClass = ev.verificationStatus === 'verified' ? 'verified' : 
+                                  (ev.verificationStatus === 'rejected' ? 'rejected' : '');
+                
+                let statusText = 'Pending Manual Review';
+                if (ev.verificationStatus === 'verified') statusText = '✅ Verified (Name Matches)';
+                if (ev.verificationStatus === 'rejected') statusText = '❌ Rejected (Name Mismatch)';
+
+                resultContainer.innerHTML = `
+                    <div class="result-box ${statusClass}">
+                        <h3>Verification Result</h3>
+                        <p><strong>Status:</strong> ${statusText}</p>
+                        <hr style="margin: 10px 0; border: 0; border-top: 1px solid #ccc;">
+                        <p><strong>Provided Name:</strong> ${ev.providedName}</p>
+                        <p><strong>Extracted Name:</strong> ${ev.extractedData.fullName || 'Not found'}</p>
+                        <p><strong>Test Date:</strong> ${ev.extractedData.testDate ? new Date(ev.extractedData.testDate).toLocaleDateString() : 'Not found'}</p>
+                        <p><strong>Verification Code:</strong> ${ev.extractedData.verificationCode || 'Not found'}</p>
+                    </div>
+                `;
+                resultContainer.style.display = 'block';
+                form.reset();
+            } catch (error) {
+                resultContainer.innerHTML = `
+                    <div class="result-box rejected">
+                        <h3>Error</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+                resultContainer.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
