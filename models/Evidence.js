@@ -20,10 +20,12 @@ const EvidenceSchema = new mongoose.Schema({
         type: String,
     },
     extractedData: {
-        fullName: String,
-        testDate: Date,
-        verificationCode: String,
-        score: String
+        type: mongoose.Schema.Types.Mixed,
+        default: {}
+    },
+    extractedScore: {
+        type: String,
+        default: 'N/A'
     },
     verificationStatus: {
         type: String,

@@ -373,16 +373,12 @@
 
             document.getElementById('credentialCount').innerText = `${evidences.length} credential${evidences.length !== 1 ? 's' : ''} in your wallet`;
             
-            // Try to set welcome title based on the providedName from the first evidence or default
-            if (evidences.length > 0 && evidences[0].providedName) {
-                const firstName = evidences[0].providedName.split(' ')[0];
-                document.getElementById('welcomeTitle').innerText = `Welcome back, ${firstName} 👋`;
-            }
+            document.getElementById('credentialCount').innerText = `${evidences.length} credential${evidences.length !== 1 ? 's' : ''} in your wallet`;
 
             evidences.forEach(ev => {
                 const isProcessing = ev.verificationStatus === 'processing';
                 const isPending = ev.verificationStatus === 'pending' || ev.verificationStatus === 'rejected';
-                const score = (ev.extractedData && ev.extractedData.score) ? ev.extractedData.score : 'N/A';
+                const score = ev.extractedScore || 'N/A';
                 const dateStr = (ev.extractedData && ev.extractedData.testDate) 
                     ? new Date(ev.extractedData.testDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) 
                     : 'Unknown Date';
@@ -497,7 +493,26 @@
         }
 
         // Initial Load
-        fetchEvidences();
+        async function initDashboard() {
+            try {
+                // Fetch user profile for welcome message
+                const userRes = await fetch('/api/users/me', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (userRes.ok) {
+                    const userData = await userRes.json();
+                    const displayName = userData.user.username || userData.user.firstName || 'User';
+                    document.getElementById('welcomeTitle').innerText = `Welcome back, ${displayName} 👋`;
+                }
+
+                // Fetch evidences
+                await fetchEvidences();
+            } catch (err) {
+                console.error('Error init dashboard:', err);
+            }
+        }
+
+        initDashboard();
     </script>
 </body>
 </html>

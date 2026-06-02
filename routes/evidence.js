@@ -6,6 +6,7 @@ const fs = require('fs');
 const Evidence = require('../models/Evidence');
 const User = require('../models/User');
 const { extractCertificateData } = require('../utils/gemini');
+const { convertTo10PointScale } = require('../utils/scoreConverter');
 const { protect } = require('../middleware/auth');
 
 // Create uploads directory if it doesn't exist
@@ -27,7 +28,30 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-async function processCertificateAsync(evidenceId, filename, mimetype, testType, providedName) {
+// Helper to recalculate user stats based on all verified evidences
+async function updateUserStats(userId) {
+    try {
+        const evidences = await Evidence.find({ userId: userId, verificationStatus: 'verified' });
+        
+        let maxStats = { speaking: 0, listening: 0, reading: 0, writing: 0 };
+        
+        for (const ev of evidences) {
+            if (ev.extractedData) {
+                const scaled = convertTo10PointScale(ev.extractedData, ev.testType);
+                if (scaled.speaking > maxStats.speaking) maxStats.speaking = scaled.speaking;
+                if (scaled.listening > maxStats.listening) maxStats.listening = scaled.listening;
+                if (scaled.reading > maxStats.reading) maxStats.reading = scaled.reading;
+                if (scaled.writing > maxStats.writing) maxStats.writing = scaled.writing;
+            }
+        }
+        
+        await User.findByIdAndUpdate(userId, { stats: maxStats });
+    } catch (err) {
+        console.error('Error recalculating user stats:', err);
+    }
+}
+
+async function processCertificateAsync(evidenceId, userId, filename, mimetype, testType, providedName) {
     try {
         const filePath = path.join(uploadDir, filename);
         const fileBuffer = fs.readFileSync(filePath);
@@ -50,8 +74,15 @@ async function processCertificateAsync(evidenceId, filename, mimetype, testType,
 
         await Evidence.findByIdAndUpdate(evidenceId, {
             extractedData: extractedData,
+            extractedScore: extractedData.totalScore || extractedData.score || 'N/A', // Fallback if AI ignores prompt
             verificationStatus: verificationStatus
         });
+
+        // Trigger stats recalculation if verified
+        if (verificationStatus === 'verified') {
+            await updateUserStats(userId);
+        }
+
     } catch (error) {
         console.error('Failed to process certificate:', error);
         await Evidence.findByIdAndUpdate(evidenceId, { verificationStatus: 'rejected' });
@@ -110,7 +141,7 @@ router.post('/upload-cert', protect, upload.single('file'), async (req, res) => 
         });
 
         // Background async processing
-        processCertificateAsync(evidence._id, file.filename, file.mimetype, testType, providedName).catch(err => {
+        processCertificateAsync(evidence._id, user._id, file.filename, file.mimetype, testType, providedName).catch(err => {
             console.error('Background processing error:', err);
         });
     } catch (error) {

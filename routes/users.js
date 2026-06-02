@@ -16,13 +16,14 @@ router.get('/me', protect, async (req, res) => {
 // PUT /api/users/me
 router.put('/me', protect, async (req, res) => {
     try {
-        const { firstName, lastName, bio, jobTitle, organization, linkedinUrl, portfolioUrl } = req.body;
+        const { username, firstName, lastName, bio, jobTitle, organization, linkedinUrl, portfolioUrl } = req.body;
         
         const user = await User.findById(req.user._id);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
 
+        if (username !== undefined) user.username = username;
         if (firstName !== undefined) user.firstName = firstName;
         if (lastName !== undefined) user.lastName = lastName;
         if (bio !== undefined) user.bio = bio;
