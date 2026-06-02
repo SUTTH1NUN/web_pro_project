@@ -22,12 +22,13 @@ const EvidenceSchema = new mongoose.Schema({
     extractedData: {
         fullName: String,
         testDate: Date,
-        verificationCode: String
+        verificationCode: String,
+        score: String
     },
     verificationStatus: {
         type: String,
-        enum: ['pending', 'verified', 'rejected'],
-        default: 'pending'
+        enum: ['processing', 'pending', 'verified', 'rejected'],
+        default: 'processing'
     },
     filename: {
         type: String,

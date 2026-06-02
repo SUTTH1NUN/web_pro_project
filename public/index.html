@@ -13,10 +13,7 @@
     <nav class="navbar">
         <div class="nav-brand">SkillWallet</div>
         <div class="nav-links">
-            <a href="#">Dashboard</a>
-            <a href="#">Evidence</a>
-            <a href="#">Tests</a>
-            <a href="#">Settings</a>
+            <a href="login.html">Login</a>
         </div>
     </nav>
 
@@ -26,12 +23,16 @@
             <p>The modern platform to collect evidence, take interactive tests, and showcase your verified portfolio.
             </p>
             <div class="actions">
-                <button class="btn-primary" id="testApiBtn">Test API Connection</button>
+                <button class="btn-primary" onclick="window.location.href='login.html'">Login to Get Started</button>
             </div>
-            <div id="apiResult" class="glass-panel" style="margin-top: 2rem; display: none;"></div>
         </div>
     </main>
 
+    <script>
+        if (localStorage.getItem('token')) {
+            window.location.href = 'dashboard.html';
+        }
+    </script>
     <script src="js/main.js"></script>
 </body>
 

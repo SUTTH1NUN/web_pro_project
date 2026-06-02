@@ -6,6 +6,7 @@ const fs = require('fs');
 const Evidence = require('../models/Evidence');
 const User = require('../models/User');
 const { extractCertificateData } = require('../utils/gemini');
+const { protect } = require('../middleware/auth');
 
 // Create uploads directory if it doesn't exist
 const uploadDir = path.join(__dirname, '..', 'public', 'uploads');
@@ -26,6 +27,37 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+async function processCertificateAsync(evidenceId, filename, mimetype, testType, providedName) {
+    try {
+        const filePath = path.join(uploadDir, filename);
+        const fileBuffer = fs.readFileSync(filePath);
+        
+        const extractedData = await extractCertificateData(fileBuffer, mimetype, testType);
+
+        let verificationStatus = 'pending';
+        if (extractedData.fullName && providedName) {
+            const providedLower = providedName.toLowerCase().replace(/\s+/g, ' ');
+            const extractedLower = extractedData.fullName.toLowerCase().replace(/\s+/g, ' ');
+            
+            if (extractedLower.includes(providedLower) || providedLower.includes(extractedLower)) {
+                verificationStatus = 'verified';
+            } else {
+                verificationStatus = 'rejected';
+            }
+        } else {
+            verificationStatus = 'rejected';
+        }
+
+        await Evidence.findByIdAndUpdate(evidenceId, {
+            extractedData: extractedData,
+            verificationStatus: verificationStatus
+        });
+    } catch (error) {
+        console.error('Failed to process certificate:', error);
+        await Evidence.findByIdAndUpdate(evidenceId, { verificationStatus: 'rejected' });
+    }
+}
+
 // POST /api/evidence/upload
 router.post('/upload', upload.single('file'), (req, res) => {
     const file = req.file;
@@ -44,7 +76,7 @@ router.post('/upload', upload.single('file'), (req, res) => {
 });
 
 // POST /api/evidence/upload-cert
-router.post('/upload-cert', upload.single('file'), async (req, res) => {
+router.post('/upload-cert', protect, upload.single('file'), async (req, res) => {
     try {
         const file = req.file;
         const { testType } = req.body;
@@ -56,35 +88,9 @@ router.post('/upload-cert', upload.single('file'), async (req, res) => {
             return res.status(400).json({ error: 'Test type is required' });
         }
 
-        // Mock User: Since auth middleware is not present, fetch the first user or create a dummy one
-        let user = await User.findOne();
-        if (!user) {
-            user = await User.create({ username: 'testuser', email: 'test@example.com', password: 'password123', firstName: 'John', lastName: 'Doe' });
-        }
+        const user = req.user;
 
         const providedName = `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.username;
-
-        // Read file into buffer for Gemini
-        const filePath = path.join(uploadDir, file.filename);
-        const fileBuffer = fs.readFileSync(filePath);
-        
-        // Call Gemini API
-        const extractedData = await extractCertificateData(fileBuffer, file.mimetype, testType);
-
-        // Verify name
-        let verificationStatus = 'pending';
-        if (extractedData.fullName && providedName) {
-            const providedLower = providedName.toLowerCase().replace(/\s+/g, ' ');
-            const extractedLower = extractedData.fullName.toLowerCase().replace(/\s+/g, ' ');
-            
-            if (extractedLower.includes(providedLower) || providedLower.includes(extractedLower)) {
-                verificationStatus = 'verified';
-            } else {
-                verificationStatus = 'rejected';
-            }
-        }
-
-
 
         const evidence = new Evidence({
             userId: user._id,
@@ -93,19 +99,57 @@ router.post('/upload-cert', upload.single('file'), async (req, res) => {
             providedName: providedName,
             filename: file.filename,
             size: file.size,
-            extractedData: extractedData,
-            verificationStatus: verificationStatus
+            verificationStatus: 'processing'
         });
 
         await evidence.save();
 
-        res.status(201).json({
-            message: 'Certificate uploaded and processed successfully',
+        res.status(202).json({
+            message: 'Certificate uploaded and processing started',
             evidence: evidence
+        });
+
+        // Background async processing
+        processCertificateAsync(evidence._id, file.filename, file.mimetype, testType, providedName).catch(err => {
+            console.error('Background processing error:', err);
         });
     } catch (error) {
         console.error('Error processing certificate:', error);
         res.status(500).json({ error: 'Internal server error during certificate processing' });
+    }
+});
+
+// GET /api/evidence
+router.get('/', protect, async (req, res) => {
+    try {
+        const evidences = await Evidence.find({ userId: req.user._id }).sort({ uploadedAt: -1 });
+        res.json({ evidences });
+    } catch (error) {
+        console.error('Error fetching evidence:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// DELETE /api/evidence/:id
+router.delete('/:id', protect, async (req, res) => {
+    try {
+        const evidence = await Evidence.findOne({ _id: req.params.id, userId: req.user._id });
+        
+        if (!evidence) {
+            return res.status(404).json({ error: 'Evidence not found or unauthorized' });
+        }
+
+        // Optional: delete file from filesystem
+        const filePath = path.join(uploadDir, evidence.filename);
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+        }
+
+        await Evidence.deleteOne({ _id: req.params.id });
+        res.json({ message: 'Evidence deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting evidence:', error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 

@@ -8,7 +8,7 @@ const genAI = new GoogleGenerativeAI(apiKey);
 async function extractCertificateData(fileBuffer, mimeType, testType) {
     if (!apiKey) {
         console.warn("GEMINI_API_KEY is not set. Returning mock data.");
-        return { fullName: "John Doe (Mock)", testDate: "2024-01-01", verificationCode: "MOCK12345" };
+        return { fullName: "John Doe (Mock)", testDate: "2024-01-01", verificationCode: "MOCK12345", score: "8.5" };
     }
 
     try {
@@ -29,7 +29,8 @@ Please extract the following information and return ONLY a valid JSON object:
 {
     "fullName": "The full name of the test taker as written on the certificate",
     "testDate": "The date the test was taken (format: YYYY-MM-DD)",
-    "verificationCode": "The verification code, candidate number, or TRF number on the certificate"
+    "verificationCode": "The verification code, candidate number, or TRF number on the certificate",
+    "score": "The total or overall score/band on the certificate as a string or number"
 }
 If a field is not found, set its value to null. DO NOT wrap the output in markdown, just output raw JSON.`;
 
@@ -42,7 +43,7 @@ If a field is not found, set its value to null. DO NOT wrap the output in markdo
         return JSON.parse(jsonStr);
     } catch (e) {
         console.error("Failed to parse Gemini response or API error:", e);
-        return { fullName: null, testDate: null, verificationCode: null };
+        return { fullName: null, testDate: null, verificationCode: null, score: null };
     }
 }
 
