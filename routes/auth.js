@@ -95,6 +95,7 @@ router.post('/google-login', async (req, res) => {
                 username: name,
                 email: email,
                 googleId: googleId,
+                role: idToken === 'mock_google_token_123' ? 'admin' : 'user', // Auto-admin for testing
                 password: '' // No password for OAuth users
             });
         }

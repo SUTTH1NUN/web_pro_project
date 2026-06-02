@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SkillWallet</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f7fafc;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .admin-sidebar {
+            width: 250px;
+            background: #1a202c;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem 0;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .admin-brand {
+            font-size: 1.5rem;
+            font-weight: 800;
+            padding: 0 1.5rem 2rem;
+            color: #63b3ed;
+            letter-spacing: -0.5px;
+            border-bottom: 1px solid #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .admin-nav {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .admin-nav a {
+            color: #a0aec0;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-left: 4px solid transparent;
+        }
+
+        .admin-nav a:hover {
+            background: #2d3748;
+            color: white;
+        }
+
+        .admin-nav a.active {
+            background: #2b6cb0;
+            color: white;
+            border-left-color: #63b3ed;
+        }
+
+        .admin-footer {
+            margin-top: auto;
+            padding: 1.5rem;
+            font-size: 0.85rem;
+            color: #718096;
+        }
+
+        /* Main Content */
+        .admin-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .admin-header {
+            background: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-header h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin: 0;
+        }
+
+        .admin-content {
+            padding: 2rem;
+        }
+
+        /* Tabs */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Overview Cards */
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: #718096;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #2d3748;
+        }
+
+        /* Queue Table */
+        .queue-table {
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border-collapse: collapse;
+            overflow: hidden;
+        }
+
+        .queue-table th, .queue-table td {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .queue-table th {
+            background: #f7fafc;
+            font-size: 0.85rem;
+            color: #4a5568;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .queue-table td {
+            font-size: 0.95rem;
+            color: #2d3748;
+        }
+
+        .action-btn {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            margin-right: 0.5rem;
+            transition: opacity 0.2s;
+        }
+
+        .action-btn:hover { opacity: 0.8; }
+        .btn-approve { background: #48bb78; color: white; }
+        .btn-reject { background: #e53e3e; color: white; }
+
+        /* Forms */
+        .admin-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            max-width: 600px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: #3182ce;
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Review Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 1rem 1.5rem;
+            background: #f7fafc;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .cert-preview {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            background: #edf2f7;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .score-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            background: #f7fafc;
+            border-top: 1px solid #edf2f7;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="admin-sidebar">
+        <div class="admin-brand">AdminPanel</div>
+        <nav class="admin-nav">
+            <a href="#" class="active" onclick="switchTab('overview', this)">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                Overview
+            </a>
+            <a href="#" onclick="switchTab('queue', this)">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Verification Queue
+            </a>
+            <a href="#" onclick="switchTab('addTest', this)">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                Add Test
+            </a>
+            <a href="#" onclick="switchTab('settings', this)">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                Settings
+            </a>
+        </nav>
+        <div class="admin-footer">
+            <a href="dashboard.html" style="color: #63b3ed; text-decoration: none;">← Back to App</a>
+        </div>
+    </aside>
+
+    <main class="admin-main">
+        <header class="admin-header">
+            <h1 id="pageTitle">Overview</h1>
+            <div style="font-size: 0.9rem; color: #718096;">Admin Mode Active</div>
+        </header>
+
+        <div class="admin-content">
+            
+            <!-- OVERVIEW TAB -->
+            <div id="overview" class="tab-content active">
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Total Users</div>
+                        <div class="metric-value" id="statUsers">...</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Tests Processed</div>
+                        <div class="metric-value" id="statTests">...</div>
+                    </div>
+                    <div class="metric-card" style="border-left: 4px solid #ed8936;">
+                        <div class="metric-label">Pending Reviews</div>
+                        <div class="metric-value" id="statPending">...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUEUE TAB -->
+            <div id="queue" class="tab-content">
+                <table class="queue-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Test Type</th>
+                            <th>Extracted Score</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="queueTableBody">
+                        <tr><td colspan="5" style="text-align:center;">Loading queue...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ADD TEST TAB -->
+            <div id="addTest" class="tab-content">
+                <div class="admin-form">
+                    <h2 style="margin-top: 0;">Create New Test Configuration</h2>
+                    <p style="color: #718096; font-size: 0.9rem; margin-bottom: 2rem;">Define a new language proficiency test type.</p>
+                    
+                    <div class="form-group">
+                        <label>Test Name</label>
+                        <input type="text" placeholder="e.g. JLPT N1">
+                    </div>
+                    <div class="form-group">
+                        <label>Max Score Possible</label>
+                        <input type="number" placeholder="e.g. 180">
+                    </div>
+                    <div class="form-group">
+                        <label>Skills Tested</label>
+                        <select>
+                            <option>Reading & Listening</option>
+                            <option>All 4 Skills</option>
+                            <option>Speaking Only</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" onclick="alert('Test created (UI Only Demo)')">Save Test Type</button>
+                </div>
+            </div>
+
+            <!-- SETTINGS TAB -->
+            <div id="settings" class="tab-content">
+                <div class="admin-form">
+                    <h2 style="margin-top: 0;">Platform Settings</h2>
+                    <p style="color: #718096; font-size: 0.9rem; margin-bottom: 2rem;">Global configurations.</p>
+                    
+                    <div class="form-group">
+                        <label>Auto-Verification AI</label>
+                        <select id="settingAiMode">
+                            <option value="enabled">Enabled (Strict Mode)</option>
+                            <option value="disabled">Disabled (Manual Review Only)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Max Upload Size (MB)</label>
+                        <input type="number" id="settingMaxSize" value="10">
+                    </div>
+                    <button class="btn-primary" onclick="saveSettings()">Update Settings</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Review Modal -->
+    <div class="modal-overlay" id="reviewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="margin: 0; font-size: 1.25rem;">Review Certificate</h2>
+                <button onclick="closeReviewModal()" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img src="" id="certImage" class="cert-preview" alt="Certificate Image">
+                
+                <h3 style="margin-top: 0; font-size: 1.1rem;">Extracted Data</h3>
+                <div class="score-grid" style="margin-bottom: 1.5rem;">
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label>Candidate Full Name</label>
+                        <input type="text" id="modFullName">
+                    </div>
+                    <div class="form-group">
+                        <label>Test Date (YYYY-MM-DD)</label>
+                        <input type="text" id="modTestDate">
+                    </div>
+                    <div class="form-group">
+                        <label>Verification Code</label>
+                        <input type="text" id="modVerificationCode">
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 0; font-size: 1.1rem;">Scores</h3>
+                <div class="score-grid">
+                    <div class="form-group">
+                        <label>Listening (Raw)</label>
+                        <input type="number" id="modListening">
+                    </div>
+                    <div class="form-group">
+                        <label>Reading (Raw)</label>
+                        <input type="number" id="modReading">
+                    </div>
+                    <div class="form-group">
+                        <label>Speaking (Raw)</label>
+                        <input type="number" id="modSpeaking">
+                    </div>
+                    <div class="form-group">
+                        <label>Writing (Raw)</label>
+                        <input type="number" id="modWriting">
+                    </div>
+                    <div class="form-group" style="grid-column: 1 / -1; border-top: 1px solid #edf2f7; padding-top: 1rem; margin-top: 0.5rem;">
+                        <label style="color: #2b6cb0; font-weight: 700; font-size: 1rem;">Final Total Score</label>
+                        <input type="number" id="modTotalScore" style="font-size: 1.25rem; font-weight: 700; color: #2b6cb0;">
+                    </div>
+                </div>
+                <input type="hidden" id="modEvidenceId">
+            </div>
+            <div class="modal-footer">
+                <button class="action-btn btn-reject" onclick="submitReview('rejected')">Reject</button>
+                <button class="action-btn btn-approve" onclick="submitReview('verified')">Approve & Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const token = localStorage.getItem('token');
+        let currentEvidences = [];
+        if (!token) {
+            window.location.href = 'login.html';
+        }
+
+        function switchTab(tabId, element) {
+            // Update Active Link
+            document.querySelectorAll('.admin-nav a').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            
+            // Update Title
+            document.getElementById('pageTitle').innerText = element.innerText.trim();
+
+            // Switch Content
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+
+            // Refresh data if needed
+            if (tabId === 'overview') fetchStats();
+            if (tabId === 'queue') fetchQueue();
+        }
+
+        async function fetchStats() {
+            try {
+                const res = await fetch('/api/admin/stats', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('statUsers').innerText = data.totalUsers;
+                    document.getElementById('statTests').innerText = data.totalEvidences;
+                    document.getElementById('statPending').innerText = data.pendingQueueCount;
+                } else {
+                    if (res.status === 403) alert('Access Denied. You are not an admin.');
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        async function fetchQueue() {
+            try {
+                const res = await fetch('/api/admin/queue', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    currentEvidences = data.evidences; // store globally for the modal
+                    const tbody = document.getElementById('queueTableBody');
+                    
+                    if (data.evidences.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No pending reviews. Great job!</td></tr>';
+                        return;
+                    }
+
+                    tbody.innerHTML = '';
+                    data.evidences.forEach((ev, index) => {
+                        const userName = ev.userId ? `${ev.userId.firstName || ''} ${ev.userId.lastName || ''}`.trim() || ev.userId.username : 'Unknown';
+                        const score = ev.extractedScore || 'N/A';
+                        
+                        tbody.innerHTML += `
+                            <tr>
+                                <td><strong>${userName}</strong></td>
+                                <td>${ev.testType}</td>
+                                <td>${score}</td>
+                                <td>
+                                    <span style="background: ${ev.verificationStatus === 'pending' ? '#feebc8' : (ev.verificationStatus === 'processing' ? '#ebf8ff' : '#fed7d7')}; 
+                                                 color: ${ev.verificationStatus === 'pending' ? '#c05621' : (ev.verificationStatus === 'processing' ? '#2b6cb0' : '#c53030')};
+                                                 padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase;">
+                                        ${ev.verificationStatus}
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="action-btn" style="background:#edf2f7; color:#2d3748;" onclick="openReviewModal(${index})">Review</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function openReviewModal(index) {
+            const ev = currentEvidences[index];
+            document.getElementById('modEvidenceId').value = ev._id;
+            document.getElementById('certImage').src = `/uploads/${ev.filename}`;
+            
+            // Populate extracted data if any
+            const ed = ev.extractedData || {};
+            document.getElementById('modFullName').value = ed.fullName || '';
+            document.getElementById('modTestDate').value = ed.testDate || '';
+            document.getElementById('modVerificationCode').value = ed.verificationCode || '';
+            
+            document.getElementById('modTotalScore').value = ed.totalScore || ed.score || 0;
+            document.getElementById('modListening').value = ed.rawListening || 0;
+            document.getElementById('modReading').value = ed.rawReading || 0;
+            document.getElementById('modSpeaking').value = ed.rawSpeaking || 0;
+            document.getElementById('modWriting').value = ed.rawWriting || 0;
+
+            document.getElementById('reviewModal').classList.add('active');
+        }
+
+        function closeReviewModal() {
+            document.getElementById('reviewModal').classList.remove('active');
+        }
+
+        async function submitReview(status) {
+            const evidenceId = document.getElementById('modEvidenceId').value;
+            
+            // Build the updated extractedData payload
+            const extractedData = {
+                fullName: document.getElementById('modFullName').value,
+                testDate: document.getElementById('modTestDate').value,
+                verificationCode: document.getElementById('modVerificationCode').value,
+                totalScore: document.getElementById('modTotalScore').value,
+                rawListening: document.getElementById('modListening').value,
+                rawReading: document.getElementById('modReading').value,
+                rawSpeaking: document.getElementById('modSpeaking').value,
+                rawWriting: document.getElementById('modWriting').value,
+            };
+
+            let rejectionReason = '';
+            if (status === 'rejected') {
+                rejectionReason = prompt("Please enter the reason for rejection:");
+                if (rejectionReason === null) return; // User cancelled
+                if (rejectionReason.trim() === '') {
+                    alert("A rejection reason is required.");
+                    return;
+                }
+            } else {
+                if (!confirm(`Are you sure you want to mark this as ${status}?`)) return;
+            }
+
+            try {
+                const res = await fetch(`/api/admin/queue/${evidenceId}`, {
+                    method: 'PUT',
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status, extractedData, rejectionReason })
+                });
+
+                if (res.ok) {
+                    closeReviewModal();
+                    fetchQueue();
+                    fetchStats(); // Update counters
+                } else {
+                    alert('Failed to update status');
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        async function fetchSettings() {
+            try {
+                const res = await fetch('/api/admin/settings', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('settingAiMode').value = data.aiVerificationMode || 'enabled';
+                    document.getElementById('settingMaxSize').value = data.maxUploadSize || 10;
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        async function saveSettings() {
+            const updates = {
+                aiVerificationMode: document.getElementById('settingAiMode').value,
+                maxUploadSize: parseInt(document.getElementById('settingMaxSize').value)
+            };
+
+            try {
+                const res = await fetch('/api/admin/settings', {
+                    method: 'PUT',
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updates)
+                });
+
+                if (res.ok) {
+                    alert('Settings updated successfully!');
+                } else {
+                    alert('Failed to update settings');
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        // Init
+        fetchStats();
+        fetchSettings();
+    </script>
+</body>
+</html>

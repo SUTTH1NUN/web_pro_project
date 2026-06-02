@@ -23,12 +23,14 @@ const usersRoutes = require('./routes/users');
 const evidenceRoutes = require('./routes/evidence');
 const badgesRoutes = require('./routes/badges');
 const testsRoutes = require('./routes/tests');
+const adminRoutes = require('./routes/admin');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/evidence', evidenceRoutes);
 app.use('/api/badges', badgesRoutes);
 app.use('/api/tests', testsRoutes);
+app.use('/api/admin', adminRoutes);
 
 
 

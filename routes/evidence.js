@@ -5,8 +5,9 @@ const path = require('path');
 const fs = require('fs');
 const Evidence = require('../models/Evidence');
 const User = require('../models/User');
+const Setting = require('../models/Setting');
 const { extractCertificateData } = require('../utils/gemini');
-const { convertTo10PointScale } = require('../utils/scoreConverter');
+const { updateUserStats } = require('../utils/userStats');
 const { protect } = require('../middleware/auth');
 
 // Create uploads directory if it doesn't exist
@@ -28,49 +29,44 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Helper to recalculate user stats based on all verified evidences
-async function updateUserStats(userId) {
-    try {
-        const evidences = await Evidence.find({ userId: userId, verificationStatus: 'verified' });
-        
-        let maxStats = { speaking: 0, listening: 0, reading: 0, writing: 0 };
-        
-        for (const ev of evidences) {
-            if (ev.extractedData) {
-                const scaled = convertTo10PointScale(ev.extractedData, ev.testType);
-                if (scaled.speaking > maxStats.speaking) maxStats.speaking = scaled.speaking;
-                if (scaled.listening > maxStats.listening) maxStats.listening = scaled.listening;
-                if (scaled.reading > maxStats.reading) maxStats.reading = scaled.reading;
-                if (scaled.writing > maxStats.writing) maxStats.writing = scaled.writing;
-            }
-        }
-        
-        await User.findByIdAndUpdate(userId, { stats: maxStats });
-    } catch (err) {
-        console.error('Error recalculating user stats:', err);
-    }
-}
-
 async function processCertificateAsync(evidenceId, userId, filename, mimetype, testType, providedName) {
     try {
         const filePath = path.join(uploadDir, filename);
         const fileBuffer = fs.readFileSync(filePath);
         
-        const extractedData = await extractCertificateData(fileBuffer, mimetype, testType);
-
-        let verificationStatus = 'pending';
-        if (extractedData.fullName && providedName) {
-            const providedLower = providedName.toLowerCase().replace(/\s+/g, ' ');
-            const extractedLower = extractedData.fullName.toLowerCase().replace(/\s+/g, ' ');
-            
-            if (extractedLower.includes(providedLower) || providedLower.includes(extractedLower)) {
-                verificationStatus = 'verified';
-            } else {
-                verificationStatus = 'rejected';
-            }
-        } else {
-            verificationStatus = 'rejected';
+        // Fetch AI setting
+        let aiMode = 'enabled';
+        try {
+            const aiSetting = await Setting.findOne({ key: 'aiVerificationMode' });
+            if (aiSetting) aiMode = aiSetting.value;
+        } catch (e) {
+            console.error("Failed to read setting, defaulting to enabled");
         }
+
+        let extractedData = {};
+        let verificationStatus = 'pending'; // Default to pending if anything is missing
+
+        if (aiMode === 'disabled') {
+            console.log("AI Verification is disabled. Pushing to manual review directly.");
+            extractedData = { fullName: providedName, testDate: new Date().toISOString() };
+            verificationStatus = 'pending';
+        } else {
+            extractedData = await extractCertificateData(fileBuffer, mimetype, testType);
+
+            // Strict Check: Ensure core data exists
+            const hasCoreData = extractedData && extractedData.fullName && extractedData.testDate && (extractedData.totalScore || extractedData.score);
+            
+            if (hasCoreData && providedName) {
+                const providedLower = providedName.toLowerCase().replace(/\s+/g, ' ');
+                const extractedLower = extractedData.fullName.toLowerCase().replace(/\s+/g, ' ');
+                
+                // Auto-Approve only if name matches and data is complete
+                if (extractedLower.includes(providedLower) || providedLower.includes(extractedLower)) {
+                    verificationStatus = 'verified';
+                }
+            }
+        }
+        // If it fails the strict check, name doesn't match, or AI is disabled, it remains 'pending' for manual review
 
         await Evidence.findByIdAndUpdate(evidenceId, {
             extractedData: extractedData,
@@ -85,7 +81,7 @@ async function processCertificateAsync(evidenceId, userId, filename, mimetype, t
 
     } catch (error) {
         console.error('Failed to process certificate:', error);
-        await Evidence.findByIdAndUpdate(evidenceId, { verificationStatus: 'rejected' });
+        await Evidence.findByIdAndUpdate(evidenceId, { verificationStatus: 'pending' }); // Fallback to pending on error
     }
 }
 

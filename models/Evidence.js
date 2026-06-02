@@ -32,6 +32,10 @@ const EvidenceSchema = new mongoose.Schema({
         enum: ['processing', 'pending', 'verified', 'rejected'],
         default: 'processing'
     },
+    rejectionReason: {
+        type: String,
+        default: ''
+    },
     filename: {
         type: String,
         required: true
