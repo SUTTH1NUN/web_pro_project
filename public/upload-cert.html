@@ -7,54 +7,7 @@
     <title>Upload Language Certificate</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-family: inherit;
-        }
-        .card {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            max-width: 600px;
-            margin: 2rem auto;
-        }
-        .result-box {
-            margin-top: 2rem;
-            padding: 1rem;
-            border-radius: 4px;
-            background: #f8f9fa;
-            border-left: 4px solid #007bff;
-        }
-        .result-box.verified {
-            border-left-color: #28a745;
-            background: #d4edda;
-        }
-        .result-box.rejected {
-            border-left-color: #dc3545;
-            background: #f8d7da;
-        }
-        .loading {
-            display: none;
-            margin-top: 1rem;
-            text-align: center;
-            font-weight: bold;
-            color: #007bff;
-        }
-    </style>
-</head>
+    </head>
 
 <body>
     <nav class="navbar">
@@ -92,14 +45,14 @@
                     <input type="file" id="file" name="file" accept=".pdf,.jpg,.jpeg,.png" required>
                 </div>
 
-                <button type="submit" class="btn-primary" style="width: 100%">Upload and Verify</button>
+                <button type="submit" class="btn-primary btn-fullwidth">Upload and Verify</button>
             </form>
 
             <div id="loadingIndicator" class="loading">
                 Analyzing certificate with AI... Please wait.
             </div>
 
-            <div id="resultContainer" style="display: none;">
+            <div id="resultContainer" class="hidden">
                 <!-- Results will be injected here -->
             </div>
         </div>
@@ -153,7 +106,7 @@
                     <div class="result-box ${statusClass}">
                         <h3>Verification Result</h3>
                         <p><strong>Status:</strong> ${statusText}</p>
-                        <hr style="margin: 10px 0; border: 0; border-top: 1px solid #ccc;">
+                        <hr class="separator">
                         <p><strong>Provided Name:</strong> ${ev.providedName}</p>
                         <p><strong>Extracted Name:</strong> ${ev.extractedData.fullName || 'Not found'}</p>
                         <p><strong>Test Date:</strong> ${ev.extractedData.testDate ? new Date(ev.extractedData.testDate).toLocaleDateString() : 'Not found'}</p>

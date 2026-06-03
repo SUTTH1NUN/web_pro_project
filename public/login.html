@@ -6,129 +6,6 @@
     <title>Login - SkillWallet</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        .auth-container {
-            max-width: 400px;
-            margin: 4rem auto;
-            padding: 2rem;
-            text-align: center;
-        }
-        .form-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid var(--glass-border);
-            color: white;
-            font-size: 1rem;
-        }
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--accent-primary);
-        }
-        .btn-full {
-            width: 100%;
-            margin-bottom: 1rem;
-        }
-        .btn-google {
-            background: white;
-            color: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
-            width: 100%;
-        }
-        .btn-google:hover {
-            transform: translateY(-2px);
-        }
-        .btn-google img {
-            width: 20px;
-            height: 20px;
-        }
-        .divider {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            margin: 1.5rem 0;
-            color: var(--text-secondary);
-        }
-        .divider::before, .divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid var(--glass-border);
-        }
-        .divider:not(:empty)::before {
-            margin-right: .25em;
-        }
-        .divider:not(:empty)::after {
-            margin-left: .25em;
-        }
-        .auth-links {
-            margin-top: 1rem;
-            font-size: 0.9rem;
-        }
-        .auth-links a {
-            color: var(--accent-primary);
-            text-decoration: none;
-        }
-        .auth-links a:hover {
-            text-decoration: underline;
-        }
-        #alertBox {
-            margin-bottom: 1rem;
-            padding: 10px;
-            border-radius: 8px;
-            display: none;
-            font-size: 0.9rem;
-        }
-        .alert-error {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid #ef4444;
-            color: #fca5a5;
-        }
-        .alert-success {
-            background: rgba(34, 197, 94, 0.2);
-            border: 1px solid #22c55e;
-            color: #86efac;
-        }
-        
-        /* Modal for specific actions like Forgot Password */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.8);
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-        .modal-content {
-            background: var(--bg-color);
-            padding: 2rem;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 400px;
-            border: 1px solid var(--glass-border);
-        }
-    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -141,16 +18,16 @@
 
     <main class="container">
         <div class="glass-panel auth-container">
-            <h2 style="margin-bottom: 1.5rem; font-size: 2rem;">Welcome Back</h2>
+            <h2 class="page-heading">Welcome Back</h2>
             
             <div id="alertBox"></div>
 
             <form id="loginForm">
-                <div class="form-group signup-only" style="display: none;">
+                <div class="form-group signup-only hidden">
                     <label>First Name</label>
                     <input type="text" id="firstName" placeholder="John">
                 </div>
-                <div class="form-group signup-only" style="display: none;">
+                <div class="form-group signup-only hidden">
                     <label>Last Name</label>
                     <input type="text" id="lastName" placeholder="Doe">
                 </div>
@@ -176,7 +53,7 @@
                 Sign in with Google (Mock)
             </button>
 
-            <div class="auth-links" style="margin-top: 2rem;">
+            <div class="auth-links mt-2">
                 Don't have an account? <a href="#" id="signupToggle">Sign up here</a>
             </div>
         </div>
@@ -185,13 +62,13 @@
     <!-- Forgot Password Modal -->
     <div class="modal" id="forgotModal">
         <div class="modal-content">
-            <h3 style="margin-bottom: 1rem;">Reset Password</h3>
-            <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">Enter your email and we will send a reset link.</p>
+            <h3 class="modal-title">Reset Password</h3>
+            <p class="modal-description">Enter your email and we will send a reset link.</p>
             <div class="form-group">
                 <input type="email" id="resetEmail" placeholder="Enter email" required>
             </div>
             <button class="btn-primary btn-full" id="sendResetBtn">Send Link</button>
-            <button class="btn-google" style="margin-top: 10px;" id="closeModalBtn">Cancel</button>
+            <button class="btn-google mt-2" id="closeModalBtn">Cancel</button>
         </div>
     </div>
 

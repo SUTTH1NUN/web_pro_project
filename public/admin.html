@@ -6,301 +6,8 @@
     <title>Admin Dashboard - SkillWallet</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f7fafc;
-            margin: 0;
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* Sidebar */
-        .admin-sidebar {
-            width: 250px;
-            background: #1a202c;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            padding: 1.5rem 0;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-        }
-
-        .admin-brand {
-            font-size: 1.5rem;
-            font-weight: 800;
-            padding: 0 1.5rem 2rem;
-            color: #63b3ed;
-            letter-spacing: -0.5px;
-            border-bottom: 1px solid #2d3748;
-            margin-bottom: 1rem;
-        }
-
-        .admin-nav {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .admin-nav a {
-            color: #a0aec0;
-            text-decoration: none;
-            padding: 1rem 1.5rem;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            border-left: 4px solid transparent;
-        }
-
-        .admin-nav a:hover {
-            background: #2d3748;
-            color: white;
-        }
-
-        .admin-nav a.active {
-            background: #2b6cb0;
-            color: white;
-            border-left-color: #63b3ed;
-        }
-
-        .admin-footer {
-            margin-top: auto;
-            padding: 1.5rem;
-            font-size: 0.85rem;
-            color: #718096;
-        }
-
-        /* Main Content */
-        .admin-main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-        }
-
-        .admin-header {
-            background: white;
-            padding: 1.5rem 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .admin-header h1 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #2d3748;
-            margin: 0;
-        }
-
-        .admin-content {
-            padding: 2rem;
-        }
-
-        /* Tabs */
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Overview Cards */
-        .metric-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .metric-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            border: 1px solid #e2e8f0;
-        }
-
-        .metric-label {
-            font-size: 0.85rem;
-            color: #718096;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.5rem;
-        }
-
-        .metric-value {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #2d3748;
-        }
-
-        /* Queue Table */
-        .queue-table {
-            width: 100%;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            border-collapse: collapse;
-            overflow: hidden;
-        }
-
-        .queue-table th, .queue-table td {
-            padding: 1rem 1.5rem;
-            text-align: left;
-            border-bottom: 1px solid #edf2f7;
-        }
-
-        .queue-table th {
-            background: #f7fafc;
-            font-size: 0.85rem;
-            color: #4a5568;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .queue-table td {
-            font-size: 0.95rem;
-            color: #2d3748;
-        }
-
-        .action-btn {
-            padding: 0.4rem 0.8rem;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
-            margin-right: 0.5rem;
-            transition: opacity 0.2s;
-        }
-
-        .action-btn:hover { opacity: 0.8; }
-        .btn-approve { background: #48bb78; color: white; }
-        .btn-reject { background: #e53e3e; color: white; }
-
-        /* Forms */
-        .admin-form {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            max-width: 600px;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #4a5568;
-            font-size: 0.9rem;
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            font-family: inherit;
-        }
-
-        .btn-primary {
-            background: #3182ce;
-            color: white;
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        /* Review Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-content {
-            background: white;
-            width: 90%;
-            max-width: 600px;
-            max-height: 90vh;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .modal-header {
-            padding: 1rem 1.5rem;
-            background: #f7fafc;
-            border-bottom: 1px solid #edf2f7;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-body {
-            padding: 1.5rem;
-            overflow-y: auto;
-            flex: 1;
-        }
-
-        .cert-preview {
-            width: 100%;
-            max-height: 300px;
-            object-fit: contain;
-            background: #edf2f7;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            border: 1px solid #e2e8f0;
-        }
-
-        .score-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .modal-footer {
-            padding: 1rem 1.5rem;
-            background: #f7fafc;
-            border-top: 1px solid #edf2f7;
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-        }
-    </style>
-</head>
-<body>
+    </head>
+<body class="admin-page">
 
     <aside class="admin-sidebar">
         <div class="admin-brand">AdminPanel</div>
@@ -323,14 +30,14 @@
             </a>
         </nav>
         <div class="admin-footer">
-            <a href="dashboard.html" style="color: #63b3ed; text-decoration: none;">← Back to App</a>
+            <a href="dashboard.html" class="link-back">← Back to App</a>
         </div>
     </aside>
 
     <main class="admin-main">
         <header class="admin-header">
             <h1 id="pageTitle">Overview</h1>
-            <div style="font-size: 0.9rem; color: #718096;">Admin Mode Active</div>
+            <div class="admin-active-label">Admin Mode Active</div>
         </header>
 
         <div class="admin-content">
@@ -346,7 +53,7 @@
                         <div class="metric-label">Tests Processed</div>
                         <div class="metric-value" id="statTests">...</div>
                     </div>
-                    <div class="metric-card" style="border-left: 4px solid #ed8936;">
+                    <div class="metric-card metric-card-warning">
                         <div class="metric-label">Pending Reviews</div>
                         <div class="metric-value" id="statPending">...</div>
                     </div>
@@ -366,7 +73,7 @@
                         </tr>
                     </thead>
                     <tbody id="queueTableBody">
-                        <tr><td colspan="5" style="text-align:center;">Loading queue...</td></tr>
+                        <tr><td colspan="5" class="table-empty">Loading queue...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -374,8 +81,8 @@
             <!-- ADD TEST TAB -->
             <div id="addTest" class="tab-content">
                 <div class="admin-form">
-                    <h2 style="margin-top: 0;">Create New Test Configuration</h2>
-                    <p style="color: #718096; font-size: 0.9rem; margin-bottom: 2rem;">Define a new language proficiency test type.</p>
+                    <h2 class="section-heading">Create New Test Configuration</h2>
+                    <p class="section-description">Define a new language proficiency test type.</p>
                     
                     <div class="form-group">
                         <label>Test Name</label>
@@ -400,8 +107,8 @@
             <!-- SETTINGS TAB -->
             <div id="settings" class="tab-content">
                 <div class="admin-form">
-                    <h2 style="margin-top: 0;">Platform Settings</h2>
-                    <p style="color: #718096; font-size: 0.9rem; margin-bottom: 2rem;">Global configurations.</p>
+                    <h2 class="section-heading">Platform Settings</h2>
+                    <p class="section-description">Global configurations.</p>
                     
                     <div class="form-group">
                         <label>Auto-Verification AI</label>
@@ -425,15 +132,15 @@
     <div class="modal-overlay" id="reviewModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 style="margin: 0; font-size: 1.25rem;">Review Certificate</h2>
-                <button onclick="closeReviewModal()" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+                <h2 class="modal-subtitle">Review Certificate</h2>
+                <button class="modal-close" onclick="closeReviewModal()">&times;</button>
             </div>
             <div class="modal-body">
                 <img src="" id="certImage" class="cert-preview" alt="Certificate Image">
                 
-                <h3 style="margin-top: 0; font-size: 1.1rem;">Extracted Data</h3>
-                <div class="score-grid" style="margin-bottom: 1.5rem;">
-                    <div class="form-group" style="grid-column: 1 / -1;">
+                <h3 class="modal-subtitle">Extracted Data</h3>
+                <div class="score-grid">
+                    <div class="form-group full-span">
                         <label>Candidate Full Name</label>
                         <input type="text" id="modFullName">
                     </div>
@@ -447,7 +154,7 @@
                     </div>
                 </div>
 
-                <h3 style="margin-top: 0; font-size: 1.1rem;">Scores</h3>
+                <h3 class="modal-subtitle">Scores</h3>
                 <div class="score-grid">
                     <div class="form-group">
                         <label>Listening (Raw)</label>
@@ -465,9 +172,9 @@
                         <label>Writing (Raw)</label>
                         <input type="number" id="modWriting">
                     </div>
-                    <div class="form-group" style="grid-column: 1 / -1; border-top: 1px solid #edf2f7; padding-top: 1rem; margin-top: 0.5rem;">
-                        <label style="color: #2b6cb0; font-weight: 700; font-size: 1rem;">Final Total Score</label>
-                        <input type="number" id="modTotalScore" style="font-size: 1.25rem; font-weight: 700; color: #2b6cb0;">
+                    <div class="form-group full-span divider-row">
+                        <label class="highlight-label">Final Total Score</label>
+                        <input type="number" id="modTotalScore" class="highlight-input">
                     </div>
                 </div>
                 <input type="hidden" id="modEvidenceId">
@@ -532,7 +239,7 @@
                     const tbody = document.getElementById('queueTableBody');
                     
                     if (data.evidences.length === 0) {
-                        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No pending reviews. Great job!</td></tr>';
+                        tbody.innerHTML = '<tr><td colspan="5" class="table-empty">No pending reviews. Great job!</td></tr>';
                         return;
                     }
 
@@ -547,14 +254,12 @@
                                 <td>${ev.testType}</td>
                                 <td>${score}</td>
                                 <td>
-                                    <span style="background: ${ev.verificationStatus === 'pending' ? '#feebc8' : (ev.verificationStatus === 'processing' ? '#ebf8ff' : '#fed7d7')}; 
-                                                 color: ${ev.verificationStatus === 'pending' ? '#c05621' : (ev.verificationStatus === 'processing' ? '#2b6cb0' : '#c53030')};
-                                                 padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase;">
+                                    <span class="status-badge ${ev.verificationStatus}">
                                         ${ev.verificationStatus}
                                     </span>
                                 </td>
                                 <td>
-                                    <button class="action-btn" style="background:#edf2f7; color:#2d3748;" onclick="openReviewModal(${index})">Review</button>
+                                    <button class="action-btn btn-muted" onclick="openReviewModal(${index})">Review</button>
                                 </td>
                             </tr>
                         `;
