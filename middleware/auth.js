@@ -13,7 +13,7 @@ const protect = async (req, res, next) => {
             token = req.headers.authorization.split(' ')[1];
 
             // Verify token
-            const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback_secret_key_12345');
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
             // Get user from the token
             req.user = await User.findById(decoded.id).select('-password');
@@ -25,12 +25,10 @@ const protect = async (req, res, next) => {
             next();
         } catch (error) {
             console.error(error);
-            res.status(401).json({ error: 'Not authorized, token failed' });
+            return res.status(401).json({ error: 'Not authorized, token failed' });
         }
-    }
-
-    if (!token) {
-        res.status(401).json({ error: 'Not authorized, no token' });
+    } else {
+        return res.status(401).json({ error: 'Not authorized, no token' });
     }
 };
 

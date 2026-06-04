@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Profile - Zentry</title>
+    <link rel="stylesheet" href="css/app.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8f4f8 100%);
+            min-height: 100vh;
+        }
+
+        .profile-hero {
+            background: linear-gradient(135deg, #08123e 0%, #112bb1 100%);
+            color: white;
+            padding: 4rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-hero::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 50%;
+        }
+
+        .profile-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -60px;
+            width: 350px;
+            height: 350px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 50%;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #435eea, #7c3aed);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0 auto 1.5rem;
+            border: 4px solid rgba(255,255,255,0.3);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        .profile-name {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-job {
+            font-size: 1.05rem;
+            opacity: 0.75;
+            margin-bottom: 1rem;
+        }
+
+        .profile-bio {
+            font-size: 0.95rem;
+            opacity: 0.65;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .zentry-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 99px;
+            padding: 0.3rem 0.9rem;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .credentials-section {
+            max-width: 900px;
+            margin: -3rem auto 4rem;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title svg {
+            color: #435eea;
+        }
+
+        .credentials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .cred-card {
+            background: white;
+            border-radius: var(--radius-xl);
+            padding: 1.75rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cred-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .cred-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 5px;
+            background: #435eea;
+        }
+
+        .cred-type-badge {
+            display: inline-block;
+            background: #f0f4ff;
+            color: #435eea;
+            padding: 0.2rem 0.6rem;
+            border-radius: 99px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cred-score {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin: 0.75rem 0;
+            transition: filter 0.3s ease;
+        }
+
+        .cred-score.blurred {
+            filter: blur(10px);
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .private-banner {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #fff5f5;
+            border: 1px solid #fed7d7;
+            border-radius: var(--radius-md);
+            padding: 0.5rem 0.75rem;
+            font-size: 0.82rem;
+            color: #c53030;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .cred-verified {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: #f0fff4;
+            color: #276749;
+            padding: 0.25rem 0.6rem;
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .share-bar {
+            background: white;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .share-bar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .copy-link-btn {
+            background: #435eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: opacity 0.2s;
+        }
+
+        .copy-link-btn:hover { opacity: 0.85; }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+            background: white;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+        }
+
+        .error-state {
+            text-align: center;
+            padding: 6rem 2rem;
+            color: var(--text-muted);
+        }
+
+        .error-state h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            color: var(--border-medium);
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top bar -->
+    <div class="share-bar">
+        <a href="index.html" class="share-bar-brand">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" />
+                <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Zentry
+        </a>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Public Profile</span>
+            <button class="copy-link-btn" onclick="copyLink()">
+                <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                Copy Link
+            </button>
+            <a href="login.html" class="copy-link-btn" style="text-decoration: none;">Sign In</a>
+        </div>
+    </div>
+
+    <!-- Content loaded dynamically -->
+    <div id="app">
+        <div class="error-state">
+            <div style="font-size: 2rem; margin-bottom: 1rem;">⏳</div>
+            <p>Loading profile...</p>
+        </div>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const username = params.get('user');
+
+        async function loadProfile() {
+            const app = document.getElementById('app');
+
+            if (!username) {
+                app.innerHTML = `
+                    <div class="error-state">
+                        <h1>404</h1>
+                        <p>No username specified in the URL.</p>
+                        <p style="font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.6;">Try: <code>share.html?user=yourusername</code></p>
+                    </div>`;
+                return;
+            }
+
+            try {
+                const res = await fetch(`/api/public/user/${encodeURIComponent(username)}`);
+
+                if (res.status === 404) {
+                    app.innerHTML = `
+                        <div class="error-state">
+                            <h1>404</h1>
+                            <p>User <strong>${username}</strong> not found.</p>
+                        </div>`;
+                    return;
+                }
+
+                const data = await res.json();
+                const user = data.user;
+                const evidences = data.evidences;
+
+                const displayName = `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.username;
+                const initials = displayName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+                const jobLine = [user.jobTitle, user.organization].filter(Boolean).join(' @ ');
+
+                document.title = `${displayName} — Zentry`;
+
+                // Build credentials HTML
+                let credsHtml = '';
+                if (evidences.length === 0) {
+                    credsHtml = `
+                        <div class="empty-state">
+                            <div style="font-size: 2.5rem; margin-bottom: 1rem;">🏅</div>
+                            <p style="font-size: 1.1rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem;">No verified credentials yet</p>
+                            <p>This user hasn't added any verified scores yet.</p>
+                        </div>`;
+                } else {
+                    credsHtml = evidences.map(ev => {
+                        const score = ev.extractedScore || 'N/A';
+                        const isPrivate = ev.isPrivate;
+
+                        return `
+                            <div class="cred-card">
+                                <div class="cred-type-badge">${ev.testType}</div>
+                                <div class="cred-score ${isPrivate ? 'blurred' : ''}">${isPrivate ? '●●●' : score}</div>
+                                ${isPrivate ? `
+                                    <div class="private-banner">
+                                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg>
+                                        Score hidden by user
+                                    </div>` : `<div class="cred-verified">✓ Admin Verified</div>`
+                                }
+                            </div>`;
+                    }).join('');
+                }
+
+                app.innerHTML = `
+                    <div class="profile-hero">
+                        <div class="profile-avatar">${initials}</div>
+                        <div class="profile-name">${displayName}</div>
+                        ${jobLine ? `<div class="profile-job">${jobLine}</div>` : ''}
+                        ${user.bio ? `<div class="profile-bio">${user.bio}</div>` : ''}
+                        <div class="zentry-badge">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" /><path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                            Verified on Zentry
+                        </div>
+                    </div>
+
+                    <div class="credentials-section">
+                        <div class="section-title">
+                            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+                            Verified Credentials (${evidences.length})
+                        </div>
+                        <div class="credentials-grid">
+                            ${credsHtml}
+                        </div>
+                    </div>`;
+
+            } catch (err) {
+                console.error(err);
+                app.innerHTML = `
+                    <div class="error-state">
+                        <h1>⚠️</h1>
+                        <p>Failed to load profile. Please try again later.</p>
+                    </div>`;
+            }
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const btn = document.querySelector('.copy-link-btn');
+                const original = btn.innerHTML;
+                btn.innerHTML = '✓ Copied!';
+                btn.style.background = '#48bb78';
+                setTimeout(() => {
+                    btn.innerHTML = original;
+                    btn.style.background = '#435eea';
+                }, 2000);
+            });
+        }
+
+        loadProfile();
+    </script>
+</body>
+</html>

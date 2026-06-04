@@ -58,6 +58,10 @@ const UserSchema = new mongoose.Schema({
             default: 'request'
         }
     },
+    portfolioBadges: {
+        type: Array,
+        default: []
+    },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
     createdAt: {
