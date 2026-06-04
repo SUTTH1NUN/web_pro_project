@@ -659,21 +659,52 @@
                     <div class="overall-number">${overall}</div>
                 </div>
                 
-                <div class="skill-row">
-                    <div class="skill-header"><span>Speaking</span><span>${stats.speaking || 0}/10</span></div>
-                    <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: ${(stats.speaking || 0) * 10}%;"></div></div>
+                <div class="skill-row" style="margin-bottom: 1rem;">
+                    <div class="skill-header" style="align-items: flex-end;">
+                        <span>Speaking</span>
+                        <div style="text-align: right; font-size: 0.85rem;">
+                            <span style="color: #3182ce;">Ext: ${stats.speaking || 0}/10</span><br>
+                            <span style="color: #ec4899;">Web: ${webStats.speaking || 0}/10</span>
+                        </div>
+                    </div>
+                    <div class="skill-bar-bg" style="margin-bottom: 4px;"><div class="skill-bar-fill" style="width: ${(stats.speaking || 0) * 10}%;"></div></div>
+                    <div class="skill-bar-bg"><div style="background: #ec4899; height: 100%; border-radius: 4px; transition: width 1s ease-in-out; width: ${(webStats.speaking || 0) * 10}%;"></div></div>
                 </div>
-                <div class="skill-row">
-                    <div class="skill-header"><span>Listening</span><span>${stats.listening || 0}/10</span></div>
-                    <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: ${(stats.listening || 0) * 10}%;"></div></div>
+                
+                <div class="skill-row" style="margin-bottom: 1rem;">
+                    <div class="skill-header" style="align-items: flex-end;">
+                        <span>Listening</span>
+                        <div style="text-align: right; font-size: 0.85rem;">
+                            <span style="color: #3182ce;">Ext: ${stats.listening || 0}/10</span><br>
+                            <span style="color: #ec4899;">Web: ${webStats.listening || 0}/10</span>
+                        </div>
+                    </div>
+                    <div class="skill-bar-bg" style="margin-bottom: 4px;"><div class="skill-bar-fill" style="width: ${(stats.listening || 0) * 10}%;"></div></div>
+                    <div class="skill-bar-bg"><div style="background: #ec4899; height: 100%; border-radius: 4px; transition: width 1s ease-in-out; width: ${(webStats.listening || 0) * 10}%;"></div></div>
                 </div>
-                <div class="skill-row">
-                    <div class="skill-header"><span>Reading</span><span>${stats.reading || 0}/10</span></div>
-                    <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: ${(stats.reading || 0) * 10}%;"></div></div>
+                
+                <div class="skill-row" style="margin-bottom: 1rem;">
+                    <div class="skill-header" style="align-items: flex-end;">
+                        <span>Reading</span>
+                        <div style="text-align: right; font-size: 0.85rem;">
+                            <span style="color: #3182ce;">Ext: ${stats.reading || 0}/10</span><br>
+                            <span style="color: #ec4899;">Web: ${webStats.reading || 0}/10</span>
+                        </div>
+                    </div>
+                    <div class="skill-bar-bg" style="margin-bottom: 4px;"><div class="skill-bar-fill" style="width: ${(stats.reading || 0) * 10}%;"></div></div>
+                    <div class="skill-bar-bg"><div style="background: #ec4899; height: 100%; border-radius: 4px; transition: width 1s ease-in-out; width: ${(webStats.reading || 0) * 10}%;"></div></div>
                 </div>
-                <div class="skill-row">
-                    <div class="skill-header"><span>Writing</span><span>${stats.writing || 0}/10</span></div>
-                    <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: ${(stats.writing || 0) * 10}%;"></div></div>
+                
+                <div class="skill-row" style="margin-bottom: 1rem;">
+                    <div class="skill-header" style="align-items: flex-end;">
+                        <span>Writing</span>
+                        <div style="text-align: right; font-size: 0.85rem;">
+                            <span style="color: #3182ce;">Ext: ${stats.writing || 0}/10</span><br>
+                            <span style="color: #ec4899;">Web: ${webStats.writing || 0}/10</span>
+                        </div>
+                    </div>
+                    <div class="skill-bar-bg" style="margin-bottom: 4px;"><div class="skill-bar-fill" style="width: ${(stats.writing || 0) * 10}%;"></div></div>
+                    <div class="skill-bar-bg"><div style="background: #ec4899; height: 100%; border-radius: 4px; transition: width 1s ease-in-out; width: ${(webStats.writing || 0) * 10}%;"></div></div>
                 </div>
             `;
             document.getElementById('skillsBreakdown').innerHTML = breakdownHtml;
