@@ -307,6 +307,22 @@
         </div>
     </div>
 
+    <!-- OTP Verification Modal -->
+    <div class="modal" id="otpModal">
+        <div class="modal-content">
+            <h3>Email Verification</h3>
+            <p style="color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; font-size: 0.95rem;">
+                We've sent a 6-digit OTP code to <strong id="otpTargetEmail"></strong>. Please enter it below to complete your registration.
+            </p>
+            <div class="form-group">
+                <label>Verification Code (OTP)</label>
+                <input type="text" id="otpCodeInput" placeholder="Enter 6-digit code" required maxlength="6" style="text-align: center; font-size: 1.5rem; letter-spacing: 6px; font-weight: bold;">
+            </div>
+            <button class="btn-submit btn-full" id="verifyOtpBtn">Verify & Register</button>
+            <button class="btn-cancel" id="closeOtpModalBtn">Cancel</button>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const loginForm = document.getElementById('loginForm');
@@ -340,6 +356,13 @@
                 forgotBtnContainer.style.display = isLoginMode ? 'block' : 'none';
             });
 
+            const otpModal = document.getElementById('otpModal');
+            const otpTargetEmail = document.getElementById('otpTargetEmail');
+            const otpCodeInput = document.getElementById('otpCodeInput');
+            const verifyOtpBtn = document.getElementById('verifyOtpBtn');
+            const closeOtpModalBtn = document.getElementById('closeOtpModalBtn');
+            let pendingSignupData = null;
+
             // Handle Form Submission
             loginForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
@@ -348,25 +371,94 @@
                 const firstName = document.getElementById('firstName').value;
                 const lastName = document.getElementById('lastName').value;
                 
-                const endpoint = isLoginMode ? '/api/auth/signin' : '/api/auth/signup';
-                const body = isLoginMode ? { email, password } : { username: email.split('@')[0], email, password, firstName, lastName };
+                if (isLoginMode) {
+                    try {
+                        const res = await fetch('/api/auth/signin', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email, password })
+                        });
+                        const data = await res.json();
+
+                        if (!res.ok) throw new Error(data.error || 'Request failed');
+                        
+                        showAlert('Login successful!', 'success');
+                        localStorage.setItem('token', data.token);
+                        setTimeout(() => window.location.href = 'dashboard.html', 1000);
+                    } catch (err) {
+                        showAlert(err.message);
+                    }
+                } else {
+                    // Signup Mode - Send OTP first
+                    pendingSignupData = {
+                        username: email.split('@')[0],
+                        email,
+                        password,
+                        firstName,
+                        lastName
+                    };
+
+                    try {
+                        showAlert('Sending OTP to your email...', 'success');
+                        const res = await fetch('/api/auth/send-otp', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email })
+                        });
+                        const data = await res.json();
+
+                        if (!res.ok) throw new Error(data.error || 'Failed to send OTP');
+                        
+                        // Show OTP modal
+                        otpTargetEmail.textContent = email;
+                        otpCodeInput.value = '';
+                        otpModal.style.display = 'flex';
+                        alertBox.style.display = 'none'; // hide sending message
+                    } catch (err) {
+                        showAlert(err.message);
+                    }
+                }
+            });
+
+            // Handle OTP Verification and actual registration
+            verifyOtpBtn.addEventListener('click', async () => {
+                const otpCode = otpCodeInput.value.trim();
+                if (!otpCode || otpCode.length !== 6) {
+                    alert('Please enter a valid 6-digit OTP code');
+                    return;
+                }
+
+                if (!pendingSignupData) return;
 
                 try {
-                    const res = await fetch(endpoint, {
+                    verifyOtpBtn.disabled = true;
+                    verifyOtpBtn.textContent = 'Verifying...';
+
+                    const signupBody = { ...pendingSignupData, otpCode };
+                    const res = await fetch('/api/auth/signup', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(body)
+                        body: JSON.stringify(signupBody)
                     });
                     const data = await res.json();
 
-                    if (!res.ok) throw new Error(data.error || 'Request failed');
-                    
-                    showAlert(isLoginMode ? 'Login successful!' : 'Account created!', 'success');
+                    if (!res.ok) throw new Error(data.error || 'Registration failed');
+
+                    otpModal.style.display = 'none';
+                    showAlert('Registration and Verification successful!', 'success');
                     localStorage.setItem('token', data.token);
                     setTimeout(() => window.location.href = 'dashboard.html', 1000);
                 } catch (err) {
-                    showAlert(err.message);
+                    alert(err.message);
+                } finally {
+                    verifyOtpBtn.disabled = false;
+                    verifyOtpBtn.textContent = 'Verify & Register';
                 }
+            });
+
+            closeOtpModalBtn.addEventListener('click', () => {
+                otpModal.style.display = 'none';
+                pendingSignupData = null;
             });
 
             // Handle Google Login (Mock)
