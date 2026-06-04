@@ -116,19 +116,7 @@ router.post('/quiz/submit', protect, async (req, res) => {
     }
 });
 
-// POST /api/tests/speaking/submit
-router.post('/speaking/submit', upload.single('audioFile'), (req, res) => {
-    const audioFile = req.file;
 
-    if (!audioFile) {
-        return res.status(400).json({ error: 'No audio file provided' });
-    }
-
-    res.json({
-        message: 'Speaking test submitted for evaluation',
-        status: 'processing'
-    });
-});
 
 const mongoose = require('mongoose');
 const Question = require('../models/Question');
@@ -411,6 +399,172 @@ Return your evaluation STRICTLY as a JSON object with the following structure (d
         });
     } catch (err) {
         console.error("Writing submit error:", err);
+        res.status(500).json({ error: 'Server Error during evaluation' });
+    }
+});
+
+// --- SPEAKING TEST ROUTES ---
+
+router.get('/seed-speaking', async (req, res) => {
+    try {
+        const speakingPrompts = [
+            "Describe a memorable vacation you took. Where did you go, who did you go with, and why was it special?",
+            "Do you think social media brings people closer together or pushes them further apart? Explain your reasoning.",
+            "Talk about a person who has had a significant influence on your life. What qualities do you admire about them?",
+            "If you could have dinner with any historical figure, who would it be and what would you ask them?",
+            "What are the main advantages and disadvantages of studying abroad? Provide examples from your own experience or knowledge.",
+            "Describe your favorite hobby or leisure activity. How did you start doing it, and why do you enjoy it so much?",
+            "In your opinion, what is the most pressing environmental issue today? How can individuals help solve this problem?",
+            "Some people prefer to plan their activities in their free time very carefully. Others prefer not to make any plans. Which do you prefer and why?",
+            "Describe a challenging situation you faced at work or school. How did you overcome it, and what did you learn?",
+            "If you had an unlimited budget to start a business, what kind of business would it be and why?"
+        ];
+        await Question.deleteMany({ type: 'Speaking Prompt' });
+        const docs = speakingPrompts.map(prompt => ({
+            type: 'Speaking Prompt',
+            cefrLevel: 'B2',
+            article: prompt,
+            questions: [],
+            sourceDataset: 'Generated Speaking Prompts'
+        }));
+        await Question.insertMany(docs);
+        res.json({ message: "Seeded speaking prompts successfully!" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// GET /api/tests/speaking/scenario
+router.get('/speaking/scenario', async (req, res) => {
+    try {
+        const count = await Question.countDocuments({ type: 'Speaking Prompt' });
+        if (count === 0) {
+            return res.json({ prompt: "Please describe a memorable vacation you took." });
+        }
+        const random = Math.floor(Math.random() * count);
+        const scenario = await Question.findOne({ type: 'Speaking Prompt' }).skip(random);
+        res.json({ prompt: scenario.article });
+    } catch (err) {
+        console.error('Error fetching speaking scenario:', err);
+        res.status(500).json({ error: 'Server Error' });
+    }
+});
+
+// POST /api/tests/speaking/submit
+router.post('/speaking/submit', protect, upload.single('audio'), async (req, res) => {
+    try {
+        const file = req.file ? req.file : null;
+        if (!file) {
+            return res.status(400).json({ error: 'No audio file provided' });
+        }
+        const prompt = req.body.prompt;
+        
+        let score = 0;
+        let cefrLevel = 'A1';
+        let feedback = 'No feedback available.';
+        let transcription = '';
+
+        let usedMock = false;
+        if (process.env.GEMINI_API_KEY) {
+            try {
+                const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+                const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
+
+                const audioPart = {
+                    inlineData: {
+                        data: file.buffer.toString("base64"),
+                        mimeType: file.mimetype || "audio/webm"
+                    }
+                };
+
+                const aiPrompt = `You are an expert IELTS/TOEFL English examiner.
+The student was asked to speak about this prompt: "${prompt}"
+
+I have provided their spoken audio. Please transcribe what they said, and then evaluate their speaking based on:
+1. Pronunciation & Fluency
+2. Task Achievement (Relevance to prompt)
+3. Grammar & Vocabulary
+
+Provide a fair score out of 10.
+CRITICAL INSTRUCTION: You MUST write the "feedback" field entirely in THAI language (ภาษาไทย). Explain the score, what they did well, and major mistakes.
+
+Return your evaluation STRICTLY as a JSON object with the following structure (do not include markdown formatting or backticks):
+{
+  "transcription": "<The exact text of what they said in English>",
+  "score": <number 0-10, up to 1 decimal place>,
+  "cefrLevel": "<A1, A2, B1, B2, C1, or C2 based on their speaking skill>",
+  "feedback": "<Feedback written entirely in THAI (ภาษาไทย)>"
+}`;
+
+                const result = await model.generateContent([aiPrompt, audioPart]);
+                const responseText = result.response.text().trim().replace(/```json/gi, '').replace(/```/g, '');
+                const parsed = JSON.parse(responseText);
+                score = parsed.score;
+                cefrLevel = parsed.cefrLevel;
+                feedback = parsed.feedback;
+                transcription = parsed.transcription;
+            } catch (apiErr) {
+                console.error("Gemini API Error (Speaking):", apiErr.message);
+                usedMock = true;
+            }
+        } else {
+            usedMock = true;
+        }
+
+        if (usedMock) {
+            score = 5.0;
+            cefrLevel = 'B1';
+            feedback = 'ไม่สามารถประเมินเสียงได้ในขณะนี้เนื่องจากระบบ AI ขัดข้อง';
+            transcription = '[Audio evaluation unavailable]';
+        }
+
+        // Save to TestResult
+        await TestResult.create({
+            userId: req.user._id,
+            moduleType: 'speaking',
+            score: score,
+            details: {
+                testType: 'speaking',
+                prompt,
+                transcription,
+                feedback,
+                cefrLevel
+            }
+        });
+
+        // Update User Profile
+        const user = await User.findById(req.user._id);
+        if (user) {
+            if (!user.webStats) {
+                user.webStats = { listening: 0, speaking: 0, reading: 0, writing: 0, overallScore: 0 };
+            }
+            user.webStats.speaking = score;
+
+            // Recalculate overall score
+            const ws = user.webStats;
+            let activeSkills = 0;
+            let sumScore = 0;
+            ['listening', 'speaking', 'reading', 'writing'].forEach(skill => {
+                if (ws[skill] > 0) {
+                    sumScore += ws[skill];
+                    activeSkills++;
+                }
+            });
+            ws.overallScore = activeSkills > 0 ? (sumScore / activeSkills) : 0;
+
+            user.markModified('webStats');
+            await user.save();
+        }
+
+        res.json({
+            message: 'Speaking evaluated successfully',
+            score,
+            cefrLevel,
+            transcription,
+            feedback
+        });
+    } catch (err) {
+        console.error("Speaking submit error:", err);
         res.status(500).json({ error: 'Server Error during evaluation' });
     }
 });
