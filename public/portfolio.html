@@ -4,9 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Export Portfolio - SkillWallet</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Export Portfolio - Zentry</title>
+    <link rel="stylesheet" href="css/app.css">
     <style>
         .export-header {
             display: flex;
@@ -14,13 +13,13 @@
             align-items: center;
             margin-bottom: 2rem;
             padding: 1rem 0;
-            border-bottom: 1px solid #edf2f7;
+            border-bottom: 1px solid var(--border-light);
         }
 
         .export-header h1 {
             font-size: 1.8rem;
             font-weight: 800;
-            color: #1a202c;
+            color: var(--text-dark);
         }
 
         .export-actions {
@@ -28,62 +27,38 @@
             gap: 1rem;
         }
 
-        .btn-outline {
-            background: transparent;
-            border: 1px solid #ccc;
-            color: #333;
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-outline:hover {
-            background: #f0f0f0;
-        }
-
-        .btn-primary {
-            border-radius: 50px;
-            padding: 0.75rem 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
         /* A4 Page Preview Style */
         .a4-preview {
             background: white;
             width: 100%;
-            max-width: 800px; /* Approx A4 ratio */
+            max-width: 800px;
             margin: 0 auto;
             min-height: 1131px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-lg);
             padding: 3rem 4rem;
-            border-radius: 4px;
+            border-radius: var(--radius-md);
             position: relative;
+            border: 1px solid var(--border-light);
         }
 
         /* Portfolio Content Styles */
         .cv-header {
-            border-bottom: 2px solid #2b6cb0;
+            border-bottom: 2px solid #435eea;
             padding-bottom: 1.5rem;
             margin-bottom: 2rem;
         }
 
         .cv-name {
+            font-family: var(--font-heading);
             font-size: 2.5rem;
             font-weight: 800;
-            color: #1a202c;
+            color: var(--text-dark);
             margin-bottom: 0.5rem;
         }
 
         .cv-title {
             font-size: 1.2rem;
-            color: #2b6cb0;
+            color: #435eea;
             font-weight: 600;
             margin-bottom: 1rem;
         }
@@ -91,7 +66,7 @@
         .cv-contact {
             display: flex;
             gap: 1.5rem;
-            color: #4a5568;
+            color: var(--text-gray);
             font-size: 0.9rem;
             flex-wrap: wrap;
         }
@@ -107,16 +82,17 @@
         }
 
         .cv-section-title {
+            font-family: var(--font-heading);
             font-size: 1.4rem;
             font-weight: 700;
-            color: #1a202c;
+            color: var(--text-dark);
             margin-bottom: 1.5rem;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .cv-bio {
-            color: #4a5568;
+            color: var(--text-gray);
             line-height: 1.7;
         }
 
@@ -126,21 +102,27 @@
             justify-content: space-between;
             align-items: center;
             padding: 1.5rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-md);
             margin-bottom: 1rem;
             background: #fafcff;
+            transition: transform 0.2s ease;
+        }
+
+        .credential-item:hover {
+            transform: translateX(4px);
         }
 
         .cred-left h3 {
+            font-family: var(--font-heading);
             font-size: 1.2rem;
             font-weight: 700;
-            color: #1a202c;
+            color: var(--text-dark);
             margin-bottom: 0.25rem;
         }
 
         .cred-left p {
-            color: #718096;
+            color: var(--text-gray);
             font-size: 0.9rem;
         }
 
@@ -149,9 +131,10 @@
         }
 
         .cred-score {
+            font-family: var(--font-heading);
             font-size: 1.8rem;
             font-weight: 800;
-            color: #2b6cb0;
+            color: #435eea;
         }
 
         .cred-verified {
@@ -173,9 +156,9 @@
             left: 4rem;
             right: 4rem;
             text-align: center;
-            border-top: 1px solid #edf2f7;
+            border-top: 1px solid var(--border-light);
             padding-top: 1.5rem;
-            color: #a0aec0;
+            color: var(--text-muted);
             font-size: 0.85rem;
             display: flex;
             justify-content: center;
@@ -201,7 +184,13 @@
 
 <body>
     <nav class="navbar">
-        <div class="nav-brand">SkillWallet</div>
+        <div class="nav-brand">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" />
+                <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Zentry
+        </div>
         <div class="nav-links">
             <a href="dashboard.html">Dashboard</a>
             <a href="test.html">Tests</a>
@@ -210,7 +199,7 @@
         </div>
     </nav>
 
-    <main class="container" style="max-width: 1000px; padding: 2rem;">
+    <main class="container" style="max-width: 1000px;">
         
         <div class="export-header">
             <h1>Export Portfolio Preview</h1>
@@ -285,7 +274,7 @@
 
             <div class="cv-footer">
                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                This document and its credentials have been digitally verified by SkillWallet.
+                This document and its credentials have been digitally verified by Zentry.
             </div>
 
         </div>

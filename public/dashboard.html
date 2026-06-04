@@ -4,9 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - SkillWallet</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Dashboard - Zentry</title>
+    <link rel="stylesheet" href="css/app.css">
     <style>
         .dashboard-header {
             display: flex;
@@ -20,44 +19,18 @@
         .welcome-text h1 {
             font-size: 2.5rem;
             font-weight: 800;
-            color: #1a1a1a;
+            color: var(--text-dark);
             margin-bottom: 0.25rem;
         }
 
         .welcome-text p {
-            color: #666;
+            color: var(--text-gray);
             font-size: 1.1rem;
         }
 
         .header-actions {
             display: flex;
             gap: 1rem;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid #ccc;
-            color: #333;
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-outline:hover {
-            background: #f0f0f0;
-        }
-
-        .btn-primary {
-            border-radius: 50px;
-            padding: 0.75rem 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
         /* Credential Grid */
@@ -69,13 +42,20 @@
 
         .credential-card {
             background: white;
-            border-radius: 16px;
+            border-radius: var(--radius-xl);
             padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow-md);
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            border: 1px solid var(--border-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .credential-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
         }
 
         .credential-card::before {
@@ -85,11 +65,11 @@
             top: 0;
             bottom: 0;
             width: 6px;
-            background: #e53e3e; /* default red */
+            background: #e53e3e;
         }
 
         .credential-card.IELTS::before { background: #e53e3e; }
-        .credential-card.TOEIC::before { background: #3182ce; }
+        .credential-card.TOEIC::before { background: #435eea; }
         .credential-card.TOEFL::before { background: #d69e2e; }
 
         .card-type-badge {
@@ -97,17 +77,17 @@
             background: #fff5f5;
             color: #c53030;
             padding: 0.25rem 0.75rem;
-            border-radius: 50px;
+            border-radius: var(--radius-full);
             font-weight: 700;
             font-size: 0.85rem;
             margin-bottom: 0.5rem;
         }
 
-        .credential-card.TOEIC .card-type-badge { background: #ebf8ff; color: #2b6cb0; }
+        .credential-card.TOEIC .card-type-badge { background: #f0f4ff; color: #435eea; }
         .credential-card.TOEFL .card-type-badge { background: #fffff0; color: #b7791f; }
 
         .card-subtitle {
-            color: #a0aec0;
+            color: var(--text-muted);
             font-size: 0.9rem;
             margin-bottom: 1.5rem;
         }
@@ -115,7 +95,7 @@
         .card-score {
             font-size: 3.5rem;
             font-weight: 800;
-            color: #1a202c;
+            color: var(--text-dark);
             margin-bottom: 2rem;
             display: flex;
             align-items: center;
@@ -129,9 +109,9 @@
         }
 
         .card-footer {
-            border-top: 1px solid #edf2f7;
+            border-top: 1px solid var(--border-light);
             padding-top: 1rem;
-            color: #718096;
+            color: var(--text-gray);
             font-size: 0.9rem;
             display: flex;
             flex-direction: column;
@@ -142,81 +122,6 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-        }
-
-        /* Modal Styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transform: translateY(20px);
-            transition: transform 0.3s;
-        }
-
-        .modal-overlay.active .modal-content {
-            transform: translateY(0);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-header h2 {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #666;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-family: inherit;
         }
 
         /* Pending Review State */
@@ -242,7 +147,7 @@
             background: #dd6b20;
             color: white;
             padding: 0.75rem 1.5rem;
-            border-radius: 50px;
+            border-radius: var(--radius-full);
             font-weight: 700;
             box-shadow: 0 4px 10px rgba(221, 107, 32, 0.3);
             display: flex;
@@ -254,17 +159,23 @@
 
 <body>
     <nav class="navbar">
-        <div class="nav-brand">SkillWallet</div>
+        <div class="nav-brand">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" />
+                <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Zentry
+        </div>
         <div class="nav-links">
             <a href="dashboard.html" class="active">Dashboard</a>
             <a href="test.html">Tests</a>
             <a href="profile.html">Profile</a>
-            <a href="admin.html" style="color: #ed8936; font-weight: 700;">Admin</a>
+            <a href="admin.html" class="nav-admin">Admin</a>
             <a href="#" onclick="logout()">Logout</a>
         </div>
     </nav>
 
-    <main class="container" style="max-width: 1200px; padding: 2rem;">
+    <main class="container" style="max-width: 1200px;">
         <div class="dashboard-header">
             <div class="welcome-text">
                 <h1 id="welcomeTitle">Welcome back 👋</h1>
@@ -321,9 +232,7 @@
 
     <script>
         const token = localStorage.getItem('token');
-        const username = localStorage.getItem('username'); // Wait, we didn't save username. Let's just decode it or fetch it.
-        // Actually, we can just fetch the credentials and maybe get user info, or just extract name from token if it had it.
-        // I will use a simple check first.
+        const username = localStorage.getItem('username');
         if (!token) {
             window.location.href = 'login.html';
         }
@@ -373,8 +282,6 @@
             grid.innerHTML = '';
 
             document.getElementById('credentialCount').innerText = `${evidences.length} credential${evidences.length !== 1 ? 's' : ''} in your wallet`;
-            
-            document.getElementById('credentialCount').innerText = `${evidences.length} credential${evidences.length !== 1 ? 's' : ''} in your wallet`;
 
             evidences.forEach(ev => {
                 const isProcessing = ev.verificationStatus === 'processing';
@@ -394,7 +301,7 @@
                 if (isProcessing) {
                     pendingHTML = `
                         <div class="pending-overlay" style="background: rgba(235, 248, 255, 0.8);">
-                            <div class="pending-badge" style="background: #3182ce; box-shadow: 0 4px 10px rgba(49, 130, 206, 0.3);">
+                            <div class="pending-badge" style="background: #435eea; box-shadow: 0 4px 10px rgba(67, 94, 234, 0.3);">
                                 <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                                 AI Processing...
                             </div>
