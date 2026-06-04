@@ -302,6 +302,10 @@
                 <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 Manage Users
             </a>
+            <a href="#" onclick="switchTab('demoCheat', this); populateCheatUsersDropdown();">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                Demo Cheat
+            </a>
             <a href="#" onclick="switchTab('settings', this)">
                 <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                 Settings
@@ -444,6 +448,67 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+
+            <!-- DEMO CHEAT TAB -->
+            <div id="demoCheat" class="tab-content">
+                <div class="admin-form" style="max-width: 600px; width: 100%; margin: 0 auto;">
+                    <h2 style="margin-top: 0; text-align: center;">Demo Cheat Mode</h2>
+                    <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 2rem; text-align: center;">Force inject test scores into a user account for demonstration purposes.</p>
+                    
+                    <form onsubmit="submitCheatScores(event)">
+                        <div class="form-group">
+                            <label>Target User</label>
+                            <select id="cheatTargetUser" required>
+                                <option value="">Loading users...</option>
+                            </select>
+                        </div>
+
+                        <h3 style="font-size: 1.1rem; margin: 1.5rem 0 1rem;">1. External Credentials (stats)</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Listening Score</label>
+                                <input type="number" id="cheatExtListening" min="0" max="100" value="0" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Reading Score</label>
+                                <input type="number" id="cheatExtReading" min="0" max="100" value="0" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Speaking Score</label>
+                                <input type="number" id="cheatExtSpeaking" min="0" max="100" value="0" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Writing Score</label>
+                                <input type="number" id="cheatExtWriting" min="0" max="100" value="0" required>
+                            </div>
+                        </div>
+
+                        <h3 style="font-size: 1.1rem; margin: 1.5rem 0 1rem;">2. Web Tests (webStats)</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Listening Score</label>
+                                <input type="number" id="cheatWebListening" min="0" max="100" value="0" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Reading Score</label>
+                                <input type="number" id="cheatWebReading" min="0" max="100" value="0" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Speaking Score</label>
+                                <input type="number" id="cheatWebSpeaking" min="0" max="100" value="0" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Writing Score</label>
+                                <input type="number" id="cheatWebWriting" min="0" max="100" value="0" required>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: flex-end;">
+                            <button type="submit" class="btn-primary" style="width: auto; padding: 0.75rem 1.5rem;" id="cheatSubmitBtn">Inject Scores</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -1150,6 +1215,88 @@
                 console.error(err);
                 alert('Server error while updating role.');
                 fetchUsers(); // reset
+            }
+        }
+
+        async function populateCheatUsersDropdown() {
+            const select = document.getElementById('cheatTargetUser');
+            select.innerHTML = '<option value="">Loading users...</option>';
+            
+            try {
+                const res = await fetch('/api/admin/users', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (res.ok) {
+                    const data = await res.json();
+                    select.innerHTML = '<option value="">-- Select a User --</option>';
+                    data.users.forEach(user => {
+                        const opt = document.createElement('option');
+                        opt.value = user._id;
+                        opt.textContent = `${user.username} (${user.email})`;
+                        select.appendChild(opt);
+                    });
+                } else {
+                    select.innerHTML = '<option value="">Failed to load users</option>';
+                }
+            } catch (err) {
+                console.error(err);
+                select.innerHTML = '<option value="">Error connecting to server</option>';
+            }
+        }
+
+        async function submitCheatScores(e) {
+            e.preventDefault();
+            const userId = document.getElementById('cheatTargetUser').value;
+            if (!userId) {
+                return alert('Please select a target user first.');
+            }
+
+            const extStats = {
+                listening: parseInt(document.getElementById('cheatExtListening').value) || 0,
+                reading: parseInt(document.getElementById('cheatExtReading').value) || 0,
+                speaking: parseInt(document.getElementById('cheatExtSpeaking').value) || 0,
+                writing: parseInt(document.getElementById('cheatExtWriting').value) || 0
+            };
+
+            const webStats = {
+                listening: parseInt(document.getElementById('cheatWebListening').value) || 0,
+                reading: parseInt(document.getElementById('cheatWebReading').value) || 0,
+                speaking: parseInt(document.getElementById('cheatWebSpeaking').value) || 0,
+                writing: parseInt(document.getElementById('cheatWebWriting').value) || 0
+            };
+
+            const btn = document.getElementById('cheatSubmitBtn');
+            btn.disabled = true;
+            btn.innerText = 'Injecting...';
+
+            try {
+                const res = await fetch(`/api/admin/users/${userId}/cheat`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ extStats, webStats })
+                });
+
+                if (res.ok) {
+                    alert('Scores injected successfully! Check the dashboard/profile to see the updated graphs.');
+                    
+                    // Reset all inputs
+                    const inputs = document.querySelectorAll('#demoCheat input[type="number"]');
+                    inputs.forEach(inp => inp.value = '0');
+                    document.getElementById('cheatTargetUser').value = '';
+                } else {
+                    const errData = await res.json();
+                    alert('Error: ' + errData.error);
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Server error.');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Inject Scores';
             }
         }
 
