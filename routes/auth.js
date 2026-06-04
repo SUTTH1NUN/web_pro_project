@@ -107,6 +107,11 @@ router.post('/signin', async (req, res) => {
     }
 });
 
+// GET /api/auth/google-client-id
+router.get('/google-client-id', (req, res) => {
+    res.json({ clientId: GOOGLE_CLIENT_ID });
+});
+
 // POST /api/auth/google-login
 router.post('/google-login', async (req, res) => {
     try {

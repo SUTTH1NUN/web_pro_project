@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Zentry</title>
     <link rel="stylesheet" href="css/landing.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
         body {
-            /* Use the same hero background as landing */
-            background: radial-gradient(circle at 80% 20%, #3051ff 0%, transparent 40%),
+            /* Use the same hero background as landing + bg.png overlay */
+            background: url('uploads/bg.png') no-repeat center center / cover,
+                        radial-gradient(circle at 80% 20%, #3051ff 0%, transparent 40%),
                         radial-gradient(circle at 20% 50%, #1c32b5 0%, transparent 40%),
                         linear-gradient(135deg, #08123e 0%, #112bb1 100%);
             color: white;
@@ -337,10 +339,7 @@
 
                 <div class="divider">OR</div>
 
-                <button class="btn-google" id="googleLoginBtn">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
-                    Sign in with Google
-                </button>
+                <div id="googleLoginBtnContainer" style="display: flex; justify-content: center; margin-top: 1rem; width: 100%;"></div>
 
                 <div class="auth-links" style="margin-top: 2rem;">
                     Don't have an account? <a href="#" id="signupToggle">Sign up here</a>
@@ -411,8 +410,6 @@
                 document.querySelector('.auth-title').textContent = isLoginMode ? 'Welcome Back' : 'Create Account';
                 loginForm.querySelector('button[type="submit"]').textContent = isLoginMode ? 'Sign In' : 'Sign Up';
                 signupToggle.textContent = isLoginMode ? 'Sign in instead' : 'Sign up here';
-                const googleBtn = document.querySelector('.divider').nextElementSibling;
-                googleBtn.innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google"> ' + (isLoginMode ? 'Sign in' : 'Sign up') + ' with Google';
                 
                 // Toggle extra fields
                 const signupOnlyFields = document.querySelectorAll('.signup-only');
@@ -535,25 +532,97 @@
                 pendingSignupData = null;
             });
 
-            // Handle Google Login (Mock)
-            document.getElementById('googleLoginBtn').addEventListener('click', async () => {
+            // Initialize Real Google Sign-In
+            async function initGoogleSignIn() {
                 try {
+                    // 1. Fetch Client ID from backend config
+                    const configRes = await fetch('/api/auth/google-client-id');
+                    const configData = await configRes.json();
+                    const clientId = configData.clientId;
+
+                    if (!clientId || clientId.includes('your-google-client-id')) {
+                        console.warn('Google Client ID is not configured on the server. Falling back to mock login helper.');
+                        renderMockGoogleBtn();
+                        return;
+                    }
+
+                    // 2. Initialize Google Identity Services
+                    google.accounts.id.initialize({
+                        client_id: clientId,
+                        callback: handleGoogleCredentialResponse
+                    });
+
+                    // 3. Render Google Sign-In Button
+                    google.accounts.id.renderButton(
+                        document.getElementById('googleLoginBtnContainer'),
+                        { 
+                            theme: 'outline', 
+                            size: 'large', 
+                            width: '380', 
+                            shape: 'pill',
+                            logo_alignment: 'left'
+                        }
+                    );
+
+                    // 4. Prompt Google One Tap
+                    google.accounts.id.prompt();
+
+                } catch (err) {
+                    console.error('Failed to initialize Google Sign-In:', err);
+                    renderMockGoogleBtn(); // Fallback to mock helper if backend fails
+                }
+            }
+
+            // Handler for the ID Token returned by Google
+            async function handleGoogleCredentialResponse(response) {
+                try {
+                    showAlert('Logging in with Google...', 'success');
                     const res = await fetch('/api/auth/google-login', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ idToken: 'mock_google_token_123' })
+                        body: JSON.stringify({ idToken: response.credential })
                     });
                     const data = await res.json();
-                    
-                    if (!res.ok) throw new Error(data.error || 'Google login failed');
-                    
+
+                    if (!res.ok) throw new Error(data.error || 'Google authentication failed');
+
                     showAlert('Google login successful!', 'success');
                     localStorage.setItem('token', data.token);
                     setTimeout(() => window.location.href = 'dashboard.html', 1000);
                 } catch (err) {
                     showAlert(err.message);
                 }
-            });
+            }
+
+            // Fallback helper to allow testing with mock token if no client ID is set
+            function renderMockGoogleBtn() {
+                const container = document.getElementById('googleLoginBtnContainer');
+                container.innerHTML = `
+                    <button class="btn-google" style="margin-top: 0.5rem;" id="mockGoogleBtn">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
+                        Sign in with Google (Mock)
+                    </button>
+                `;
+                document.getElementById('mockGoogleBtn').addEventListener('click', async () => {
+                    try {
+                        const res = await fetch('/api/auth/google-login', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ idToken: 'mock_google_token_123' })
+                        });
+                        const data = await res.json();
+                        if (!res.ok) throw new Error(data.error);
+                        showAlert('Mock Google Login Successful!', 'success');
+                        localStorage.setItem('token', data.token);
+                        setTimeout(() => window.location.href = 'dashboard.html', 1000);
+                    } catch (err) {
+                        showAlert(err.message);
+                    }
+                });
+            }
+
+            // Run Google Sign-In Initialization
+            initGoogleSignIn();
 
             // Handle Forgot Password
             const forgotModal = document.getElementById('forgotModal');
