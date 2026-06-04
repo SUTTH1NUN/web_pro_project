@@ -140,6 +140,37 @@
             gap: 1.5rem;
         }
 
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px dashed #f0f4ff;
+        }
+        
+        .section-icon {
+            background: #f0f4ff;
+            color: #435eea;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+        }
+
+        .highlight-title {
+            margin-bottom: 0;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.8rem;
+            font-weight: 800;
+            font-family: var(--font-heading);
+            letter-spacing: -0.5px;
+        }
+
         .overall-score-box {
             background: #f0f4ff;
             border: 1px solid #d8e5ff;
@@ -316,6 +347,17 @@
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .badge-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .badge-list::-webkit-scrollbar-thumb {
+            background-color: var(--border-medium);
+            border-radius: 4px;
         }
 
         .draggable-badge {
@@ -422,21 +464,9 @@
             <button class="btn-edit" id="btnEditProfile" onclick="openEditModal()">Edit Profile</button>
             
             <div class="badge-box">
-                <h3>Web Test Badges</h3>
+                <h3>Available Credentials</h3>
                 <p style="font-size: 0.85rem; color: var(--text-gray); margin-bottom: 1rem;">Click or drag to add to Verified Credentials.</p>
                 <div class="badge-list" id="badgeList">
-                    <div class="draggable-badge" draggable="true" id="badge-1" onclick="moveBadgeToEvidence(this)">
-                        <span>English Reading Test</span>
-                        <svg class="icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                    </div>
-                    <div class="draggable-badge" draggable="true" id="badge-2" onclick="moveBadgeToEvidence(this)">
-                        <span>English Listening Test</span>
-                        <svg class="icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                    </div>
-                    <div class="draggable-badge" draggable="true" id="badge-3" onclick="moveBadgeToEvidence(this)">
-                        <span>English Speaking Test</span>
-                        <svg class="icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                    </div>
                 </div>
             </div>
         </aside>
@@ -446,7 +476,12 @@
             
             <!-- Radar Chart Card -->
             <div class="card">
-                <h2 class="card-title">Language Skills Overview</h2>
+                <div class="section-header">
+                    <div class="section-icon">
+                        <svg width="26" height="26" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h2 class="highlight-title">Language Skills Overview</h2>
+                </div>
                 <div class="chart-wrapper">
                     <div class="chart-container">
                         <canvas id="skillsChart"></canvas>
@@ -460,9 +495,18 @@
 
             <!-- Credentials Card -->
             <div class="card">
-                <h2 class="card-title">Verified Credentials</h2>
+                <div class="section-header">
+                    <div class="section-icon">
+                        <svg width="26" height="26" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <h2 class="highlight-title">Verified Credentials</h2>
+                    <span id="badgeCountDisplay" style="margin-left: auto; font-size: 1rem; font-weight: 700; color: var(--text-gray); background: #f0f4ff; padding: 0.3rem 0.8rem; border-radius: 20px;">0/6</span>
+                </div>
                 <div class="evidence-grid" id="evidenceGrid">
                     <p style="color: var(--text-muted); grid-column: 1/-1;">Loading credentials...</p>
+                </div>
+                <div id="saveCredentialsContainer" style="display: none; margin-top: 1.5rem; text-align: right; border-top: 1px solid var(--border-light); padding-top: 1rem;">
+                    <button class="btn-save" id="btnSaveCredentials" onclick="savePortfolioBadges()" style="width: auto;">Save Credentials</button>
                 </div>
             </div>
 
@@ -570,6 +614,9 @@
         }
 
         let chartInstance = null;
+        let userWebStats = null;
+        let userPortfolioBadges = [];
+        let userEvidences = [];
 
         function logout() {
             localStorage.removeItem('token');
@@ -636,9 +683,10 @@
                     document.getElementById('portfolioUrl').value = user.portfolioUrl || '';
                 }
 
-                const stats = user.stats || { speaking: 0, listening: 0, reading: 0, writing: 0 };
-                const webStats = user.webStats || { speaking: 0, listening: 0, reading: 0, writing: 0 };
-                renderChart(stats, webStats);
+                userWebStats = user.webStats || { speaking: 0, listening: 0, reading: 0, writing: 0 };
+                userPortfolioBadges = user.portfolioBadges || [];
+                const userStats = user.stats || { speaking: 0, listening: 0, reading: 0, writing: 0 };
+                renderChart(userStats, userWebStats);
 
             } catch (err) {
                 console.error('Error fetching profile:', err);
@@ -669,72 +717,86 @@
                 }
 
                 const grid = document.getElementById('evidenceGrid');
-                const savedBadges = isGuestView ? [] : JSON.parse(localStorage.getItem('addedBadges') || '[]');
 
-                // For guests, filter out private scores up front
-                const visibleEvidences = isGuestView ? evidences.filter(ev => !ev.isPrivate) : evidences;
-
-                if (visibleEvidences.length === 0 && savedBadges.length === 0) {
-                    grid.innerHTML = isGuestView
-                        ? '<p style="color: var(--text-muted); grid-column: 1/-1;">This user has no public verified credentials.</p>'
-                        : '<p style="color: var(--text-muted); grid-column: 1/-1;">No credentials yet. Add some on your dashboard!</p>';
-                    return;
-                }
+                // Filter out private scores for guests, and ONLY keep verified evidences for everyone
+                const visibleEvidences = evidences.filter(ev => {
+                    if (isGuestView && ev.isPrivate) return false;
+                    return ev.verificationStatus === 'verified';
+                });
+                userEvidences = visibleEvidences;
 
                 grid.innerHTML = '';
-                visibleEvidences.forEach(ev => {
-                    if (isGuestView) {
-                        grid.innerHTML += `
-                            <div class="evidence-item">
-                                <h4>${ev.testType}</h4>
-                                <p>Score: ${ev.extractedScore || 'N/A'}</p>
-                                <span class="badge-verified">✓ Verified</span>
-                            </div>`;
-                    } else {
-                        // Owner view: show all with status
-                        let statusHtml = '';
-                        if (ev.verificationStatus === 'verified') {
-                            statusHtml = '<span class="badge-verified">✓ Verified</span>';
-                        } else if (ev.verificationStatus === 'processing') {
-                            statusHtml = '<span class="badge-verified" style="background: #f0f4ff; color: #435eea;">⏳ Processing</span>';
-                        } else {
-                            statusHtml = '<span class="badge-verified" style="background: #feebc8; color: #c05621;">⌛ Pending</span>';
-                        }
-
-                        grid.innerHTML += `
-                            <div class="evidence-item">
-                                <h4>${ev.testType}</h4>
-                                <p>Score: ${ev.extractedScore || 'N/A'}</p>
-                                ${statusHtml}
-                            </div>`;
-                    }
-                });
-
-                // Render locally added badges (owner only)
-                if (!isGuestView) {
-                    savedBadges.forEach(badge => {
+                if (userPortfolioBadges.length === 0) {
+                    grid.innerHTML = isGuestView
+                        ? '<p style="color: var(--text-muted); grid-column: 1/-1;">This user has not displayed any credentials yet.</p>'
+                        : '<p style="color: var(--text-muted); grid-column: 1/-1;">Drag credentials here from the sidebar!</p>';
+                } else {
+                    userPortfolioBadges.forEach(badge => {
+                        const removableHtml = !isGuestView ? `<button onclick="removeBadgeFromEvidence(this, '${badge.title}')" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #e53e3e; cursor: pointer; font-size: 1.5rem; line-height: 1;">&times;</button>` : '';
                         const badgeHtml = `
-                            <div class="evidence-item" style="animation: fadeIn 0.5s; position: relative;">
-                                <button onclick="removeBadgeFromEvidence(this, '${badge.title}')" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #e53e3e; cursor: pointer; font-size: 1.5rem; line-height: 1;">&times;</button>
+                            <div class="evidence-item" data-title="${badge.title}" data-score="${badge.score}" data-type="${badge.type}" style="animation: fadeIn 0.5s; position: relative;">
+                                ${removableHtml}
                                 <h4>${badge.title}</h4>
-                                <p>Score: 95/100 (Web Test)</p>
+                                <p>Score: ${badge.score}</p>
                                 <span class="badge-verified">✓ Verified</span>
-                                <p style="font-size: 0.75rem; color: #435eea; margin-top: 0.5rem; font-weight: 500;">✓ Added to Portfolio PDF</p>
+                                ${badge.type === 'web' ? '<p style="font-size: 0.75rem; color: #435eea; margin-top: 0.5rem; font-weight: 500;">✓ Added to Portfolio PDF</p>' : ''}
                             </div>
                         `;
                         grid.insertAdjacentHTML('beforeend', badgeHtml);
-
-                        const sidebars = document.querySelectorAll('.draggable-badge');
-                        sidebars.forEach(s => {
-                            if (s.querySelector('span') && s.querySelector('span').innerText === badge.title) {
-                                s.remove();
-                            }
-                        });
                     });
                 }
 
+                // Populate Sidebar (Available Credentials)
+                if (!isGuestView) {
+                    const badgeList = document.getElementById('badgeList');
+                    badgeList.innerHTML = '';
+
+                    // 1. API Evidences (Imported - ordered by latest)
+                    userEvidences.forEach((ev, idx) => {
+                        const title = ev.testType;
+                        const score = ev.extractedScore || 'N/A';
+                        if (!userPortfolioBadges.some(b => b.title === title)) {
+                            addDraggableBadge(badgeList, `badge-ext-${idx}`, title, score, 'external');
+                        }
+                    });
+
+                    // 2. Web Test Badges
+                    ['reading', 'listening', 'speaking', 'writing'].forEach((skill, idx) => {
+                        if (userWebStats && userWebStats[skill] > 0) {
+                            const title = 'English ' + skill.charAt(0).toUpperCase() + skill.slice(1) + ' Test';
+                            const score = `${userWebStats[skill]*10}/100 (Web Test)`;
+                            if (!userPortfolioBadges.some(b => b.title === title)) {
+                                addDraggableBadge(badgeList, `badge-web-${idx}`, title, score, 'web');
+                            }
+                        }
+                    });
+                }
+                
+                updateBadgeCountDisplay();
+
             } catch (err) {
                 console.error(err);
+            }
+        }
+
+        function addDraggableBadge(container, id, title, score, type) {
+            const badgeHtml = `
+                <div class="draggable-badge" draggable="true" id="${id}" data-title="${title}" data-score="${score}" data-type="${type}" onclick="moveBadgeToEvidence(this)">
+                    <span>${title}</span>
+                    <svg class="icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', badgeHtml);
+            
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', el.id);
+                    el.style.opacity = '0.5';
+                });
+                el.addEventListener('dragend', (e) => {
+                    el.style.opacity = '1';
+                });
             }
         }
 
@@ -918,22 +980,57 @@
             }
         });
 
+        async function savePortfolioBadges() {
+            const btn = document.getElementById('btnSaveCredentials');
+            btn.innerText = 'Saving...';
+            btn.disabled = true;
+
+            const items = document.querySelectorAll('#evidenceGrid .evidence-item');
+            const portfolioBadges = [];
+            items.forEach(item => {
+                portfolioBadges.push({
+                    title: item.getAttribute('data-title'),
+                    score: item.getAttribute('data-score'),
+                    type: item.getAttribute('data-type')
+                });
+            });
+
+            try {
+                const res = await fetch('/api/users/me', {
+                    method: 'PUT',
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ portfolioBadges })
+                });
+
+                if (res.ok) {
+                    alert('Credentials saved successfully!');
+                    // Keep localStorage updated for the PDF export feature
+                    localStorage.setItem('addedBadges', JSON.stringify(portfolioBadges));
+                    document.getElementById('saveCredentialsContainer').style.display = 'none';
+                } else {
+                    alert('Failed to save credentials.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('An error occurred.');
+            } finally {
+                btn.innerText = 'Save Credentials';
+                btn.disabled = false;
+            }
+        }
+
         // Init
-        fetchProfile();
-        fetchEvidences();
+        async function init() {
+            await fetchProfile();
+            await fetchEvidences();
+        }
+        init();
 
         // Drag and Drop: owner only
         const evidenceGrid = document.getElementById('evidenceGrid');
-
-        document.querySelectorAll('.draggable-badge').forEach(badge => {
-            badge.addEventListener('dragstart', (e) => {
-                e.dataTransfer.setData('text/plain', e.target.id);
-                e.target.style.opacity = '0.5';
-            });
-            badge.addEventListener('dragend', (e) => {
-                e.target.style.opacity = '1';
-            });
-        });
 
         evidenceGrid.addEventListener('dragover', (e) => {
             e.preventDefault();
@@ -955,67 +1052,57 @@
         });
 
         function moveBadgeToEvidence(badgeElement) {
-            const title = badgeElement.querySelector('span').innerText;
+            const currentItems = evidenceGrid.querySelectorAll('.evidence-item').length;
+            if (currentItems >= 6) {
+                alert('You can only display up to 6 Verified Credentials.');
+                return;
+            }
+
+            const title = badgeElement.getAttribute('data-title');
+            const score = badgeElement.getAttribute('data-score');
+            const type = badgeElement.getAttribute('data-type');
+            
             badgeElement.remove(); // Remove from sidebar
 
-            // Remove the "Loading credentials..." or empty message if it's the first one
             const emptyMsg = evidenceGrid.querySelector('p');
             if (emptyMsg) emptyMsg.remove();
 
-            // Add to evidence grid visually
             const evidenceHtml = `
-                <div class="evidence-item" style="animation: fadeIn 0.5s; position: relative;">
+                <div class="evidence-item" data-title="${title}" data-score="${score}" data-type="${type}" style="animation: fadeIn 0.5s; position: relative;">
                     <button onclick="removeBadgeFromEvidence(this, '${title}')" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #e53e3e; cursor: pointer; font-size: 1.5rem; line-height: 1;">&times;</button>
                     <h4>${title}</h4>
-                    <p>Score: 95/100 (Web Test)</p>
+                    <p>Score: ${score}</p>
                     <span class="badge-verified">✓ Verified</span>
-                    <p style="font-size: 0.75rem; color: #435eea; margin-top: 0.5rem; font-weight: 500;">✓ Added to Portfolio PDF</p>
+                    ${type === 'web' ? '<p style="font-size: 0.75rem; color: #435eea; margin-top: 0.5rem; font-weight: 500;">✓ Added to Portfolio PDF</p>' : ''}
                 </div>
             `;
             evidenceGrid.insertAdjacentHTML('beforeend', evidenceHtml);
-            
-            // Save to localStorage for the PDF page
-            let savedBadges = JSON.parse(localStorage.getItem('addedBadges') || '[]');
-            if (!savedBadges.some(b => b.title === title)) {
-                savedBadges.push({ title: title, score: "95 / 100", date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) });
-                localStorage.setItem('addedBadges', JSON.stringify(savedBadges));
-            }
+            document.getElementById('saveCredentialsContainer').style.display = 'block';
+            updateBadgeCountDisplay();
         }
 
         function removeBadgeFromEvidence(btnElement, title) {
-            // Remove from DOM
             const item = btnElement.closest('.evidence-item');
+            const score = item.getAttribute('data-score');
+            const type = item.getAttribute('data-type');
             if (item) item.remove();
             
-            // Remove from localStorage
-            let savedBadges = JSON.parse(localStorage.getItem('addedBadges') || '[]');
-            savedBadges = savedBadges.filter(b => b.title !== title);
-            localStorage.setItem('addedBadges', JSON.stringify(savedBadges));
-            
-            // Show empty state if needed
             if (evidenceGrid.querySelectorAll('.evidence-item').length === 0) {
-                evidenceGrid.innerHTML = '<p style="color: var(--text-muted); grid-column: 1/-1;">No credentials yet. Add some on your dashboard!</p>';
+                evidenceGrid.innerHTML = '<p style="color: var(--text-muted); grid-column: 1/-1;">Drag credentials here from the sidebar!</p>';
             }
             
-            // Add back to sidebar
             const badgeList = document.getElementById('badgeList');
-            const newBadge = document.createElement('div');
-            newBadge.className = 'draggable-badge';
-            newBadge.draggable = true;
-            newBadge.id = 'badge-' + Date.now();
-            newBadge.innerHTML = `
-                <span>${title}</span>
-                <svg class="icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-            `;
-            newBadge.onclick = function() { moveBadgeToEvidence(this); };
-            newBadge.addEventListener('dragstart', (e) => {
-                e.dataTransfer.setData('text/plain', newBadge.id);
-                e.target.style.opacity = '0.5';
-            });
-            newBadge.addEventListener('dragend', (e) => {
-                e.target.style.opacity = '1';
-            });
-            badgeList.appendChild(newBadge);
+            addDraggableBadge(badgeList, 'badge-' + Date.now(), title, score, type);
+            document.getElementById('saveCredentialsContainer').style.display = 'block';
+            updateBadgeCountDisplay();
+        }
+
+        function updateBadgeCountDisplay() {
+            const currentItems = evidenceGrid.querySelectorAll('.evidence-item').length;
+            const countDisplay = document.getElementById('badgeCountDisplay');
+            if (countDisplay) {
+                countDisplay.innerText = `${currentItems}/6`;
+            }
         }
 
     </script>

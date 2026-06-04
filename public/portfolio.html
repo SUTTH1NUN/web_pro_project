@@ -27,18 +27,29 @@
             gap: 1rem;
         }
 
+        /* A4 Page Preview Container */
+        .preview-wrapper {
+            width: 100%;
+            height: calc(100vh - 180px);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
         /* A4 Page Preview Style */
         .a4-preview {
             background: white;
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-            min-height: 1131px;
+            width: 800px;
+            height: 1131px;
             box-shadow: var(--shadow-lg);
             padding: 3rem 4rem;
             border-radius: var(--radius-md);
             position: relative;
             border: 1px solid var(--border-light);
+            transform-origin: top center;
         }
 
         /* Portfolio Content Styles */
@@ -218,67 +229,40 @@
         <!-- html2pdf CDN -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-        <div class="a4-preview">
-            
-            <div class="cv-header">
-                <div class="cv-name" id="previewName">John Doe</div>
-                <div class="cv-title" id="previewJob">Software Engineer @ TechCorp</div>
-                <div class="cv-contact">
-                    <span>
-                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                        <span id="previewEmail">johndoe@example.com</span>
-                    </span>
-                    <span>
-                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                        <span id="previewLinkedin">linkedin.com/in/johndoe</span>
-                    </span>
-                </div>
-            </div>
-
-            <div class="cv-section">
-                <h2 class="cv-section-title">About Me</h2>
-                <p class="cv-bio" id="previewBio">Passionate software engineer with a strong foundation in modern web technologies. I specialize in building scalable applications and am constantly seeking to improve my language and communication skills to work effectively in global teams.</p>
-            </div>
-
-            <div class="cv-section" id="pdfCredentialsList">
-                <h2 class="cv-section-title">Verified Language Credentials</h2>
-                <!-- Mock Credential 1 -->
-                <div class="credential-item">
-                    <div class="cred-left">
-                        <h3>TOEIC English Proficiency</h3>
-                        <p>Date Tested: Oct 15, 2025 • Code: TX-84920</p>
-                    </div>
-                    <div class="cred-right">
-                        <div class="cred-score">850 / 990</div>
-                        <div class="cred-verified">
-                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            AI Verified
-                        </div>
+        <div class="preview-wrapper">
+            <div class="a4-preview">
+                
+                <div class="cv-header">
+                    <div class="cv-name" id="previewName">John Doe</div>
+                    <div class="cv-title" id="previewJob">Software Engineer @ TechCorp</div>
+                    <div class="cv-contact">
+                        <span>
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            <span id="previewEmail">johndoe@example.com</span>
+                        </span>
+                        <span>
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                            <span id="previewLinkedin">linkedin.com/in/johndoe</span>
+                        </span>
                     </div>
                 </div>
 
-                <!-- Mock Credential 2 -->
-                <div class="credential-item">
-                    <div class="cred-left">
-                        <h3>IELTS Academic</h3>
-                        <p>Date Tested: Jan 22, 2026 • Code: IL-11029</p>
-                    </div>
-                    <div class="cred-right">
-                        <div class="cred-score">7.5 / 9.0</div>
-                        <div class="cred-verified">
-                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            AI Verified
-                        </div>
-                    </div>
+                <div class="cv-section">
+                    <h2 class="cv-section-title">About Me</h2>
+                    <p class="cv-bio" id="previewBio">Passionate software engineer with a strong foundation in modern web technologies. I specialize in building scalable applications and am constantly seeking to improve my language and communication skills to work effectively in global teams.</p>
+                </div>
+
+                <div class="cv-section" id="pdfCredentialsList">
+                    <h2 class="cv-section-title">Verified Language Credentials</h2>
+                    <!-- Badges will be loaded dynamically here -->
+                </div>
+
+                <div class="cv-footer">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    This document and its credentials have been digitally verified by Zentry.
                 </div>
 
             </div>
-
-            <div class="cv-footer">
-                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                This document and its credentials have been digitally verified by Zentry.
-            </div>
-
         </div>
     </main>
 
@@ -325,32 +309,42 @@
                     } else {
                         document.getElementById('previewLinkedin').parentElement.style.display = 'none';
                     }
+                    
+                    // Load badges dragged into Verified Credentials from Profile page
+                    loadInjectedBadges(user.portfolioBadges || []);
                 }
-                
-                // Also load badges dragged into Verified Credentials from Profile page
-                loadInjectedBadges();
 
             } catch (err) {
                 console.error(err);
             }
         }
 
-        function loadInjectedBadges() {
+        function loadInjectedBadges(badges) {
             const list = document.getElementById('pdfCredentialsList');
-            const savedBadges = JSON.parse(localStorage.getItem('addedBadges') || '[]');
             
-            savedBadges.forEach((badge, index) => {
+            // Keep the title
+            const titleHTML = '<h2 class="cv-section-title">Verified Language Credentials</h2>';
+            list.innerHTML = titleHTML;
+
+            if (badges.length === 0) {
+                list.insertAdjacentHTML('beforeend', '<p style="color: var(--text-muted);">No verified credentials selected.</p>');
+                return;
+            }
+            
+            badges.forEach((badge, index) => {
+                const sourceText = badge.type === 'web' ? 'Zentry Web Test' : 'External Certificate';
+                // For a more professional look, we just use a generic recent date or leave it out. We will omit the date if we don't store it, or use the current year.
                 const badgeHtml = `
                 <div class="credential-item" style="border-color: #435eea; background: #f8faff;">
                     <div class="cred-left">
                         <h3>${badge.title}</h3>
-                        <p>Date Tested: ${badge.date} • Source: Zentry Web Test</p>
+                        <p>Source: ${sourceText}</p>
                     </div>
                     <div class="cred-right">
                         <div class="cred-score">${badge.score}</div>
                         <div class="cred-verified">
                             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            AI Verified
+                            Zentry Verified
                         </div>
                     </div>
                 </div>
@@ -359,7 +353,25 @@
             });
         }
 
+        function scalePreview() {
+            const wrapper = document.querySelector('.preview-wrapper');
+            const preview = document.querySelector('.a4-preview');
+            if (wrapper && preview) {
+                // Determine scale based on wrapper height vs preview height (leaving a little margin)
+                const scaleY = (wrapper.clientHeight - 20) / 1131;
+                // Don't scale up past 1
+                const scale = Math.min(scaleY, 1);
+                preview.style.transform = `scale(${scale})`;
+            }
+        }
+
+        window.addEventListener('resize', scalePreview);
+
         function generatePDF() {
+            // Remove scaling temporarily for printing
+            const preview = document.querySelector('.a4-preview');
+            preview.style.transform = 'none';
+
             const element = document.querySelector('.a4-preview');
             const opt = {
                 margin:       0,
@@ -369,11 +381,15 @@
                 jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
             };
             
-            // Generate PDF
-            html2pdf().set(opt).from(element).save();
+            // Generate PDF and then restore scaling
+            html2pdf().set(opt).from(element).save().then(() => {
+                scalePreview();
+            });
         }
 
-        loadPreviewData();
+        loadPreviewData().then(() => {
+            scalePreview();
+        });
     </script>
 </body>
 </html>

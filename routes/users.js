@@ -16,7 +16,7 @@ router.get('/me', protect, async (req, res) => {
 // PUT /api/users/me
 router.put('/me', protect, async (req, res) => {
     try {
-        const { username, firstName, lastName, bio, jobTitle, organization, linkedinUrl, portfolioUrl } = req.body;
+        const { username, firstName, lastName, bio, jobTitle, organization, linkedinUrl, portfolioUrl, portfolioBadges } = req.body;
         
         const user = await User.findById(req.user._id);
         if (!user) {
@@ -31,6 +31,10 @@ router.put('/me', protect, async (req, res) => {
         if (organization !== undefined) user.organization = organization;
         if (linkedinUrl !== undefined) user.linkedinUrl = linkedinUrl;
         if (portfolioUrl !== undefined) user.portfolioUrl = portfolioUrl;
+        if (portfolioBadges !== undefined) {
+            user.portfolioBadges = portfolioBadges;
+            user.markModified('portfolioBadges');
+        }
 
         await user.save();
 

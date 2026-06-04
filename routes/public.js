@@ -42,6 +42,7 @@ router.get('/user/:username', async (req, res) => {
                 jobTitle: user.jobTitle,
                 organization: user.organization,
                 bio: user.bio,
+                portfolioBadges: user.portfolioBadges || [],
             },
             evidences: publicEvidences
         });

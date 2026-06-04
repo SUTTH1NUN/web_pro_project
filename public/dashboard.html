@@ -36,7 +36,7 @@
         /* Credential Grid */
         .credential-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 2rem;
         }
 
@@ -99,6 +99,15 @@
         .credential-card.TOEFL .card-type-badge {
             background: #fffff0;
             color: #b7791f;
+        }
+
+        .credential-card.Web::before {
+            background: #6b46f2;
+        }
+
+        .credential-card.Web .card-type-badge {
+            background: #f3f0ff;
+            color: #6b46f2;
         }
 
         .card-subtitle {
@@ -220,7 +229,7 @@
         </div>
     </nav>
 
-    <main class="container" style="max-width: 1200px;">
+    <main class="container" style="max-width: 1650px; padding: 2rem 4rem;">
         <div class="dashboard-header">
             <div class="welcome-text">
                 <h1 id="welcomeTitle">Welcome back 👋</h1>
@@ -366,6 +375,15 @@
         let pollingTimer = null;
         async function fetchEvidences() {
             try {
+                let userWebStats = null;
+                try {
+                    const userRes = await fetch('/api/users/me', { headers: { 'Authorization': `Bearer ${token}` } });
+                    if (userRes.ok) {
+                        const userData = await userRes.json();
+                        userWebStats = userData.user.webStats || null;
+                    }
+                } catch (e) { console.error(e); }
+
                 const res = await fetch('/api/evidence', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
@@ -376,7 +394,29 @@
                 }
 
                 const data = await res.json();
-                renderEvidences(data.evidences);
+                let allEvidences = data.evidences;
+
+                if (userWebStats) {
+                    ['reading', 'listening', 'speaking', 'writing'].forEach(skill => {
+                        if (userWebStats[skill] > 0) {
+                            allEvidences.push({
+                                isWebBadge: true,
+                                testType: 'Web ' + skill.charAt(0).toUpperCase() + skill.slice(1) + ' Test',
+                                extractedScore: `${userWebStats[skill]*10}/100`,
+                                extractedData: { testDate: new Date().toISOString() },
+                                verificationStatus: 'verified'
+                            });
+                        }
+                    });
+                }
+
+                allEvidences.sort((a, b) => {
+                    const dateA = new Date((a.extractedData && a.extractedData.testDate) || a.createdAt || 0);
+                    const dateB = new Date((b.extractedData && b.extractedData.testDate) || b.createdAt || 0);
+                    return dateB - dateA; // Descending (newest first)
+                });
+
+                renderEvidences(allEvidences);
 
                 // Polling logic
                 if (pollingTimer) clearTimeout(pollingTimer);
@@ -451,17 +491,19 @@
                     <div>
                         <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                             <span class="card-type-badge">${ev.testType}</span>
+                            ${!ev.isWebBadge ? `
                             <div style="display: flex; gap: 0.5rem; position: relative; z-index: 20;">
                                 <button onclick="event.stopPropagation(); togglePrivacy('${ev._id}', ${!ev.isPrivate})" style="background:none; border:none; color:${ev.isPrivate ? '#e53e3e' : '#4a5568'}; cursor:pointer;" title="${ev.isPrivate ? 'Make Public' : 'Make Private'}">
                                     ${ev.isPrivate 
-                                        ? `<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg>`
-                                        : `<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>`
+                                        ? '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg>'
+                                        : '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>'
                                     }
                                 </button>
                                 <button onclick="event.stopPropagation(); deleteEvidence('${ev._id}')" style="background:none; border:none; color:#4a5568; cursor:pointer;" title="Delete Score">
                                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                 </button>
                             </div>
+                            ` : ''}
                         </div>
                         <div class="card-subtitle">English Proficiency</div>
                         <div class="card-score">
@@ -474,7 +516,6 @@
                             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                             ${dateStr}
                         </div>
-                        <div>${code}</div>
                     </div>
                 `;
                 grid.appendChild(card);
