@@ -311,7 +311,7 @@
                     </div>
                 </div>
 
-                <button class="btn-start" onclick="alert('Feature coming soon!')">
+                <button class="btn-start" onclick="openWritingTestModal()">
                     Start Writing Test
                 </button>
             </div>
@@ -440,6 +440,69 @@
         </div>
     </div>
 
+    <!-- Writing Test Modal -->
+    <div id="writingTestModal" class="modal-overlay"
+        style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+        <div class="modal-content"
+            style="background: white; border-radius: 12px; width: 100%; max-width: 800px; padding: 2rem; position: relative; max-height: 90vh; overflow-y: auto;">
+            <button onclick="closeWritingTestModal()"
+                style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            <h2 style="margin-bottom: 1rem;">Business Writing Test</h2>
+
+            <div id="writingPromptContainer"
+                style="background: #f7fafc; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #e2e8f0;">
+                <p style="font-weight: 600; color: #2d3748; margin-bottom: 0.5rem;">Scenario:</p>
+                <p id="writingPromptText" style="color: #4a5568; line-height: 1.6;">You are a project manager. Write a
+                    professional email to your client apologizing for a 2-day delay in delivering the final report.
+                    Ensure you maintain a polite and professional tone.</p>
+            </div>
+
+            <form id="writingTestForm">
+                <textarea id="writingTextarea" name="text" rows="10"
+                    style="width: 100%; padding: 1rem; border: 1px solid #cbd5e0; border-radius: 8px; font-family: inherit; font-size: 1rem; resize: vertical; margin-bottom: 1rem;"
+                    placeholder="Write your email here..." required></textarea>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <span id="wordCountDisplay" style="font-size: 0.9rem; color: #718096;">Word count: 0</span>
+                </div>
+                <button type="submit" id="submitWritingBtn" class="btn-start"
+                    style="background: linear-gradient(90deg, #ed8936, #dd6b20); color: white; width: 100%;">
+                    Submit Writing
+                </button>
+            </form>
+
+            <div id="writingLoading" style="display: none; text-align: center; padding: 3rem 0;">
+                <div class="loadingSpinner"
+                    style="width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #dd6b20; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem auto;">
+                </div>
+                <p style="color: #4a5568; font-weight: 500;">AI is evaluating your writing...</p>
+            </div>
+
+            <div id="writingResult" style="display: none; text-align: center; padding: 2rem 0;">
+                <div style="font-size: 4rem; margin-bottom: 1rem;">📝</div>
+                <h2 style="margin-bottom: 1rem; color: #2d3748;">Evaluation Complete!</h2>
+                <div
+                    style="display: flex; justify-content: space-around; background: #f7fafc; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 1.5rem;">
+                    <div>
+                        <p style="font-size: 0.9rem; color: #718096; margin-bottom: 0.25rem;">Score</p>
+                        <div id="writingScoreDisplay" style="font-size: 2rem; font-weight: 700; color: #dd6b20;">8.5/10
+                        </div>
+                    </div>
+                    <div>
+                        <p style="font-size: 0.9rem; color: #718096; margin-bottom: 0.25rem;">CEFR Level</p>
+                        <div id="writingCefrDisplay" style="font-size: 2rem; font-weight: 700; color: #3182ce;">B2</div>
+                    </div>
+                </div>
+                <div
+                    style="text-align: left; background: #ebf4ff; padding: 1.5rem; border-radius: 8px; border: 1px solid #bee3f8; margin-bottom: 2rem;">
+                    <p style="font-weight: 600; color: #2b6cb0; margin-bottom: 0.5rem;">AI Feedback:</p>
+                    <p id="writingFeedbackDisplay" style="color: #2c5282; line-height: 1.6;"></p>
+                </div>
+                <button onclick="window.location.href='profile.html'" class="btn-start"
+                    style="background: #38a169; color: white;">View My Profile</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Listening Test Modal -->
     <div id="listeningTestModal" class="modal-overlay"
         style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
@@ -523,7 +586,7 @@
             try {
                 console.log("Start button clicked for type:", type);
                 currentTestType = type;
-                
+
                 const testModal = document.getElementById('testModal');
                 // Force visibility and prevent CSS trapping
                 document.body.appendChild(testModal); // Move to end of body
@@ -533,21 +596,21 @@
                 testModal.style.setProperty('z-index', '999999', 'important');
                 testModal.style.setProperty('background', 'rgba(0,0,0,0.7)', 'important');
                 testModal.style.setProperty('pointer-events', 'auto', 'important');
-                
+
                 // Ensure all children are clickable
                 const allChildren = testModal.querySelectorAll('*');
                 allChildren.forEach(child => {
                     child.style.setProperty('pointer-events', 'auto', 'important');
                 });
-                
+
                 document.getElementById('adaptiveResult').style.display = 'none';
                 document.getElementById('adaptiveTestForm').style.display = 'none';
-                
+
                 const titleEl = document.getElementById('modalTitle');
                 if (titleEl) {
                     titleEl.innerHTML = `${type === 'reading' ? 'Reading' : 'Listening'} Test <span style="font-size: 0.8rem; color: #a0aec0;">(v4)</span>`;
                 }
-                
+
                 // Reset state
                 adaptiveState = {
                     currentScore: 0.0,
@@ -556,11 +619,11 @@
                     maxSteps: type === 'reading' ? 10 : 15,
                     currentQuestionData: null
                 };
-                
+
                 timeLeft = 600; // Reset timer to 10 mins
                 updateTimerDisplay('timerDisplay');
                 startTimer('adaptiveTestForm', 'timerDisplay');
-                
+
                 fetchNextAdaptiveQuestion();
             } catch (err) {
                 console.error("Error in startAdaptiveTest:", err);
@@ -812,6 +875,102 @@
         // --- Restored Missing Functions --- //
 
 
+
+        // --- Writing Test Logic --- //
+        const writingTextarea = document.getElementById('writingTextarea');
+        const wordCountDisplay = document.getElementById('wordCountDisplay');
+        const promptText = "You are a project manager. Write a professional email to your client apologizing for a 2-day delay in delivering the final report. Ensure you maintain a polite and professional tone.";
+
+        if (writingTextarea) {
+            writingTextarea.addEventListener('input', () => {
+                const words = writingTextarea.value.trim().split(/\s+/).filter(w => w.length > 0).length;
+                wordCountDisplay.innerText = `Word count: ${words}`;
+                if (words < 30) {
+                    wordCountDisplay.style.color = '#e53e3e';
+                } else {
+                    wordCountDisplay.style.color = '#38a169';
+                }
+            });
+        }
+
+        async function openWritingTestModal() {
+            const modal = document.getElementById('writingTestModal');
+            document.body.appendChild(modal);
+
+            // Force visibility
+            modal.style.setProperty('display', 'flex', 'important');
+            modal.style.setProperty('visibility', 'visible', 'important');
+            modal.style.setProperty('opacity', '1', 'important');
+            modal.style.setProperty('z-index', '999999', 'important');
+            modal.style.setProperty('pointer-events', 'auto', 'important');
+
+            document.getElementById('writingTestForm').style.display = 'block';
+            document.getElementById('writingLoading').style.display = 'none';
+            document.getElementById('writingResult').style.display = 'none';
+            writingTextarea.value = '';
+            wordCountDisplay.innerText = 'Word count: 0';
+            wordCountDisplay.style.color = '#718096';
+
+            document.getElementById('writingPromptText').innerText = "Loading scenario...";
+            try {
+                const res = await fetch(`/api/tests/writing/scenario?t=${new Date().getTime()}`, { cache: 'no-store' });
+                if (res.ok) {
+                    const data = await res.json();
+                    currentWritingPrompt = data.prompt;
+                    document.getElementById('writingPromptText').innerText = currentWritingPrompt;
+                }
+            } catch (err) {
+                console.error("Failed to load scenario:", err);
+                document.getElementById('writingPromptText').innerText = currentWritingPrompt;
+            }
+        }
+
+        function closeWritingTestModal() {
+            document.getElementById('writingTestModal').style.display = 'none';
+        }
+
+        document.getElementById('writingTestForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const words = writingTextarea.value.trim().split(/\s+/).filter(w => w.length > 0).length;
+            if (words < 30) {
+                alert('Please write at least 30 words to accurately assess your skills.');
+                return;
+            }
+
+            document.getElementById('writingTestForm').style.display = 'none';
+            document.getElementById('writingLoading').style.display = 'block';
+
+            try {
+                const res = await fetch(`/api/tests/writing/submit?t=${new Date().getTime()}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        text: writingTextarea.value,
+                        prompt: currentWritingPrompt
+                    })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('writingLoading').style.display = 'none';
+                    document.getElementById('writingResult').style.display = 'block';
+
+                    document.getElementById('writingScoreDisplay').innerText = `${data.score}/10`;
+                    document.getElementById('writingCefrDisplay').innerText = data.cefrLevel;
+                    document.getElementById('writingFeedbackDisplay').innerText = data.feedback;
+                } else {
+                    throw new Error('Failed to submit test');
+                }
+            } catch (error) {
+                console.error(error);
+                alert('An error occurred while evaluating the writing test.');
+                document.getElementById('writingLoading').style.display = 'none';
+                document.getElementById('writingTestForm').style.display = 'block';
+            }
+        });
 
         function startTimer(formId, displayId) {
             clearInterval(timerInterval);

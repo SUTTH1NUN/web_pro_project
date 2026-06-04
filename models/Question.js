@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const questionSchema = new mongoose.Schema({
     type: { 
         type: String, 
-        enum: ['Short Comprehension', 'Cloze Test', 'Listening Comprehension'], 
+        enum: ['Short Comprehension', 'Cloze Test', 'Listening Comprehension', 'Writing Prompt'], 
         required: true 
     },
     cefrLevel: { 

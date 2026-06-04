@@ -349,7 +349,7 @@
                 const lastName = document.getElementById('lastName').value;
                 
                 const endpoint = isLoginMode ? '/api/auth/signin' : '/api/auth/signup';
-                const body = isLoginMode ? { email, password } : { username: email.split('@')[0], email, password, firstName, lastName };
+                const body = isLoginMode ? { email, password } : { username: firstName, email, password, firstName, lastName };
 
                 try {
                     const res = await fetch(endpoint, {

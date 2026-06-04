@@ -68,9 +68,17 @@
             background: #e53e3e;
         }
 
-        .credential-card.IELTS::before { background: #e53e3e; }
-        .credential-card.TOEIC::before { background: #435eea; }
-        .credential-card.TOEFL::before { background: #d69e2e; }
+        .credential-card.IELTS::before {
+            background: #e53e3e;
+        }
+
+        .credential-card.TOEIC::before {
+            background: #435eea;
+        }
+
+        .credential-card.TOEFL::before {
+            background: #d69e2e;
+        }
 
         .card-type-badge {
             display: inline-block;
@@ -83,8 +91,15 @@
             margin-bottom: 0.5rem;
         }
 
-        .credential-card.TOEIC .card-type-badge { background: #f0f4ff; color: #435eea; }
-        .credential-card.TOEFL .card-type-badge { background: #fffff0; color: #b7791f; }
+        .credential-card.TOEIC .card-type-badge {
+            background: #f0f4ff;
+            color: #435eea;
+        }
+
+        .credential-card.TOEFL .card-type-badge {
+            background: #fffff0;
+            color: #b7791f;
+        }
 
         .card-subtitle {
             color: var(--text-muted);
@@ -117,7 +132,7 @@
             flex-direction: column;
             gap: 0.5rem;
         }
-        
+
         .card-footer .date {
             display: flex;
             align-items: center;
@@ -162,7 +177,8 @@
         <div class="nav-brand">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" />
-                <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" />
             </svg>
             Zentry
         </div>
@@ -183,11 +199,17 @@
             </div>
             <div class="header-actions">
                 <button class="btn-outline" onclick="window.location.href='portfolio.html'">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                        </path>
+                    </svg>
                     Generate PDF
                 </button>
                 <button class="btn-primary" onclick="openModal()">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
                     Add Score
                 </button>
             </div>
@@ -225,7 +247,8 @@
                     <input type="file" id="file" name="file" accept=".pdf,.jpg,.jpeg,.png" required>
                 </div>
 
-                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;" id="submitBtn">Upload and Verify</button>
+                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;"
+                    id="submitBtn">Upload and Verify</button>
             </form>
         </div>
     </div>
@@ -257,7 +280,7 @@
                 const res = await fetch('/api/evidence', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
-                
+
                 if (res.status === 401) {
                     logout();
                     return;
@@ -287,16 +310,16 @@
                 const isProcessing = ev.verificationStatus === 'processing';
                 const isPending = ev.verificationStatus === 'pending';
                 const isRejected = ev.verificationStatus === 'rejected';
-                
+
                 const score = ev.extractedScore || 'N/A';
-                const dateStr = (ev.extractedData && ev.extractedData.testDate) 
-                    ? new Date(ev.extractedData.testDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) 
+                const dateStr = (ev.extractedData && ev.extractedData.testDate)
+                    ? new Date(ev.extractedData.testDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
                     : 'Unknown Date';
                 const code = (ev.extractedData && ev.extractedData.verificationCode) ? ev.extractedData.verificationCode : 'No Code';
 
                 const card = document.createElement('div');
                 card.className = `credential-card ${ev.testType.split(' ')[0]} ${isPending || isProcessing || isRejected ? 'pending' : ''}`;
-                
+
                 let pendingHTML = '';
                 if (isProcessing) {
                     pendingHTML = `
@@ -423,7 +446,7 @@
                 });
                 if (userRes.ok) {
                     const userData = await userRes.json();
-                    const displayName = userData.user.username || userData.user.firstName || 'User';
+                    const displayName = userData.user.username || 'User';
                     document.getElementById('welcomeTitle').innerText = `Welcome back, ${displayName} 👋`;
                 }
 
@@ -437,4 +460,5 @@
         initDashboard();
     </script>
 </body>
+
 </html>
