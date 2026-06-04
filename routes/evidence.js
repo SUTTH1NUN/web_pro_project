@@ -180,4 +180,22 @@ router.delete('/:id', protect, async (req, res) => {
     }
 });
 
+// PUT /api/evidence/:id/privacy
+router.put('/:id/privacy', protect, async (req, res) => {
+    try {
+        const evidence = await Evidence.findOne({ _id: req.params.id, userId: req.user._id });
+        if (!evidence) {
+            return res.status(404).json({ error: 'Evidence not found' });
+        }
+        
+        evidence.isPrivate = req.body.isPrivate;
+        await evidence.save();
+        
+        res.json({ message: 'Privacy status updated', isPrivate: evidence.isPrivate });
+    } catch (error) {
+        console.error('Error updating evidence privacy:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 module.exports = router;
