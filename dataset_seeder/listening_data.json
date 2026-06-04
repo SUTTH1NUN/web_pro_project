@@ -1,0 +1,1008 @@
+/*A1*/
+[
+    {
+        "article": "Hello. I would like a large coffee with milk, please. And one chocolate cake. How much is that?",
+        "question": "What does the person order?",
+        "options": [
+            "A large coffee and a chocolate cake",
+            "A small coffee and a banana",
+            "Tea with milk and a cake",
+            "A large coffee and an apple"
+        ],
+        "answer": "A large coffee and a chocolate cake"
+    },
+    {
+        "article": "Attention passengers. The train to London is at platform four. The train leaves at ten fifteen. Please have your tickets ready.",
+        "question": "What time does the train leave?",
+        "options": [
+            "10:15",
+            "10:50",
+            "4:15",
+            "11:15"
+        ],
+        "answer": "10:15"
+    },
+    {
+        "article": "Hi, my name is Sarah. I am from Canada. I live in Toronto with my brother, Tom. I am twenty-two years old.",
+        "question": "Where is Sarah from?",
+        "options": [
+            "Canada",
+            "America",
+            "England",
+            "Australia"
+        ],
+        "answer": "Canada"
+    },
+    {
+        "article": "Good morning! Today in Madrid, the weather is very hot and sunny. Put on your hats and drink a lot of water. There is no rain today.",
+        "question": "What is the weather like in Madrid today?",
+        "options": [
+            "Hot and sunny",
+            "Cold and rainy",
+            "Cloudy and windy",
+            "Snowy and cold"
+        ],
+        "answer": "Hot and sunny"
+    },
+    {
+        "article": "Excuse me, do you have this blue T-shirt in a size medium? Let me check. No, I am sorry. We only have small and large.",
+        "question": "What size T-shirt does the person want?",
+        "options": [
+            "Medium",
+            "Small",
+            "Large",
+            "Extra Large"
+        ],
+        "answer": "Medium"
+    },
+    {
+        "article": "Hi John, it is Mary. Do you want to go to the cinema on Saturday night? The movie starts at eight o'clock. Call me back. Bye!",
+        "question": "Where does Mary want to go on Saturday?",
+        "options": [
+            "To the cinema",
+            "To the park",
+            "To a restaurant",
+            "To the supermarket"
+        ],
+        "answer": "To the cinema"
+    },
+    {
+        "article": "I wake up at seven o'clock every day. I eat breakfast, and then I go to work by bus. I start work at eight thirty.",
+        "question": "How does the person go to work?",
+        "options": [
+            "By bus",
+            "By car",
+            "By train",
+            "They walk"
+        ],
+        "answer": "By bus"
+    },
+    {
+        "article": "Flight 205 to Paris is now boarding. Passengers, please go to gate number twelve. Have your passport in your hand.",
+        "question": "Which gate should the passengers go to?",
+        "options": [
+            "Gate 12",
+            "Gate 20",
+            "Gate 5",
+            "Gate 15"
+        ],
+        "answer": "Gate 12"
+    },
+    {
+        "article": "Excuse me, where is the hospital? Go straight, and turn left at the bank. The hospital is next to the park.",
+        "question": "Where is the hospital?",
+        "options": [
+            "Next to the park",
+            "Behind the bank",
+            "Next to the supermarket",
+            "In front of the bank"
+        ],
+        "answer": "Next to the park"
+    },
+    {
+        "article": "Look at this photo. This is my family. My father is tall and has black hair. My mother is short. And this is my little sister, Emma. She is five years old.",
+        "question": "Who is Emma?",
+        "options": [
+            "The little sister",
+            "The mother",
+            "The grandmother",
+            "A friend"
+        ],
+        "answer": "The little sister"
+    },
+    {
+        "article": "Good morning, students. Please open your books to page forty-two. Read the text and then answer the three questions.",
+        "question": "What page do the students need to open?",
+        "options": [
+            "Page 42",
+            "Page 24",
+            "Page 40",
+            "Page 22"
+        ],
+        "answer": "Page 42"
+    },
+    {
+        "article": "I need to buy food for dinner. I need chicken, rice, and tomatoes. Oh, and I also need to buy some milk for the morning.",
+        "question": "What meat does the person buy for dinner?",
+        "options": [
+            "Chicken",
+            "Fish",
+            "Beef",
+            "Pork"
+        ],
+        "answer": "Chicken"
+    },
+    {
+        "article": "I love the weekend. On Saturdays, I play football with my friends in the park. On Sundays, I read books and listen to music at home.",
+        "question": "What does the person do on Saturdays?",
+        "options": [
+            "Play football",
+            "Read books",
+            "Listen to music",
+            "Go to work"
+        ],
+        "answer": "Play football"
+    },
+    {
+        "article": "Good evening. Welcome to the Star Hotel. What is your name, please? My name is David Smith. I have a room for two nights.",
+        "question": "How many nights is David staying at the hotel?",
+        "options": [
+            "Two nights",
+            "One night",
+            "Three nights",
+            "Four nights"
+        ],
+        "answer": "Two nights"
+    },
+    {
+        "article": "Hello, I want to see the doctor, please. My stomach hurts. Okay. Can you come on Tuesday morning at ten o'clock? Yes, thank you.",
+        "question": "When is the appointment with the doctor?",
+        "options": [
+            "Tuesday morning",
+            "Monday morning",
+            "Tuesday afternoon",
+            "Wednesday evening"
+        ],
+        "answer": "Tuesday morning"
+    }
+]
+/*A2*/
+[
+    {
+        "article": "Welcome to 'Local Life' podcast. Today we are talking about the City Food Festival. It starts this Friday at 4 PM in Central Square and finishes on Sunday evening. Over fifty chefs will be there. Don't miss it!",
+        "question": "When does the City Food Festival end?",
+        "options": [
+            "Sunday evening",
+            "Friday at 4 PM",
+            "Saturday morning",
+            "Friday evening"
+        ],
+        "answer": "Sunday evening"
+    },
+    {
+        "article": "Attention passengers on flight EZ-402 to Berlin. We are sorry to announce that your flight is delayed by two hours because of heavy snow. Please go to the desk at Gate 5 to get a free meal voucher.",
+        "question": "Why is the flight to Berlin delayed?",
+        "options": [
+            "Because of heavy snow",
+            "Because the plane is broken",
+            "Because of strong winds",
+            "Because the pilot is late"
+        ],
+        "answer": "Because of heavy snow"
+    },
+    {
+        "article": "Hi, I bought these shoes here last week, but they are too small. I have the receipt with me. Can I exchange them for a size eight, please? Or can I get my money back?",
+        "question": "What does the customer want to do?",
+        "options": [
+            "Exchange shoes for a different size",
+            "Buy a new pair of shoes",
+            "Buy a shirt instead",
+            "Talk to the manager"
+        ],
+        "answer": "Exchange shoes for a different size"
+    },
+    {
+        "article": "Hi Sarah, it's Mark from the dental clinic. You have an appointment tomorrow at 10 AM, but Dr. Smith is sick. Can we change your appointment to next Thursday at the same time? Please call me back.",
+        "question": "Why is Mark calling Sarah?",
+        "options": [
+            "To change her appointment",
+            "To tell her she is sick",
+            "To ask for money",
+            "To cancel her dentist appointment forever"
+        ],
+        "answer": "To change her appointment"
+    },
+    {
+        "article": "Excuse me, I'm a vegetarian. Does the mushroom soup have any chicken broth in it? I also can't eat dairy, so I hope there is no cream. If it does, I will just have the green salad.",
+        "question": "What kind of food does the customer want to avoid?",
+        "options": [
+            "Meat and dairy",
+            "Mushrooms and salad",
+            "Only dairy",
+            "Only chicken"
+        ],
+        "answer": "Meat and dairy"
+    },
+    {
+        "article": "Okay team, let's talk about next week's schedule. On Monday and Tuesday, we will work in the office as usual. But on Wednesday and Thursday, everyone must work from home because they are painting the building.",
+        "question": "Where will the team work on Wednesday?",
+        "options": [
+            "From home",
+            "In the office",
+            "In a new building",
+            "Outside the office"
+        ],
+        "answer": "From home"
+    },
+    {
+        "article": "Here is your weekend weather forecast. Saturday will be mostly cloudy but dry, perfect for a walk. However, Sunday will bring heavy rain and strong winds all day, so it's a good time to stay indoors and read a book.",
+        "question": "What should people expect on Sunday?",
+        "options": [
+            "Heavy rain and strong winds",
+            "Cloudy but dry weather",
+            "Sunny and warm weather",
+            "Snow and cold winds"
+        ],
+        "answer": "Heavy rain and strong winds"
+    },
+    {
+        "article": "Listen carefully, students. Your history project is due next Friday, the 15th of May. You need to write a two-page summary about the Romans and email it to me. Do not bring a paper copy to class.",
+        "question": "How should the students submit their history project?",
+        "options": [
+            "By email",
+            "On paper",
+            "In a presentation",
+            "In a notebook"
+        ],
+        "answer": "By email"
+    },
+    {
+        "article": "To get to the museum, walk straight down this street until you see the post office. Then, turn right at the traffic lights. Walk past the big church, and the museum will be on your left, across from the bakery.",
+        "question": "Where is the museum located?",
+        "options": [
+            "Across from the bakery",
+            "Inside the post office",
+            "Next to the traffic lights",
+            "Behind the church"
+        ],
+        "answer": "Across from the bakery"
+    },
+    {
+        "article": "Last summer, I traveled to Italy with my sister. We visited Rome and Venice. The food was amazing, especially the pizza! But we lost our bags at the train station on the second day. It was very stressful.",
+        "question": "What bad thing happened during the trip?",
+        "options": [
+            "They lost their bags",
+            "They didn't like the food",
+            "They missed their train",
+            "They couldn't visit Venice"
+        ],
+        "answer": "They lost their bags"
+    },
+    {
+        "article": "Hello, reception? This is room 304. The television isn't working, and the air conditioning is making a very loud noise. I can't sleep at all. Could you send someone to fix it, or move me to another room?",
+        "question": "What is the problem in room 304?",
+        "options": [
+            "The TV is broken and the AC is loud",
+            "The bed is too hard",
+            "The room is too cold",
+            "The shower is not working"
+        ],
+        "answer": "The TV is broken and the AC is loud"
+    },
+    {
+        "article": "In my last job, I was a receptionist at a hotel for three years. I answered phone calls, helped guests with their luggage, and answered emails. I am looking for a new job now because I want to work closer to my house.",
+        "question": "Why is the speaker looking for a new job?",
+        "options": [
+            "To work closer to home",
+            "Because they hated the hotel",
+            "To make more money",
+            "Because they want to be a manager"
+        ],
+        "answer": "To work closer to home"
+    },
+    {
+        "article": "Attention visitors. The National Art Gallery will close in fifteen minutes. Please make your way to the main exit on the ground floor. The gift shop is already closed, but you can buy tickets for tomorrow online.",
+        "question": "What must the visitors do soon?",
+        "options": [
+            "Go to the main exit",
+            "Go to the gift shop",
+            "Buy a ticket on the ground floor",
+            "Wait in the gallery"
+        ],
+        "answer": "Go to the main exit"
+    },
+    {
+        "article": "Passengers for the number 53 bus, please listen. Because of roadworks on Main Street, this bus will not stop at the library or the park today. It will go straight to the train station.",
+        "question": "Why is the bus changing its route?",
+        "options": [
+            "Because of roadworks",
+            "Because there is a traffic jam",
+            "Because the bus is broken",
+            "Because it is raining heavily"
+        ],
+        "answer": "Because of roadworks"
+    },
+    {
+        "article": "Hey Alex, are we still having the barbecue on Saturday? I can bring some drinks and a big bowl of potato salad. Let me know if you need me to bring some chairs, too. I have three extra ones in my garage.",
+        "question": "What is the speaker offering to bring to the barbecue?",
+        "options": [
+            "Drinks, potato salad, and chairs",
+            "Only chairs",
+            "Meat and drinks",
+            "A barbecue grill and salad"
+        ],
+        "answer": "Drinks, potato salad, and chairs"
+    }
+]
+/*B1*/
+[
+    {
+        "article": "Welcome back to 'Green Travel'. Today we're looking at eco-friendly holidays. Instead of taking a flight, which creates a lot of carbon emissions, many people are choosing to travel by train across Europe. It might take longer, but you get to see the beautiful countryside, and it is much better for the planet.",
+        "question": "What is the main advantage of train travel mentioned in the podcast?",
+        "options": [
+            "It is much faster than flying",
+            "It is better for the environment",
+            "It is cheaper than buying a plane ticket",
+            "You can sleep more comfortably"
+        ],
+        "answer": "It is better for the environment"
+    },
+    {
+        "article": "Good morning, everyone. Just a quick update before we start the main meeting. The new software update will be installed on all computers this Friday evening. Therefore, please make sure you save all your documents to the cloud before you leave work. IT will be unavailable over the weekend if you have any issues.",
+        "question": "What are the employees instructed to do before the weekend?",
+        "options": [
+            "Install the new software themselves",
+            "Call the IT department on Friday",
+            "Save their files to the cloud",
+            "Turn off their computers early"
+        ],
+        "answer": "Save their files to the cloud"
+    },
+    {
+        "article": "Attention all passengers on flight BA 702 to Tokyo. This flight is overbooked. We are currently looking for three volunteers to take a later flight tomorrow morning. Volunteers will receive a free night at the airport hotel, meals, and a voucher for five hundred dollars. If you are interested, please approach the customer service desk immediately.",
+        "question": "What compensation is being offered to volunteers?",
+        "options": [
+            "A free flight to anywhere in the world",
+            "Five hundred dollars and hotel accommodation",
+            "A business class upgrade for their current flight",
+            "Free meals on the flight to Tokyo"
+        ],
+        "answer": "Five hundred dollars and hotel accommodation"
+    },
+    {
+        "article": "Welcome to Introduction to Psychology. Today, we're going to discuss human memory, specifically the difference between short-term and long-term memory. While short-term memory holds information for just a few seconds, long-term memory can store it for a lifetime. Next week, we'll look at how sleep affects this storage process.",
+        "question": "What is the topic of next week's lecture?",
+        "options": [
+            "The capacity of short-term memory",
+            "How to improve your study habits",
+            "The impact of sleep on memory storage",
+            "The history of human psychology"
+        ],
+        "answer": "The impact of sleep on memory storage"
+    },
+    {
+        "article": "Hello, Oakwood Restaurant. Yes, I'd like to book a table for four people for this Saturday at 7:30 PM. We have one person who is allergic to nuts, so please make sure the kitchen knows. Also, if possible, we'd love a table by the window because it's a birthday celebration.",
+        "question": "What special request did the caller make for the meal?",
+        "options": [
+            "A table near the kitchen and a birthday cake",
+            "A nut-free meal and a window seat",
+            "A vegetarian menu and a window seat",
+            "A quiet table for two people"
+        ],
+        "answer": "A nut-free meal and a window seat"
+    },
+    {
+        "article": "Hi Liam, it's Chloe. I know we were supposed to go to the gym together this evening, but I've had to stay late at work to finish a project. I won't be able to make it. Do you want to go for a run tomorrow morning instead? Let me know when you get this message. Sorry again!",
+        "question": "Why is Chloe canceling her plans with Liam?",
+        "options": [
+            "She is feeling too tired to exercise",
+            "She has to work late on a project",
+            "She wants to go for a run instead",
+            "She has another appointment"
+        ],
+        "answer": "She has to work late on a project"
+    },
+    {
+        "article": "Good afternoon. I bought this coffee machine online, but when it arrived, the glass jug was completely cracked. I don't want a refund, I just want a replacement part. I've brought my confirmation email as proof of purchase. Can you order a new jug for me?",
+        "question": "What does the customer want the shop to do?",
+        "options": [
+            "Give him his money back",
+            "Replace the broken glass jug",
+            "Fix the coffee machine's engine",
+            "Give him a completely new machine"
+        ],
+        "answer": "Replace the broken glass jug"
+    },
+    {
+        "article": "Interviewer: So, David, your new book is a thriller set in space. This is quite a change from your usual historical novels! David: Yes, it is. I've always loved science fiction since I was a teenager, and during the lockdown, I finally had the time and inspiration to explore this genre. It was challenging, but a lot of fun.",
+        "question": "Why did David write a science fiction book this time?",
+        "options": [
+            "He was tired of writing historical novels",
+            "He has always loved the genre and found time during lockdown",
+            "His publisher asked him to try something new",
+            "He watched a lot of movies about space recently"
+        ],
+        "answer": "He has always loved the genre and found time during lockdown"
+    },
+    {
+        "article": "Just a quick update on the marketing campaign for the new app. The social media ads are performing better than we expected, especially on Instagram. However, the email newsletter hasn't generated many clicks. I suggest we pause the email campaign for now and put that budget into creating more video content for social media.",
+        "question": "What does the speaker suggest doing with the budget?",
+        "options": [
+            "Spend it all on the email newsletter",
+            "Save it for a future project",
+            "Use it to create more video content",
+            "Hire more marketing staff"
+        ],
+        "answer": "Use it to create more video content"
+    },
+    {
+        "article": "Welcome to the historic Edinburgh Castle. As we walk through the gates, please keep your tickets handy. Our tour will take about two hours. We will start at the Great Hall, then move to the Crown Jewels. Please note that taking photographs is allowed everywhere except inside the Crown Room.",
+        "question": "Where are visitors forbidden to take photographs?",
+        "options": [
+            "At the entrance gates",
+            "Inside the Crown Room",
+            "In the Great Hall",
+            "Everywhere in the castle"
+        ],
+        "answer": "Inside the Crown Room"
+    },
+    {
+        "article": "Well, your blood pressure is perfectly normal, which is great. However, you mentioned you've been having headaches and trouble sleeping. I think this might be due to stress. I'm not going to prescribe medication right now. Instead, I want you to try cutting down on caffeine and maybe take up some gentle exercise like yoga.",
+        "question": "What does the doctor advise the patient to do?",
+        "options": [
+            "Take medication for high blood pressure",
+            "Drink less caffeine and exercise gently",
+            "Sleep for at least ten hours a night",
+            "Stop working completely to avoid stress"
+        ],
+        "answer": "Drink less caffeine and exercise gently"
+    },
+    {
+        "article": "In local news, the city council has announced plans to build a new public library in the city center. Construction will begin next spring and should take about eighteen months to complete. The current library on High Street will remain open until the new one is ready, so residents won't lose access to books and services.",
+        "question": "What will happen to the current library while the new one is being built?",
+        "options": [
+            "It will close immediately",
+            "It will become a coffee shop",
+            "It will stay open until the new one is finished",
+            "It will move to a temporary location"
+        ],
+        "answer": "It will stay open until the new one is finished"
+    },
+    {
+        "article": "You want to go to the national museum? It's a bit far to walk from here. I wouldn't recommend taking a taxi right now because the traffic is terrible in the city center. Your best option is the underground. Take the blue line towards the stadium and get off at the third stop. It should only take you ten minutes.",
+        "question": "Why does the speaker say not to take a taxi?",
+        "options": [
+            "Taxis are too expensive",
+            "There are no taxis available",
+            "The traffic is very bad right now",
+            "The underground is more comfortable"
+        ],
+        "answer": "The traffic is very bad right now"
+    },
+    {
+        "article": "Interviewer: I see from your CV that you worked in sales for five years. Can you tell me why you want to transition into human resources? Applicant: Well, while I enjoyed meeting targets in sales, I found that I was most passionate about training new team members and helping them develop their careers. I want a role that focuses on people's development.",
+        "question": "What did the applicant enjoy most about their previous sales job?",
+        "options": [
+            "Earning a high salary from commissions",
+            "Meeting difficult sales targets",
+            "Training and developing new team members",
+            "Traveling to meet different clients"
+        ],
+        "answer": "Training and developing new team members"
+    },
+    {
+        "article": "The national weather service has issued a severe storm warning for the coastal areas this evening. Residents are advised to secure any loose outdoor furniture and avoid driving unless absolutely necessary. High winds and heavy rainfall are expected starting at 6 PM. Power outages are possible, so please ensure your phones are charged.",
+        "question": "What should people do with their outdoor furniture?",
+        "options": [
+            "Throw it away",
+            "Bring it inside or secure it",
+            "Wash it before the rain starts",
+            "Sell it as quickly as possible"
+        ],
+        "answer": "Bring it inside or secure it"
+    }
+]
+/*B2*/
+[
+    {
+        "article": "Given the supply chain disruptions we've been facing, pushing the launch back to Q3 seems inevitable. While marketing is understandably frustrated, launching now with limited stock would ultimately damage our brand reputation more than a delay. We need to focus on managing customer expectations and offering pre-order incentives in the meantime.",
+        "question": "What is the primary reason for delaying the product launch?",
+        "options": [
+            "Marketing requested more time to prepare",
+            "Supply chain disruptions caused severe stock shortages",
+            "The brand reputation is already too damaged",
+            "Pre-order incentives were not ready in time"
+        ],
+        "answer": "Supply chain disruptions caused severe stock shortages"
+    },
+    {
+        "article": "Urban heat islands occur because concrete and asphalt absorb and retain heat significantly more than natural landscapes. Furthermore, the lack of vegetation in urban centers means we lose the cooling effect of evapotranspiration. To mitigate this, urban planners are increasingly integrating green roofs and utilizing reflective building materials to lower surface temperatures.",
+        "question": "How do urban planners attempt to reduce the heat island effect?",
+        "options": [
+            "By replacing natural landscapes with asphalt",
+            "By increasing the amount of concrete used in construction",
+            "By incorporating green roofs and reflective materials",
+            "By reducing the amount of evapotranspiration"
+        ],
+        "answer": "By incorporating green roofs and reflective materials"
+    },
+    {
+        "article": "When I started my digital detox, the first few days were agonizing. I constantly felt like I was missing out on crucial information. But by the second week, that 'fear of missing out' faded. I found myself reading actual books again and my sleep quality improved drastically. It's not about abandoning technology altogether, but rather establishing healthy boundaries.",
+        "question": "What was the speaker's initial reaction to the digital detox?",
+        "options": [
+            "They immediately started reading books",
+            "They found it very difficult and felt anxious",
+            "They slept much better on the very first night",
+            "They wanted to abandon technology entirely"
+        ],
+        "answer": "They found it very difficult and felt anxious"
+    },
+    {
+        "article": "Commuters heading into the city center this morning should anticipate major delays. The westbound lanes of the M4 motorway are closed due to a multi-vehicle collision overnight. Emergency services are still clearing the scene. Drivers are strongly advised to take the A38 as an alternative route, though expect heavy congestion there as well.",
+        "question": "Why is the M4 motorway currently closed?",
+        "options": [
+            "Routine road maintenance is taking place",
+            "A major traffic accident occurred overnight",
+            "There is heavy congestion on the A38",
+            "Emergency services are conducting a training drill"
+        ],
+        "answer": "A major traffic accident occurred overnight"
+    },
+    {
+        "article": "In my previous role, a colleague and I strongly disagreed on the direction of a marketing campaign. Instead of escalating the issue to our manager, I suggested we sit down and analyze the market research data together. We eventually found a compromise that combined elements of both our strategies, which led to a highly successful campaign.",
+        "question": "How did the applicant resolve the disagreement with their colleague?",
+        "options": [
+            "By asking their manager to make the final decision",
+            "By ignoring the colleague's suggestions completely",
+            "By reviewing data together to find a compromise",
+            "By changing departments to avoid further conflict"
+        ],
+        "answer": "By reviewing data together to find a compromise"
+    },
+    {
+        "article": "I'm calling regarding my internet service. I understand that occasional outages happen, but my connection has been dropping intermittently for the past three weeks, particularly during my evening video conferences. I've already rebooted the router multiple times. I'd appreciate it if you could send a technician out to check the external line, as I suspect that's where the fault lies.",
+        "question": "What does the customer believe is causing the internet issue?",
+        "options": [
+            "A broken router inside the house",
+            "Occasional scheduled network maintenance",
+            "A physical problem with the external line",
+            "Too many people on video conferences"
+        ],
+        "answer": "A physical problem with the external line"
+    },
+    {
+        "article": "Welcome to the central library. Most of our collections are open-stack, meaning you can browse freely. However, the rare manuscripts housed on the fourth floor require special permission. You must submit a request form signed by your academic supervisor at least 48 hours in advance, and you'll be required to wear provided gloves while handling the materials.",
+        "question": "What is required to access the rare manuscripts?",
+        "options": [
+            "Just walking up to the fourth floor during opening hours",
+            "A 48-hour advance request signed by an academic supervisor",
+            "Purchasing a pair of special gloves from the library desk",
+            "Browsing the open-stack collections first"
+        ],
+        "answer": "A 48-hour advance request signed by an academic supervisor"
+    },
+    {
+        "article": "I finally watched that new sci-fi movie everyone's talking about. Visually, it was absolutely stunning, and the special effects were groundbreaking. But honestly, the plot felt incredibly convoluted and left too many loose ends. The actors did what they could with the script, but I just couldn't connect with any of the characters.",
+        "question": "What was the speaker's opinion of the movie's story?",
+        "options": [
+            "It was groundbreaking and visually stunning",
+            "It was well-acted and highly emotional",
+            "It was confusing and poorly resolved",
+            "It was simple, predictable, and boring"
+        ],
+        "answer": "It was confusing and poorly resolved"
+    },
+    {
+        "article": "Doctor, I've been experiencing this persistent fatigue for about a month now. At first, I thought it was just overwork, but even after a restful weekend, I wake up exhausted. I also have this dull ache in my lower back. I haven't changed my diet or exercise routine, so I'm completely baffled as to what's triggering this.",
+        "question": "What can be inferred about the patient's condition?",
+        "options": [
+            "It was caused by a recent change in their diet",
+            "It completely disappears after a restful weekend",
+            "It involves extreme and sharp pain in the upper back",
+            "It is not relieved by rest and the cause is unknown"
+        ],
+        "answer": "It is not relieved by rest and the cause is unknown"
+    },
+    {
+        "article": "In response to surging inflation figures released yesterday, the central bank has announced an immediate interest rate hike of half a percentage point. Financial analysts predict this move will cool down the housing market by making mortgages more expensive. However, small business owners are expressing concern that borrowing costs will stifle their expansion plans for the coming year.",
+        "question": "How might the interest rate hike affect small businesses, according to the report?",
+        "options": [
+            "It will make buying a commercial property much cheaper",
+            "It will help them expand their businesses significantly faster",
+            "It will make borrowing money for future expansion more expensive",
+            "It will lower inflation immediately and increase their overall profits"
+        ],
+        "answer": "It will make borrowing money for future expansion more expensive"
+    },
+    {
+        "article": "Listen up, everyone. We've had a slight shift in priorities from upper management. While the user interface redesign was our primary focus for this sprint, we now need to pivot and address the security vulnerabilities flagged in the recent audit. The UI work isn't scrapped, but it's going on the back burner until we patch these critical security flaws.",
+        "question": "What is the new immediate priority for the development team?",
+        "options": [
+            "Continuing the user interface redesign as planned",
+            "Waiting for a new security audit from upper management",
+            "Fixing the critical security vulnerabilities immediately",
+            "Scrapping the entire software project and starting over"
+        ],
+        "answer": "Fixing the critical security vulnerabilities immediately"
+    },
+    {
+        "article": "Unlike her contemporaries who favored elaborate descriptions, Hemingway's writing style is renowned for its sheer minimalism. He relied heavily on the 'iceberg theory,' where the underlying meaning is mostly unstated, floating beneath the surface of the dialogue. This forces the reader to actively interpret the subtext rather than being spoon-fed the narrative.",
+        "question": "How does the speaker describe Hemingway's writing style?",
+        "options": [
+            "Elaborate and highly descriptive with long paragraphs",
+            "Minimalist and heavily reliant on unstated underlying meaning",
+            "Direct and constantly spoon-feeding the narrative to the reader",
+            "Complicated and primarily written to confuse the audience"
+        ],
+        "answer": "Minimalist and heavily reliant on unstated underlying meaning"
+    },
+    {
+        "article": "Ladies and gentlemen, this is your captain speaking. Due to severe thunderstorms developing over our destination airport in Atlanta, air traffic control has instructed us to divert to Charlotte. We anticipate landing in approximately 45 minutes. We will refuel and wait for the storm system to pass before continuing. We apologize for the inconvenience, but safety is our foremost priority.",
+        "question": "Why is the airplane diverting to Charlotte?",
+        "options": [
+            "The airplane is running dangerously low on fuel",
+            "The captain made a critical navigation error",
+            "There is dangerous weather at the original destination",
+            "Air traffic control in Charlotte requested emergency help"
+        ],
+        "answer": "There is dangerous weather at the original destination"
+    },
+    {
+        "article": "As you stand before this masterpiece, notice the artist's masterful use of chiaroscuro—the sharp contrast between light and dark. The focal point, the figure illuminated by the single candle, draws your eye immediately, while the secondary characters remain obscured in the shadows. This technique wasn't just aesthetic; it was used to heighten the dramatic tension of the scene.",
+        "question": "What is the primary purpose of the 'chiaroscuro' technique in the painting?",
+        "options": [
+            "To make all characters in the painting equally visible",
+            "To heighten the dramatic tension by contrasting light and dark",
+            "To demonstrate the artist's skill with painting candles",
+            "To intentionally obscure the main focal point from the viewer"
+        ],
+        "answer": "To heighten the dramatic tension by contrasting light and dark"
+    },
+    {
+        "article": "I completely understand why you're tempted to buy a house now that mortgage rates have dipped slightly. However, you need to factor in property taxes, maintenance costs, and home insurance, which can easily catch you off guard. Since you might be relocated for work in two years anyway, renting still gives you the flexibility you might urgently need.",
+        "question": "Why does the speaker advise their friend to continue renting?",
+        "options": [
+            "Because current mortgage rates are incredibly high",
+            "Because the friend cannot afford the current monthly rent",
+            "Because buying a house is universally a bad investment",
+            "Because the friend might need flexibility if they relocate for work"
+        ],
+        "answer": "Because the friend might need flexibility if they relocate for work"
+    }
+]
+/*C1*/
+[
+    {
+        "article": "While prescriptive linguists often bemoan the dilution of language, arguing that colloquialisms erode structural integrity, a descriptivist approach posits that language is a living, breathing entity. The assimilation of slang isn't indicative of cognitive decline, but rather semantic expansion. It's the inherent fluidity of language that ensures its survival, accommodating societal shifts rather than rigidly resisting them.",
+        "question": "What is the speaker's stance on the assimilation of slang?",
+        "options": [
+            "It represents semantic expansion and language survival.",
+            "It is a primary cause of cognitive decline in society.",
+            "It erodes the structural integrity of a language over time.",
+            "It should be rigidly resisted by prescriptive linguists."
+        ],
+        "answer": "It represents semantic expansion and language survival."
+    },
+    {
+        "article": "Looking at the Q3 projections, it's evident that the proposed merger is less about vertical integration and more about aggressive market consolidation. While the synergistic benefits are heavily touted in the prospectus, the underlying strategy seems to be neutralizing our primary competitor. However, this approach runs the very real risk of triggering an antitrust probe, which could tie us up in litigation for years.",
+        "question": "What is the speaker's primary concern regarding the proposed merger?",
+        "options": [
+            "It will fail to neutralize their main market competitor.",
+            "It might prompt a lengthy antitrust investigation by regulators.",
+            "It relies too heavily on vertical integration strategies.",
+            "The synergistic benefits outlined in the prospectus are inaccurate."
+        ],
+        "answer": "It might prompt a lengthy antitrust investigation by regulators."
+    },
+    {
+        "article": "The deployment of algorithmic risk assessments in the criminal justice system is fraught with ethical peril. Proponents argue they strip human bias from sentencing. Yet, these models are trained on historical data, which is inextricably woven with systemic inequalities. Consequently, rather than eradicating prejudice, these algorithms risk mathematically codifying it under the veneer of objective science.",
+        "question": "Why does the speaker criticize the use of algorithmic risk assessments?",
+        "options": [
+            "They are too difficult for judges and lawyers to interpret.",
+            "They strip away necessary human empathy from the sentencing process.",
+            "They reinforce and mathematically legitimize existing systemic prejudices.",
+            "They completely ignore historical data when making predictions."
+        ],
+        "answer": "They reinforce and mathematically legitimize existing systemic prejudices."
+    },
+    {
+        "article": "Deep-sea mining is often heralded as the panacea for our insatiable appetite for rare earth metals. However, this nascent industry operates in a regulatory vacuum. The benthic ecosystems they intend to exploit are incredibly fragile and poorly understood. The sediment plumes generated by the dredging process could suffocate marine life over vast swaths of the ocean floor, causing irreversible ecological devastation long before we fully comprehend the fallout.",
+        "question": "What is a specific environmental threat posed by deep-sea mining mentioned in the excerpt?",
+        "options": [
+            "The rapid depletion of rare earth metals.",
+            "The creation of sediment plumes that can choke marine life.",
+            "The introduction of invasive species to benthic ecosystems.",
+            "The warming of ocean temperatures due to dredging machinery."
+        ],
+        "answer": "The creation of sediment plumes that can choke marine life."
+    },
+    {
+        "article": "We often flatter ourselves into believing our decisions are the product of rigorous rational analysis. Yet, cognitive psychology reveals that we are heavily susceptible to the anchoring effect. When presented with an initial piece of information—however arbitrary—our subsequent judgments are disproportionately skewed toward that anchor. It takes a concerted, metacognitive effort to decouple our reasoning from that initial reference point.",
+        "question": "What does the 'anchoring effect' illustrate about human decision-making?",
+        "options": [
+            "Rational analysis is the most common way humans make decisions.",
+            "Initial, sometimes irrelevant information disproportionately influences our subsequent judgments.",
+            "Metacognitive effort naturally prevents us from making biased choices.",
+            "Arbitrary information is usually ignored when making rigorous decisions."
+        ],
+        "answer": "Initial, sometimes irrelevant information disproportionately influences our subsequent judgments."
+    },
+    {
+        "article": "The artist's latest retrospective is, frankly, an exercise in self-indulgence. While her early work demonstrated a profound command of spatial dynamics, this new installation feels entirely derivative. It leans heavily on shock value, utilizing discordant multimedia elements that lack any cohesive thematic thread. It's as though she's abandoned nuanced critique in favor of a superficial, cacophonous spectacle.",
+        "question": "How does the critic view the artist's new installation compared to her early work?",
+        "options": [
+            "As a profound continuation of her mastery of spatial dynamics.",
+            "As a cohesive thematic exploration of modern multimedia.",
+            "As a superficial spectacle lacking the nuance of her previous creations.",
+            "As an impressive, albeit shocking, critique of self-indulgence."
+        ],
+        "answer": "As a superficial spectacle lacking the nuance of her previous creations."
+    },
+    {
+        "article": "For decades, the prevailing dogma was that our genetic blueprint was unalterable. Enter epigenetics. We now understand that environmental factors—ranging from prolonged stress to dietary habits—can essentially tag our DNA, turning certain gene expressions on or off without altering the underlying sequence. It's a paradigm shift, suggesting that we aren't merely passive victims of our genetic inheritance, but active participants in its manifestation.",
+        "question": "What is the main implication of epigenetics discussed by the speaker?",
+        "options": [
+            "Genetic blueprints can now be completely rewritten by scientists.",
+            "Environmental factors can modify gene expression without changing the DNA sequence.",
+            "Dietary habits are the sole factor in altering our underlying DNA sequence.",
+            "Humans are completely helpless against the genetic traits they inherit."
+        ],
+        "answer": "Environmental factors can modify gene expression without changing the DNA sequence."
+    },
+    {
+        "article": "The revitalization project aims to breathe new life into the historic docklands, transforming derelict warehouses into mixed-use commercial spaces. However, community organizers are rightfully apprehensive. The influx of affluent professionals will inevitably drive up property valuations, exacerbating the affordable housing crisis. If we don't implement robust rent-control measures concurrently, this 'revitalization' is merely a euphemism for gentrification and displacement.",
+        "question": "What does the speaker believe is a necessary condition for the docklands project to be successful without causing harm?",
+        "options": [
+            "The simultaneous implementation of strong rent-control measures.",
+            "The total halting of any commercial development in the historic area.",
+            "The forced relocation of affluent professionals from the docklands.",
+            "The demolition of all derelict warehouses to build affordable housing."
+        ],
+        "answer": "The simultaneous implementation of strong rent-control measures."
+    },
+    {
+        "article": "Despite early morning volatility, blue-chip stocks rallied late in the session, effectively offsetting the tech sector's sharp decline. Investors are ostensibly digesting the Federal Reserve's hawkish minutes, which strongly hint at an impending tightening of monetary policy. While growth stocks are typically the first to take a hit in a high-interest environment, defensive sectors like utilities and healthcare are providing a much-needed ballast to the broader market.",
+        "question": "Why are defensive sectors currently performing well in the stock market?",
+        "options": [
+            "They are benefiting from the Federal Reserve lowering interest rates.",
+            "They are acting as stabilizers against the tech decline and anticipated high interest rates.",
+            "They are experiencing a sudden surge in technological innovation.",
+            "They are capitalizing on the early morning volatility of blue-chip stocks."
+        ],
+        "answer": "They are acting as stabilizers against the tech decline and anticipated high interest rates."
+    },
+    {
+        "article": "My approach to change management is rooted in transparency and iterative feedback. When we overhauled the supply chain at my previous firm, there was palpable resistance. Rather than mandating compliance from the top down, I instituted cross-functional focus groups. This didn't just placate the skeptics; it unearthed critical operational blind spots that the executive team had completely overlooked, ultimately streamlining the transition.",
+        "question": "How did the applicant effectively manage the supply chain overhaul?",
+        "options": [
+            "By mandating strict top-down compliance from all employees.",
+            "By completely replacing the executive team in charge of the transition.",
+            "By ignoring the skeptics and pushing through the changes rapidly.",
+            "By utilizing cross-functional groups to gather feedback and identify overlooked issues."
+        ],
+        "answer": "By utilizing cross-functional groups to gather feedback and identify overlooked issues."
+    },
+    {
+        "article": "To view the revolution merely as a spontaneous uprising of the proletariat is a gross oversimplification. While economic disparity was undoubtedly the catalyst, the ideological groundwork had been meticulously laid by a disenfranchised intelligentsia over the preceding decade. They disseminated clandestine pamphlets that weaponized the public's grievance, effectively transforming disparate, localized bread riots into a cohesive movement aimed at toppling the monarchy.",
+        "question": "What role did the 'disenfranchised intelligentsia' play in the revolution, according to the speaker?",
+        "options": [
+            "They initiated the localized bread riots to steal food.",
+            "They defended the monarchy from the spontaneous uprisings.",
+            "They provided the ideological framework that united isolated protests into a focused rebellion.",
+            "They solved the economic disparity that was the root cause of the revolution."
+        ],
+        "answer": "They provided the ideological framework that united isolated protests into a focused rebellion."
+    },
+    {
+        "article": "In assessing the plaintiff's claim of copyright infringement, we must carefully navigate the doctrine of fair use. The defendant's utilization of the copyrighted material is undeniably transformative. They didn't merely reproduce the original artwork; they satirized it, fundamentally altering its message and purpose. Furthermore, this parody does not act as a market substitute for the original piece, significantly weakening the plaintiff's assertion of financial damages.",
+        "question": "Why does the speaker believe the defendant's use of the material is protected?",
+        "options": [
+            "It is a direct and faithful reproduction of the original artwork.",
+            "The plaintiff never officially registered the copyright for the artwork.",
+            "It is a transformative parody that does not financially compete with the original work.",
+            "The defendant paid a licensing fee to use the artwork for a parody."
+        ],
+        "answer": "It is a transformative parody that does not financially compete with the original work."
+    },
+    {
+        "article": "I finally finished the Booker winner. I know the critics are raving about its non-linear narrative, but honestly, I found the fragmented chronology more alienating than profound. It felt like a gimmick that deliberately obscured the character development. By the time the disparate plot threads finally converged in the third act, I was too emotionally detached to care about the protagonist's epiphany.",
+        "question": "What was the speaker's main criticism of the award-winning book?",
+        "options": [
+            "The third act was entirely predictable and boring.",
+            "The disjointed timeline hindered emotional connection and character development.",
+            "The critics were completely wrong about the book winning an award.",
+            "The protagonist's epiphany was too long and overly detailed."
+        ],
+        "answer": "The disjointed timeline hindered emotional connection and character development."
+    },
+    {
+        "article": "The James Webb telescope has revolutionized our understanding of exoplanetary atmospheres, but its spectroscopic capabilities have limitations when it comes to detecting biosignatures in heavily clouded planets. Our proposed orbital observatory, utilizing advanced interferometry, circumvents this bottleneck. By resolving the atmospheric composition with unprecedented granularity, we can definitively differentiate between biotic and abiotic methane sources, a holy grail in the search for extraterrestrial life.",
+        "question": "How does the proposed observatory improve upon existing technology like the James Webb telescope?",
+        "options": [
+            "It travels much closer to exoplanets to take physical samples.",
+            "It focuses entirely on abiotic methane sources rather than biosignatures.",
+            "It uses interferometry to penetrate cloud cover and distinguish the origins of certain gases.",
+            "It replaces the need for spectroscopy by relying solely on visual photography."
+        ],
+        "answer": "It uses interferometry to penetrate cloud cover and distinguish the origins of certain gases."
+    },
+    {
+        "article": "The administration's rhetoric regarding energy independence is increasingly incongruous with its policy actions. While they publicly champion the transition to renewables, they are simultaneously quietly subsidizing fossil fuel exploration through labyrinthine tax loopholes. This cognitive dissonance not only undermines our international climate commitments but also creates a volatile environment for green tech investors seeking regulatory certainty.",
+        "question": "What is the speaker's main criticism of the administration's energy strategy?",
+        "options": [
+            "They are moving too quickly toward renewable energy sources.",
+            "They have completely abandoned their international climate commitments.",
+            "They are openly taxing fossil fuel companies too heavily.",
+            "There is a contradiction between their public support for renewables and their hidden support for fossil fuels."
+        ],
+        "answer": "There is a contradiction between their public support for renewables and their hidden support for fossil fuels."
+    }
+]
+/*C2*/
+[
+    {
+        "article": "While the weak version of the Sapir-Whorf hypothesis—that language merely influences thought—is largely uncontroversial today, resurrecting its strong deterministic counterpart borders on academic heresy. Yet, contemporary neuroimaging suggests a more nuanced reality: while our lexicon doesn't strictly delimit our cognitive boundaries, it incontrovertibly shapes our ontological framing. We aren't prisoners of our grammar, but rather, language acts as a highly specialized cognitive scaffolding, predisposing us to compartmentalize the continuum of experience into culturally idiosyncratic silos.",
+        "question": "What is the speaker's nuanced stance on the Sapir-Whorf hypothesis?",
+        "options": [
+            "Language strictly confines our ability to perceive objective reality.",
+            "The strong deterministic version is completely validated by modern neuroimaging.",
+            "Language does not imprison our thoughts but heavily predisposes how we categorize experiences.",
+            "The hypothesis is entirely obsolete and has no bearing on modern cognitive science."
+        ],
+        "answer": "Language does not imprison our thoughts but heavily predisposes how we categorize experiences."
+    },
+    {
+        "article": "Deploying a 'poison pill' defense in the face of this hostile takeover might initially appease the board's instinct for self-preservation, but it borders on a breach of fiduciary duty. By deliberately diluting the target's equity to thwart the acquisition, we are effectively disenfranchising our own shareholders. While it staves off the immediate threat of corporate cannibalism, it concurrently signals to the market an entrenched management prioritizing its own tenure over maximizing long-term shareholder value.",
+        "question": "Why does the speaker oppose utilizing a 'poison pill' strategy?",
+        "options": [
+            "It legally forces the acquiring company to pay a much higher premium.",
+            "It prioritizes the board's job security at the expense of shareholder value.",
+            "It makes the company an even more attractive target for corporate cannibalism.",
+            "It is an obsolete tactic that no longer dilutes the target's equity effectively."
+        ],
+        "answer": "It prioritizes the board's job security at the expense of shareholder value."
+    },
+    {
+        "article": "The author's penchant for metafiction isn't mere stylistic bravado; it's a deliberate epistemological critique of our post-truth era. By constantly undermining her own narrator's reliability and fracturing the narrative chronology, she forces the reader to confront the inherent malleability of 'facts.' The novel refuses to offer the catharsis of a definitive resolution, choosing instead to reflect the dizzying relativity and cognitive dissonance that characterize contemporary digital discourse.",
+        "question": "According to the critique, what is the primary function of the novel's metafictional elements?",
+        "options": [
+            "To provide readers with a comforting, definitive resolution to complex issues.",
+            "To showcase the author's impressive stylistic bravado and literary intelligence.",
+            "To mock the historical accuracy of events described in the narrative.",
+            "To compel readers to actively question the nature of truth and factual reliability."
+        ],
+        "answer": "To compel readers to actively question the nature of truth and factual reliability."
+    },
+    {
+        "article": "The assertion of extraterritorial jurisdiction in this antitrust case represents a flagrant overreach that flouts the bedrock principles of customary international law. While the bilateral treaty ostensibly permits mutual legal assistance, it does not confer a carte blanche to unilaterally police foreign markets. If we allow domestic regulatory zeal to supersede the sovereignty of allied nations, we risk precipitating a retaliatory cascade of diplomatic sanctions that will unravel decades of carefully orchestrated geopolitical equilibrium.",
+        "question": "What is the speaker warning against in the context of the antitrust case?",
+        "options": [
+            "The rewriting of bilateral treaties to favor developing nations.",
+            "The unilateral imposition of domestic laws on foreign sovereign markets.",
+            "The lack of regulatory zeal in combating international corporate monopolies.",
+            "The complete abolition of customary international law by the allied nations."
+        ],
+        "answer": "The unilateral imposition of domestic laws on foreign sovereign markets."
+    },
+    {
+        "article": "While somatic gene therapy offers a targeted, localized intervention for monogenic disorders, the pivot toward germline modification opens a Pandora's box of bioethical conundrums. We are moving from healing an individual to irrevocably altering the human germplasm. The sheer arrogance of assuming we can accurately predict the pleiotropic effects of these edits across successive generations is staggering. We risk embedding irreversible, iatrogenic mutations into the human genome under the guise of eradication.",
+        "question": "What is the speaker's primary concern regarding germline modification?",
+        "options": [
+            "It is ineffective for treating localized monogenic disorders.",
+            "It is too expensive to be implemented on a global scale.",
+            "It risks introducing permanent, unforeseen medical complications into future generations.",
+            "It requires a level of technological sophistication that currently does not exist."
+        ],
+        "answer": "It risks introducing permanent, unforeseen medical complications into future generations."
+    },
+    {
+        "article": "We have fundamentally transitioned into Baudrillard's realm of the hyperreal, where the simulacrum doesn't merely represent reality; it precedes and dictates it. The curated aesthetics of social media have ceased to be a reflection of our lives. Instead, our actual lives are retroactively molded to fit the parameters of the digital algorithm. The tragic irony is that in our relentless pursuit of 'authentic' experiences, we are merely pantomiming pre-packaged tropes dictated by ubiquitous commercial semiotics.",
+        "question": "What paradox of modern life does the speaker highlight?",
+        "options": [
+            "Social media algorithms are struggling to accurately represent authentic human emotion.",
+            "The pursuit of authentic experiences actually results in the imitation of artificial, commercial tropes.",
+            "People are abandoning social media to return to a more primitive, less curated reality.",
+            "Commercial semiotics are failing to capture the true essence of the hyperreal."
+        ],
+        "answer": "The pursuit of authentic experiences actually results in the imitation of artificial, commercial tropes."
+    },
+    {
+        "article": "Invoking the anthropic principle to explain the seemingly fine-tuned cosmological constants is a profound abdication of scientific inquiry. It essentially argues that the universe is the way it is because if it weren't, we wouldn't be here to observe it. While philosophically tantalizing, it is scientifically sterile. It effectively acts as a tautological stopgap, a 'god of the gaps' argument dressed in secular garb, discouraging the rigorous pursuit of a unified theory that could mathematically necessitate these constants.",
+        "question": "Why does the speaker consider the anthropic principle to be scientifically inadequate?",
+        "options": [
+            "Because it encourages overly aggressive scientific experimentation.",
+            "Because it proves that a unified theory of physics is impossible to achieve.",
+            "Because it relies on religious ideology rather than philosophical logic.",
+            "Because it provides a circular explanation that halts further rigorous investigation."
+        ],
+        "answer": "Because it provides a circular explanation that halts further rigorous investigation."
+    },
+    {
+        "article": "Brutalism is arguably the most misunderstood architectural movement of the 20th century. Conceived as a utopian, egalitarian endeavor—using raw concrete as a symbol of unpretentious honesty—it sought to democratize space. Yet, the public's visceral rejection of these monolithic structures as dystopian eyesores highlights a profound failure in spatial determinism. The architects erroneously assumed that imposing a rationally designed, monumental environment would inevitably engineer a more cohesive, socialist society.",
+        "question": "What fundamental error did Brutalist architects make, according to the excerpt?",
+        "options": [
+            "They believed raw concrete was too expensive for public housing projects.",
+            "They assumed that a specific physical environment could successfully dictate social behavior.",
+            "They prioritized aesthetic beauty over functional durability in their designs.",
+            "They failed to understand the mathematical principles of monumental environments."
+        ],
+        "answer": "They assumed that a specific physical environment could successfully dictate social behavior."
+    },
+    {
+        "article": "The persistent adherence to the 'Great Man' theory of history is an exercise in narrative reductionism that strips agency from the masses. By attributing the seismic shifts of epochs to the singular genius or sheer will of isolated individuals, we obscure the complex, subterranean socio-economic currents that actually precipitate change. A more rigorous historiography demands we pivot to subaltern studies, analyzing how grassroots movements and material conditions serve as the true incubators of revolution.",
+        "question": "What is the speaker's main critique of the 'Great Man' theory of history?",
+        "options": [
+            "It overemphasizes the role of grassroots movements in historical events.",
+            "It requires historians to rely on incomplete biographical data.",
+            "It ignores the underlying socio-economic and collective forces that drive historical change.",
+            "It focuses too heavily on material conditions rather than philosophical ideals."
+        ],
+        "answer": "It ignores the underlying socio-economic and collective forces that drive historical change."
+    },
+    {
+        "article": "The seductiveness of Modern Monetary Theory lies in its premise that a sovereign currency issuer cannot technically go bankrupt, thereby ostensibly rendering deficit spending a non-issue until full employment is reached. However, this nonchalance toward fiscal discipline blithely ignores the psychological mechanisms of inflation expectations. Once the public loses faith in the purchasing power of fiat currency, velocity skyrockets, and inflation metamorphoses from a manageable economic metric into a self-fulfilling, hyperinflationary spiral.",
+        "question": "What fatal flaw in Modern Monetary Theory does the speaker identify?",
+        "options": [
+            "It assumes that a sovereign currency issuer can frequently go bankrupt.",
+            "It fails to account for the psychological loss of public faith in a currency's value.",
+            "It demands an overly strict adherence to fiscal discipline and balanced budgets.",
+            "It guarantees full employment at the cost of immediate, unmanageable deflation."
+        ],
+        "answer": "It fails to account for the psychological loss of public faith in a currency's value."
+    },
+    {
+        "article": "The prevailing paradigm in AGI research conflates advanced computational heuristics with genuine sentience. We are engineering highly sophisticated philosophical zombies—entities capable of mimicking empathy, reasoning, and creativity with startling verisimilitude, yet completely devoid of inner experiential life, or qualia. Until we can bridge the explanatory gap regarding how physical processes give rise to subjective experience, declaring an AI 'conscious' is merely an anthropomorphic projection.",
+        "question": "What distinction is central to the speaker's argument about artificial general intelligence?",
+        "options": [
+            "The difference between functional simulation of behavior and actual subjective experience.",
+            "The difference between heuristic algorithms and standard computational programming.",
+            "The difference between human emotional projection and robotic logic.",
+            "The difference between empathetic behavior and creative problem-solving."
+        ],
+        "answer": "The difference between functional simulation of behavior and actual subjective experience."
+    },
+    {
+        "article": "The recent bipartisan infrastructure bill is being heralded as a triumph of legislative compromise, yet a closer examination reveals a masterclass in performative incrementalism. Both sides have effectively colluded to pass a watered-down package that provides excellent photo opportunities while assiduously avoiding any structural disruption to the fossil fuel status quo. It is a spectacular feat of political theater designed to placate the electorate without threatening the vested interests of their primary donors.",
+        "question": "What is the speaker's cynical view of the recent bipartisan bill?",
+        "options": [
+            "It is a radical restructuring of the economy disguised as a minor infrastructure plan.",
+            "It is a genuine but failed attempt to completely eliminate fossil fuel dependency.",
+            "It is a superficial measure meant to create the illusion of progress while protecting elite interests.",
+            "It is a poorly constructed bill that will result in the immediate loss of donor funding."
+        ],
+        "answer": "It is a superficial measure meant to create the illusion of progress while protecting elite interests."
+    },
+    {
+        "article": "In his late string quartets, Beethoven doesn't merely stretch the sonata form; he actively dismantles it. The music is characterized by jarring juxtaposition, abrupt silences, and an almost brutal disregard for conventional harmonic resolution. This isn't the work of a composer losing his technical faculties to deafness, but rather a profound ontological statement. He deliberately shatters the cohesive architectural symmetry of classical music to articulate a modern, fragmented existential angst that words could never capture.",
+        "question": "How does the speaker interpret the unconventional structure of Beethoven's late string quartets?",
+        "options": [
+            "As a tragic result of the composer's declining hearing and technical skills.",
+            "As an intentional deconstruction of musical form to express a fragmented existential reality.",
+            "As an attempt to create a new, perfectly symmetrical architectural style of music.",
+            "As a humorous parody of the rigid sonata form popular in classical music."
+        ],
+        "answer": "As an intentional deconstruction of musical form to express a fragmented existential reality."
+    },
+    {
+        "article": "The extirpation of apex predators has triggered a phenomenon known as trophic downgrading, precipitating cascading effects throughout the entire ecosystem. We are not merely seeing a decline in biodiversity, but a shift toward an alternative stable state. The overgrazing by unchecked herbivore populations has fundamentally altered the soil chemistry and hydrological cycles. Consequently, merely reintroducing the predators now is largely futile; the underlying ecological scaffolding has been so irrevocably warped that it can no longer support the historical climax community.",
+        "question": "Why is reintroducing predators an insufficient solution for these ecosystems?",
+        "options": [
+            "Because the predators will immediately migrate to a more suitable environment.",
+            "Because the herbivores have evolved defenses against the apex predators.",
+            "Because the fundamental physical and chemical structures of the environment have been permanently altered.",
+            "Because the biodiversity of the ecosystem has actually increased without the predators."
+        ],
+        "answer": "Because the fundamental physical and chemical structures of the environment have been permanently altered."
+    },
+    {
+        "article": "Counsel's reliance on Chevron deference in this instance is fundamentally misplaced and effectively serves as an end-run around the non-delegation doctrine. The executive agency has not merely interpreted an ambiguous statute; it has unilaterally fabricated sweeping regulatory frameworks out of whole cloth, completely bypassing the legislative branch. To defer to the agency's interpretation here is to abdicate judicial review and sanction the unconstitutional consolidation of legislative and executive powers within an unelected bureaucracy.",
+        "question": "What is the core of the legal argument against the executive agency's actions?",
+        "options": [
+            "The agency has misinterpreted a very clear and unambiguous statute.",
+            "The agency lacks the funding to implement the new sweeping regulatory frameworks.",
+            "The agency has usurped legislative authority by creating laws rather than interpreting them.",
+            "The agency has violated the rights of the legislative branch to interpret the constitution."
+        ],
+        "answer": "The agency has usurped legislative authority by creating laws rather than interpreting them."
+    }
+]

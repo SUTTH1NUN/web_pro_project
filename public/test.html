@@ -216,7 +216,7 @@
                     </div>
                 </div>
 
-                <button class="btn-start" onclick="alert('Feature coming soon!')">
+                <button class="btn-start" onclick="startAdaptiveTest('reading')">
                     Start Reading Test
                 </button>
             </div>
@@ -268,13 +268,111 @@
                     </div>
                 </div>
 
-                <button class="btn-start" onclick="alert('Feature coming soon!')">
+                <button class="btn-start" onclick="startAdaptiveTest('listening')">
                     Start Listening Test
                 </button>
             </div>
 
         </div>
     </main>
+
+    <!-- Reading Test Modal (Adaptive) -->
+    <div id="testModal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+        <div class="modal-content" style="background: white; border-radius: 12px; width: 100%; max-width: 800px; padding: 2rem; position: relative; max-height: 90vh; overflow-y: auto;">
+            <button onclick="closeTestModal()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2 id="modalTitle">Reading Test <span style="font-size: 0.8rem; color: #a0aec0;">(v4)</span></h2>
+                <span id="adaptiveProgress" style="font-weight: 600; color: #3182ce; background: #ebf8ff; padding: 4px 12px; border-radius: 20px;">Question 1 of 15</span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; background: #edf2f7; padding: 0.75rem; border-radius: 8px;">
+                <span style="font-weight: 600; color: #4a5568;">Time Remaining:</span>
+                <span id="timerDisplay" style="font-size: 1.25rem; font-weight: 700; color: #e53e3e;">10:00</span>
+            </div>
+
+            <!-- Loading State -->
+            <div id="adaptiveLoading" style="display: none; text-align: center; padding: 3rem 0;">
+                <div id="loadingSpinner" style="width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #3182ce; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem auto;"></div>
+                <p id="loadingText" style="color: #4a5568; font-weight: 500;">AI is analyzing your level and picking the next question...</p>
+                <div id="errorDisplay" style="color: red; margin-top: 1rem; font-weight: bold;"></div>
+                <button id="retryBtn" onclick="closeTestModal()" class="btn-start" style="background: #e53e3e; color: white; display: none; margin-top: 1rem;">Close & Try Again</button>
+                <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
+            </div>
+
+            <!-- Question Container -->
+            <form id="adaptiveTestForm" style="display: none;">
+                <div id="audioControls" style="display: none; background: #f7fafc; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #e2e8f0; text-align: center;">
+                    <p style="margin-bottom: 1rem; color: #4a5568; font-weight: 600;">Listen to the scenario carefully.</p>
+                    <button type="button" id="playAudioBtn" onclick="playListeningAudio()" style="background: #3182ce; color: white; border: none; padding: 0.75rem 2rem; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <span>🔊 Play Audio</span>
+                    </button>
+                    <p id="playCountDisplay" style="margin-top: 0.5rem; font-size: 0.85rem; color: #718096;">Plays remaining: 2</p>
+                </div>
+
+                <div id="articleContainer" style="background: #f7fafc; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #e2e8f0; font-size: 1.05rem; line-height: 1.6;">
+                    <!-- Article text will go here -->
+                </div>
+
+                <div id="questionContainer" style="margin-bottom: 1.5rem;">
+                    <!-- Question and options will go here -->
+                </div>
+
+                <button type="submit" id="submitAdaptiveBtn" class="btn-start" style="background: #3182ce; color: white;">Submit Answer</button>
+            </form>
+
+            <!-- Result Container -->
+            <div id="adaptiveResult" style="display: none; text-align: center; padding: 2rem 0;">
+                <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+                <h2 style="margin-bottom: 1rem; color: #2d3748;">Test Completed!</h2>
+                <p style="font-size: 1.2rem; color: #4a5568; margin-bottom: 0.5rem;">Your Estimated CEFR Level is:</p>
+                <div id="finalCefrDisplay" style="font-size: 3rem; font-weight: 800; color: #3182ce; margin-bottom: 2rem;">B2</div>
+                <button onclick="window.location.href='profile.html'" class="btn-start" style="background: #38a169; color: white;">View My Profile</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Listening Test Modal -->
+    <div id="listeningTestModal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+        <div class="modal-content" style="background: white; border-radius: 12px; width: 100%; max-width: 600px; padding: 2rem; position: relative;">
+            <button onclick="closeListeningTestModal()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            <h2 style="margin-bottom: 1rem;">Listening Test</h2>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; background: #edf2f7; padding: 0.75rem; border-radius: 8px;">
+                <span style="font-weight: 600; color: #4a5568;">Time Remaining:</span>
+                <span id="listeningTimerDisplay" style="font-size: 1.25rem; font-weight: 700; color: #e53e3e;">10:00</span>
+            </div>
+
+            <!-- Audio Player Mockup -->
+            <div style="margin-bottom: 1.5rem; background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; text-align: center;">
+                <p style="font-weight: 600; color: #4a5568; margin-bottom: 0.5rem;">Audio Conversation 1</p>
+                <audio controls style="width: 100%;" onplay="this.playCount = (this.playCount || 0) + 1; if(this.playCount > 2) { alert('You have reached the maximum number of plays.'); this.pause(); }">
+                    <!-- Note: Add a real audio source here -->
+                    <source src="#" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <p style="font-size: 0.8rem; color: #a0aec0; margin-top: 0.5rem;">Maximum 2 plays allowed.</p>
+            </div>
+
+            <form id="listeningTestForm">
+                <div style="margin-bottom: 1.5rem;">
+                    <p style="font-weight: 600; margin-bottom: 0.5rem;">1. Where does the conversation take place?</p>
+                    <label style="display: block; margin-bottom: 0.5rem;"><input type="radio" name="l1" value="A"> A) At a hospital</label>
+                    <label style="display: block; margin-bottom: 0.5rem;"><input type="radio" name="l1" value="B"> B) At a train station</label>
+                    <label style="display: block; margin-bottom: 0.5rem;"><input type="radio" name="l1" value="C"> C) At a restaurant</label>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <p style="font-weight: 600; margin-bottom: 0.5rem;">2. What does the man want to buy?</p>
+                    <label style="display: block; margin-bottom: 0.5rem;"><input type="radio" name="l2" value="A"> A) A ticket to London</label>
+                    <label style="display: block; margin-bottom: 0.5rem;"><input type="radio" name="l2" value="B"> B) A cup of coffee</label>
+                    <label style="display: block; margin-bottom: 0.5rem;"><input type="radio" name="l2" value="C"> C) A newspaper</label>
+                </div>
+
+                <button type="submit" id="submitListeningTestBtn" class="btn-start" style="background: #805ad5; color: white;">Submit Test</button>
+            </form>
+        </div>
+    </div>
 
     <script>
         const token = localStorage.getItem('token');
@@ -286,6 +384,362 @@
             localStorage.removeItem('token');
             window.location.href = 'index.html';
         }
+
+        let timerInterval;
+        let timeLeft = 600; // 10 minutes in seconds
+        let currentTestType = null;
+
+        let adaptiveState = {
+            currentScore: 0.0,
+            seenQuestionIds: [],
+            step: 1,
+            maxSteps: 10,
+            currentQuestionData: null
+        };
+
+        function startAdaptiveTest(type) {
+            currentTestType = type;
+            document.getElementById('testModal').style.display = 'flex';
+            document.getElementById('adaptiveResult').style.display = 'none';
+            document.getElementById('adaptiveTestForm').style.display = 'none';
+            
+            const titleEl = document.getElementById('modalTitle');
+            if (titleEl) {
+                titleEl.innerHTML = `${type === 'reading' ? 'Reading' : 'Listening'} Test <span style="font-size: 0.8rem; color: #a0aec0;">(v4)</span>`;
+            }
+            
+            // Reset state
+            adaptiveState = {
+                currentScore: 0.0,
+                seenQuestionIds: [],
+                step: 1,
+                maxSteps: 15,
+                currentQuestionData: null
+            };
+            
+            timeLeft = 600; // Reset timer to 10 mins
+            updateTimerDisplay('timerDisplay');
+            startTimer('adaptiveTestForm', 'timerDisplay');
+            
+            fetchNextAdaptiveQuestion();
+        }
+
+        function showErrorInModal(msg) {
+            document.getElementById('loadingSpinner').style.display = 'none';
+            document.getElementById('loadingText').innerText = 'Something went wrong!';
+            document.getElementById('errorDisplay').innerText = msg;
+            document.getElementById('retryBtn').style.display = 'inline-block';
+        }
+
+        async function fetchNextAdaptiveQuestion() {
+            document.getElementById('adaptiveTestForm').style.display = 'none';
+            document.getElementById('adaptiveLoading').style.display = 'block';
+            document.getElementById('loadingSpinner').style.display = 'block';
+            document.getElementById('loadingText').innerText = 'AI is analyzing your level and picking the next question...';
+            document.getElementById('errorDisplay').innerText = '';
+            document.getElementById('retryBtn').style.display = 'none';
+            
+            document.getElementById('adaptiveProgress').innerText = `Question ${adaptiveState.step} of ${adaptiveState.maxSteps}`;
+
+            try {
+                const reqBody = { 
+                    testType: currentTestType,
+                    currentScore: adaptiveState.currentScore,
+                    seenQuestionIds: adaptiveState.seenQuestionIds
+                };
+                console.log('Fetching next question...', reqBody);
+
+                const res = await fetch('/api/tests/adaptive/next', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` 
+                    },
+                    body: JSON.stringify(reqBody)
+                });
+
+                console.log('Response status:', res.status);
+
+                if (res.ok) {
+                    const data = await res.json();
+                    console.log('Question Data:', data);
+                    if (!data || !data.questions || data.questions.length === 0) {
+                        throw new Error('Invalid question data received from server');
+                    }
+                    adaptiveState.currentQuestionData = data;
+                    renderAdaptiveQuestion(data);
+                } else {
+                    let errMsg = 'Unknown error';
+                    try {
+                        const errData = await res.json();
+                        errMsg = errData.message || errData.error || errMsg;
+                    } catch(e) {}
+                    showErrorInModal(`API Error (${res.status}): ${errMsg}`);
+                }
+            } catch (err) {
+                console.error('Fetch Exception:', err);
+                showErrorInModal(`Connection error: ${err.message}`);
+            }
+        }
+
+        function renderAdaptiveQuestion(data) {
+            document.getElementById('adaptiveLoading').style.display = 'none';
+            document.getElementById('adaptiveTestForm').style.display = 'block';
+            document.getElementById('submitAdaptiveBtn').disabled = false;
+            document.getElementById('submitAdaptiveBtn').innerText = 'Submit Answer';
+
+            // Render Audio or Article based on test type
+            if (currentTestType === 'listening') {
+                document.getElementById('articleContainer').style.display = 'none';
+                document.getElementById('audioControls').style.display = 'block';
+                
+                // Reset audio plays for this question
+                playCount = 0;
+                document.getElementById('playCountDisplay').innerText = `Plays remaining: ${MAX_PLAYS}`;
+                const playBtn = document.getElementById('playAudioBtn');
+                playBtn.disabled = false;
+                playBtn.style.opacity = '1';
+                playBtn.innerHTML = '<span>🔊 Play Audio</span>';
+            } else {
+                document.getElementById('audioControls').style.display = 'none';
+                document.getElementById('articleContainer').style.display = 'block';
+                document.getElementById('articleContainer').innerText = data.article || "No passage provided.";
+            }
+
+            // Render Question & Options (Assuming 1 sub-question for simplicity)
+            const subQ = data.questions[0];
+            let optionsHtml = '';
+            
+            if (subQ.options && subQ.options.length > 0) {
+                subQ.options.forEach((opt, index) => {
+                    const letter = String.fromCharCode(65 + index); // A, B, C...
+                    optionsHtml += `
+                        <label style="display: block; margin-bottom: 0.75rem; cursor: pointer; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 8px;">
+                            <input type="radio" name="adaptiveOption" value="${opt}" required style="margin-right: 0.5rem;"> 
+                            <strong>${letter})</strong> ${opt}
+                        </label>
+                    `;
+                });
+            } else {
+                // Fallback for Fill-in-the-blank
+                optionsHtml = `<input type="text" name="adaptiveOption" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #cbd5e0;">`;
+            }
+
+            document.getElementById('questionContainer').innerHTML = `
+                <p style="font-weight: 700; margin-bottom: 1rem; font-size: 1.1rem; color: #2d3748;">${subQ.question}</p>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                    ${optionsHtml}
+                </div>
+            `;
+        }
+
+        document.getElementById('adaptiveTestForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitAdaptiveBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Submitting...';
+
+            const formData = new FormData(e.target);
+            const userAnswer = formData.get('adaptiveOption');
+            const subQ = adaptiveState.currentQuestionData.questions[0];
+
+            try {
+                const res = await fetch('/api/tests/adaptive/submit', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` 
+                    },
+                    body: JSON.stringify({ 
+                        questionId: adaptiveState.currentQuestionData.questionId,
+                        subQuestionId: subQ._id,
+                        userAnswer: userAnswer,
+                        currentScore: adaptiveState.currentScore,
+                        step: adaptiveState.step
+                    })
+                });
+
+                if (res.ok) {
+                    const resultData = await res.json();
+                    
+                    // Update State
+                    adaptiveState.currentScore = resultData.newScore;
+                    adaptiveState.seenQuestionIds.push(adaptiveState.currentQuestionData.questionId);
+                    
+                    // Show feedback briefly
+                    submitBtn.style.backgroundColor = resultData.isCorrect ? '#38a169' : '#e53e3e';
+                    submitBtn.innerText = resultData.isCorrect ? 'Correct! 🟢' : 'Incorrect 🔴';
+                    
+                    setTimeout(() => {
+                        submitBtn.style.backgroundColor = '#3182ce'; // Reset color
+                        if (adaptiveState.step < adaptiveState.maxSteps) {
+                            adaptiveState.step++;
+                            fetchNextAdaptiveQuestion();
+                        } else {
+                            finishAdaptiveTest();
+                        }
+                    }, 1500);
+
+                } else {
+                    alert('Error submitting answer.');
+                    submitBtn.disabled = false;
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Connection error.');
+                submitBtn.disabled = false;
+            }
+        });
+
+        async function finishAdaptiveTest() {
+            clearInterval(timerInterval);
+            document.getElementById('adaptiveTestForm').style.display = 'none';
+            document.getElementById('adaptiveLoading').style.display = 'block';
+
+            try {
+                const res = await fetch('/api/tests/adaptive/finish', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` 
+                    },
+                    body: JSON.stringify({ 
+                        testType: currentTestType,
+                        finalScore: adaptiveState.currentScore
+                    })
+                });
+
+                if (res.ok) {
+                    const finalData = await res.json();
+                    document.getElementById('adaptiveLoading').style.display = 'none';
+                    document.getElementById('adaptiveResult').style.display = 'block';
+                    document.getElementById('finalCefrDisplay').innerText = finalData.cefrLevel;
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Error finishing test.');
+            }
+        }
+
+        function closeTestModal() {
+            document.getElementById('testModal').style.display = 'none';
+            clearInterval(timerInterval);
+            window.speechSynthesis.cancel(); // Stop playing audio if closed
+        }
+
+        // --- Audio Logic --- //
+        let playCount = 0;
+        const MAX_PLAYS = 2;
+
+        function playListeningAudio() {
+            if (playCount >= MAX_PLAYS) return;
+            
+            const textToRead = adaptiveState.currentQuestionData?.article;
+            if (!textToRead) return;
+
+            // Stop any ongoing speech
+            window.speechSynthesis.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(textToRead);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.9; // Slightly slower for comprehension
+            
+            const playBtn = document.getElementById('playAudioBtn');
+            playBtn.disabled = true;
+            playBtn.style.opacity = '0.7';
+            playBtn.innerHTML = '<span>⏳ Playing...</span>';
+
+            utterance.onend = () => {
+                playCount++;
+                document.getElementById('playCountDisplay').innerText = `Plays remaining: ${MAX_PLAYS - playCount}`;
+                
+                if (playCount < MAX_PLAYS) {
+                    playBtn.disabled = false;
+                    playBtn.style.opacity = '1';
+                    playBtn.innerHTML = '<span>🔊 Play Again</span>';
+                } else {
+                    playBtn.innerHTML = '<span>🔇 No more plays</span>';
+                }
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // --- Restored Missing Functions --- //
+
+
+
+        function startTimer(formId, displayId) {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay(displayId);
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Time is up! Submitting your test automatically.");
+                    document.getElementById(formId).dispatchEvent(new Event('submit'));
+                }
+            }, 1000);
+        }
+
+        function closeListeningTestModal() {
+            document.getElementById('listeningTestModal').style.display = 'none';
+            clearInterval(timerInterval);
+            document.getElementById('listeningTestForm').reset();
+        }
+
+        function updateTimerDisplay(displayId) {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const displayEl = document.getElementById(displayId);
+            if(displayEl) {
+                displayEl.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }
+
+        async function handleTestSubmit(e, testType, btnId, formId) {
+            e.preventDefault();
+            clearInterval(timerInterval);
+            document.getElementById(btnId).disabled = true;
+            document.getElementById(btnId).innerText = 'Submitting...';
+
+            const formData = new FormData(e.target);
+            const answers = {};
+            for (let [key, value] of formData.entries()) {
+                answers[key] = value;
+            }
+
+            try {
+                const res = await fetch('/api/tests/quiz/submit', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` 
+                    },
+                    body: JSON.stringify({ answers, testType: testType })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    alert(`Test submitted successfully! Your score is ${data.score}/10`);
+                    if(testType === 'listening') closeListeningTestModal();
+                    
+                    window.location.href = 'profile.html';
+                } else {
+                    const err = await res.json();
+                    alert('Failed to submit test: ' + (err.error || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error(error);
+                alert('An error occurred while submitting the test.');
+            } finally {
+                document.getElementById(btnId).disabled = false;
+                document.getElementById(btnId).innerText = 'Submit Test';
+            }
+        }
+
+        document.getElementById('listeningTestForm').addEventListener('submit', (e) => handleTestSubmit(e, 'listening', 'submitListeningTestBtn', 'listeningTestForm'));
     </script>
 </body>
 </html>

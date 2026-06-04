@@ -483,9 +483,10 @@
 
                     // Ensure stats object exists
                     const stats = user.stats || { speaking: 0, listening: 0, reading: 0, writing: 0 };
+                    const webStats = user.webStats || { speaking: 0, listening: 0, reading: 0, writing: 0 };
 
                     // Render Chart
-                    renderChart(stats);
+                    renderChart(stats, webStats);
                 }
             } catch (err) {
                 console.error('Error fetching profile:', err);
@@ -534,7 +535,7 @@
         }
 
         // Render Radar Chart using Chart.js
-        function renderChart(stats) {
+        function renderChart(stats, webStats = {}) {
             const ctx = document.getElementById('skillsChart').getContext('2d');
             
             if (chartInstance) {
@@ -545,17 +546,30 @@
                 type: 'radar',
                 data: {
                     labels: ['Speaking', 'Listening', 'Reading', 'Writing'],
-                    datasets: [{
-                        label: 'Proficiency Score',
-                        data: [stats.speaking || 0, stats.listening || 0, stats.reading || 0, stats.writing || 0],
-                        backgroundColor: 'rgba(67, 94, 234, 0.15)',
-                        borderColor: '#435eea',
-                        pointBackgroundColor: '#435eea',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: '#435eea',
-                        borderWidth: 2,
-                    }]
+                    datasets: [
+                        {
+                            label: 'External Certificate Score',
+                            data: [stats.speaking || 0, stats.listening || 0, stats.reading || 0, stats.writing || 0],
+                            backgroundColor: 'rgba(49, 130, 206, 0.2)',
+                            borderColor: '#3182ce',
+                            pointBackgroundColor: '#3182ce',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#3182ce',
+                            borderWidth: 2,
+                        },
+                        {
+                            label: 'Website Test Score',
+                            data: [webStats.speaking || 0, webStats.listening || 0, webStats.reading || 0, webStats.writing || 0],
+                            backgroundColor: 'rgba(236, 72, 153, 0.2)',
+                            borderColor: '#ec4899',
+                            pointBackgroundColor: '#ec4899',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#ec4899',
+                            borderWidth: 2,
+                        }
+                    ]
                 },
                 options: {
                     responsive: true,
@@ -580,7 +594,7 @@
                         }
                     },
                     plugins: {
-                        legend: { display: false }
+                        legend: { display: true, position: 'bottom' }
                     }
                 }
             });
@@ -606,21 +620,52 @@
                     <div class="overall-number">${overall}</div>
                 </div>
                 
-                <div class="skill-row">
-                    <div class="skill-header"><span>Speaking</span><span>${stats.speaking || 0}/10</span></div>
-                    <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: ${(stats.speaking || 0) * 10}%;"></div></div>
+                <div class="skill-row" style="margin-bottom: 1rem;">
+                    <div class="skill-header" style="align-items: flex-end;">
+                        <span>Speaking</span>
+                        <div style="text-align: right; font-size: 0.85rem;">
+                            <span style="color: #3182ce;">Ext: ${stats.speaking || 0}/10</span><br>
+                            <span style="color: #ec4899;">Web: ${webStats.speaking || 0}/10</span>
+                        </div>
+                    </div>
+                    <div class="skill-bar-bg" style="margin-bottom: 4px;"><div class="skill-bar-fill" style="width: ${(stats.speaking || 0) * 10}%;"></div></div>
+                    <div class="skill-bar-bg"><div style="background: #ec4899; height: 100%; border-radius: 4px; transition: width 1s ease-in-out; width: ${(webStats.speaking || 0) * 10}%;"></div></div>
                 </div>
-                <div class="skill-row">
-                    <div class="skill-header"><span>Listening</span><span>${stats.listening || 0}/10</span></div>
-                    <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: ${(stats.listening || 0) * 10}%;"></div></div>
+                
+                <div class="skill-row" style="margin-bottom: 1rem;">
+                    <div class="skill-header" style="align-items: flex-end;">
+                        <span>Listening</span>
+                        <div style="text-align: right; font-size: 0.85rem;">
+                            <span style="color: #3182ce;">Ext: ${stats.listening || 0}/10</span><br>
+                            <span style="color: #ec4899;">Web: ${webStats.listening || 0}/10</span>
+                        </div>
+                    </div>
+                    <div class="skill-bar-bg" style="margin-bottom: 4px;"><div class="skill-bar-fill" style="width: ${(stats.listening || 0) * 10}%;"></div></div>
+                    <div class="skill-bar-bg"><div style="background: #ec4899; height: 100%; border-radius: 4px; transition: width 1s ease-in-out; width: ${(webStats.listening || 0) * 10}%;"></div></div>
                 </div>
-                <div class="skill-row">
-                    <div class="skill-header"><span>Reading</span><span>${stats.reading || 0}/10</span></div>
-                    <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: ${(stats.reading || 0) * 10}%;"></div></div>
+                
+                <div class="skill-row" style="margin-bottom: 1rem;">
+                    <div class="skill-header" style="align-items: flex-end;">
+                        <span>Reading</span>
+                        <div style="text-align: right; font-size: 0.85rem;">
+                            <span style="color: #3182ce;">Ext: ${stats.reading || 0}/10</span><br>
+                            <span style="color: #ec4899;">Web: ${webStats.reading || 0}/10</span>
+                        </div>
+                    </div>
+                    <div class="skill-bar-bg" style="margin-bottom: 4px;"><div class="skill-bar-fill" style="width: ${(stats.reading || 0) * 10}%;"></div></div>
+                    <div class="skill-bar-bg"><div style="background: #ec4899; height: 100%; border-radius: 4px; transition: width 1s ease-in-out; width: ${(webStats.reading || 0) * 10}%;"></div></div>
                 </div>
-                <div class="skill-row">
-                    <div class="skill-header"><span>Writing</span><span>${stats.writing || 0}/10</span></div>
-                    <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: ${(stats.writing || 0) * 10}%;"></div></div>
+                
+                <div class="skill-row" style="margin-bottom: 1rem;">
+                    <div class="skill-header" style="align-items: flex-end;">
+                        <span>Writing</span>
+                        <div style="text-align: right; font-size: 0.85rem;">
+                            <span style="color: #3182ce;">Ext: ${stats.writing || 0}/10</span><br>
+                            <span style="color: #ec4899;">Web: ${webStats.writing || 0}/10</span>
+                        </div>
+                    </div>
+                    <div class="skill-bar-bg" style="margin-bottom: 4px;"><div class="skill-bar-fill" style="width: ${(stats.writing || 0) * 10}%;"></div></div>
+                    <div class="skill-bar-bg"><div style="background: #ec4899; height: 100%; border-radius: 4px; transition: width 1s ease-in-out; width: ${(webStats.writing || 0) * 10}%;"></div></div>
                 </div>
             `;
             document.getElementById('skillsBreakdown').innerHTML = breakdownHtml;

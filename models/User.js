@@ -44,6 +44,13 @@ const UserSchema = new mongoose.Schema({
         writing: { type: Number, default: 0 },
         overallScore: { type: Number, default: 0 }
     },
+    webStats: {
+        listening: { type: Number, default: 0 },
+        speaking: { type: Number, default: 0 },
+        reading: { type: Number, default: 0 },
+        writing: { type: Number, default: 0 },
+        overallScore: { type: Number, default: 0 }
+    },
     privacy: {
         visibility: {
             type: String,
