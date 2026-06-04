@@ -138,6 +138,8 @@ router.post('/adaptive/next', protect, async (req, res) => {
             questionTypes = ['Cloze Test'];
         } else if (testType === 'reading_short') {
             questionTypes = ['Short Comprehension'];
+        } else if (testType === 'listening') {
+            questionTypes = ['Listening Comprehension'];
         }
         
         // Find a random question matching the CEFR level that hasn't been seen
@@ -194,7 +196,7 @@ router.post('/adaptive/submit', protect, async (req, res) => {
             questionDoc.questions[0];
 
         if (subQ) {
-            correctAnswer = subQ.answer;
+            correctAnswer = subQ.answer || subQ.correctAnswer;
             isCorrect = (userAnswer === correctAnswer);
         }
 

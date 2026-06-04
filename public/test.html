@@ -210,7 +210,7 @@
                     </div>
                 </div>
 
-                <button class="btn-start" onclick="startReadingTest()">
+                <button class="btn-start" onclick="startAdaptiveTest('reading')">
                     Start Reading Test
                 </button>
             </div>
@@ -262,7 +262,7 @@
                     </div>
                 </div>
 
-                <button class="btn-start" onclick="startListeningTest()">
+                <button class="btn-start" onclick="startAdaptiveTest('listening')">
                     Start Listening Test
                 </button>
             </div>
@@ -276,8 +276,8 @@
             <button onclick="closeTestModal()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
             
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h2>Reading Test <span style="font-size: 0.8rem; color: #a0aec0;">(v3)</span></h2>
-                <span id="adaptiveProgress" style="font-weight: 600; color: #3182ce; background: #ebf8ff; padding: 4px 12px; border-radius: 20px;">Question 1 of 10</span>
+                <h2 id="modalTitle">Reading Test <span style="font-size: 0.8rem; color: #a0aec0;">(v4)</span></h2>
+                <span id="adaptiveProgress" style="font-weight: 600; color: #3182ce; background: #ebf8ff; padding: 4px 12px; border-radius: 20px;">Question 1 of 15</span>
             </div>
             
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; background: #edf2f7; padding: 0.75rem; border-radius: 8px;">
@@ -296,6 +296,14 @@
 
             <!-- Question Container -->
             <form id="adaptiveTestForm" style="display: none;">
+                <div id="audioControls" style="display: none; background: #f7fafc; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #e2e8f0; text-align: center;">
+                    <p style="margin-bottom: 1rem; color: #4a5568; font-weight: 600;">Listen to the scenario carefully.</p>
+                    <button type="button" id="playAudioBtn" onclick="playListeningAudio()" style="background: #3182ce; color: white; border: none; padding: 0.75rem 2rem; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <span>🔊 Play Audio</span>
+                    </button>
+                    <p id="playCountDisplay" style="margin-top: 0.5rem; font-size: 0.85rem; color: #718096;">Plays remaining: 2</p>
+                </div>
+
                 <div id="articleContainer" style="background: #f7fafc; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #e2e8f0; font-size: 1.05rem; line-height: 1.6;">
                     <!-- Article text will go here -->
                 </div>
@@ -383,17 +391,23 @@
             currentQuestionData: null
         };
 
-        function startReadingTest() {
+        function startAdaptiveTest(type) {
+            currentTestType = type;
             document.getElementById('testModal').style.display = 'flex';
             document.getElementById('adaptiveResult').style.display = 'none';
             document.getElementById('adaptiveTestForm').style.display = 'none';
+            
+            const titleEl = document.getElementById('modalTitle');
+            if (titleEl) {
+                titleEl.innerHTML = `${type === 'reading' ? 'Reading' : 'Listening'} Test <span style="font-size: 0.8rem; color: #a0aec0;">(v4)</span>`;
+            }
             
             // Reset state
             adaptiveState = {
                 currentScore: 0.0,
                 seenQuestionIds: [],
                 step: 1,
-                maxSteps: 10,
+                maxSteps: 15,
                 currentQuestionData: null
             };
             
@@ -423,7 +437,7 @@
 
             try {
                 const reqBody = { 
-                    testType: 'reading',
+                    testType: currentTestType,
                     currentScore: adaptiveState.currentScore,
                     seenQuestionIds: adaptiveState.seenQuestionIds
                 };
@@ -468,8 +482,23 @@
             document.getElementById('submitAdaptiveBtn').disabled = false;
             document.getElementById('submitAdaptiveBtn').innerText = 'Submit Answer';
 
-            // Render Article
-            document.getElementById('articleContainer').innerText = data.article || "No passage provided.";
+            // Render Audio or Article based on test type
+            if (currentTestType === 'listening') {
+                document.getElementById('articleContainer').style.display = 'none';
+                document.getElementById('audioControls').style.display = 'block';
+                
+                // Reset audio plays for this question
+                playCount = 0;
+                document.getElementById('playCountDisplay').innerText = `Plays remaining: ${MAX_PLAYS}`;
+                const playBtn = document.getElementById('playAudioBtn');
+                playBtn.disabled = false;
+                playBtn.style.opacity = '1';
+                playBtn.innerHTML = '<span>🔊 Play Audio</span>';
+            } else {
+                document.getElementById('audioControls').style.display = 'none';
+                document.getElementById('articleContainer').style.display = 'block';
+                document.getElementById('articleContainer').innerText = data.article || "No passage provided.";
+            }
 
             // Render Question & Options (Assuming 1 sub-question for simplicity)
             const subQ = data.questions[0];
@@ -569,7 +598,7 @@
                         'Authorization': `Bearer ${token}` 
                     },
                     body: JSON.stringify({ 
-                        testType: 'reading',
+                        testType: currentTestType,
                         finalScore: adaptiveState.currentScore
                     })
                 });
@@ -589,17 +618,50 @@
         function closeTestModal() {
             document.getElementById('testModal').style.display = 'none';
             clearInterval(timerInterval);
+            window.speechSynthesis.cancel(); // Stop playing audio if closed
+        }
+
+        // --- Audio Logic --- //
+        let playCount = 0;
+        const MAX_PLAYS = 2;
+
+        function playListeningAudio() {
+            if (playCount >= MAX_PLAYS) return;
+            
+            const textToRead = adaptiveState.currentQuestionData?.article;
+            if (!textToRead) return;
+
+            // Stop any ongoing speech
+            window.speechSynthesis.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(textToRead);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.9; // Slightly slower for comprehension
+            
+            const playBtn = document.getElementById('playAudioBtn');
+            playBtn.disabled = true;
+            playBtn.style.opacity = '0.7';
+            playBtn.innerHTML = '<span>⏳ Playing...</span>';
+
+            utterance.onend = () => {
+                playCount++;
+                document.getElementById('playCountDisplay').innerText = `Plays remaining: ${MAX_PLAYS - playCount}`;
+                
+                if (playCount < MAX_PLAYS) {
+                    playBtn.disabled = false;
+                    playBtn.style.opacity = '1';
+                    playBtn.innerHTML = '<span>🔊 Play Again</span>';
+                } else {
+                    playBtn.innerHTML = '<span>🔇 No more plays</span>';
+                }
+            };
+
+            window.speechSynthesis.speak(utterance);
         }
 
         // --- Restored Missing Functions --- //
 
-        function startListeningTest() {
-            document.getElementById('listeningTestModal').style.display = 'flex';
-            currentTestType = 'listening';
-            timeLeft = 600; // Reset timer
-            updateTimerDisplay('listeningTimerDisplay');
-            startTimer('listeningTestForm', 'listeningTimerDisplay');
-        }
+
 
         function startTimer(formId, displayId) {
             clearInterval(timerInterval);
