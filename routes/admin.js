@@ -9,7 +9,7 @@ const { updateUserStats } = require('../utils/userStats');
 
 // Apply protect middleware to all routes in this file (must be logged in)
 router.use(protect);
-// router.use(admin); // Temporarily removed for testing
+router.use(admin);
 
 // GET /api/admin/stats
 // Returns overall platform statistics
@@ -276,44 +276,6 @@ router.delete('/questions/:id', async (req, res) => {
         res.json({ message: 'Question deleted successfully' });
     } catch (error) {
         console.error('Error deleting question:', error);
-        res.status(500).json({ error: 'Server Error' });
-    }
-});
-
-// PUT /api/admin/users/:id/cheat
-// Demo cheat API to force set user scores
-router.put('/users/:id/cheat', async (req, res) => {
-    try {
-        const { extStats, webStats } = req.body;
-        
-        const user = await User.findById(req.params.id);
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-        
-        if (extStats) {
-            const listening = Number(extStats.listening) || 0;
-            const reading = Number(extStats.reading) || 0;
-            const speaking = Number(extStats.speaking) || 0;
-            const writing = Number(extStats.writing) || 0;
-            const overallScore = Math.round((listening + reading + speaking + writing) / 4);
-            user.stats = { listening, reading, speaking, writing, overallScore };
-        }
-
-        if (webStats) {
-            const listening = Number(webStats.listening) || 0;
-            const reading = Number(webStats.reading) || 0;
-            const speaking = Number(webStats.speaking) || 0;
-            const writing = Number(webStats.writing) || 0;
-            const overallScore = Math.round((listening + reading + speaking + writing) / 4);
-            user.webStats = { listening, reading, speaking, writing, overallScore };
-        }
-        
-        await user.save();
-        
-        res.json({ message: 'Scores injected successfully', stats: user.stats, webStats: user.webStats });
-    } catch (error) {
-        console.error('Error in demo cheat:', error);
         res.status(500).json({ error: 'Server Error' });
     }
 });

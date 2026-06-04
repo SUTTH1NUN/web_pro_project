@@ -85,23 +85,6 @@ async function processCertificateAsync(evidenceId, userId, filename, mimetype, t
     }
 }
 
-// POST /api/evidence/upload
-router.post('/upload', upload.single('file'), (req, res) => {
-    const file = req.file;
-    const { type } = req.body;
-
-    if (!file) {
-        return res.status(400).json({ error: 'No file uploaded' });
-    }
-
-    res.status(201).json({
-        message: 'Evidence uploaded successfully',
-        type: type || 'unknown',
-        filename: file.filename,
-        size: file.size
-    });
-});
-
 // POST /api/evidence/upload-cert
 router.post('/upload-cert', protect, upload.single('file'), async (req, res) => {
     try {

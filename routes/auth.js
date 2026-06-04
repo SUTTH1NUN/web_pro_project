@@ -6,9 +6,13 @@ const User = require('../models/User');
 const Otp = require('../models/Otp');
 const { sendOtpEmail, sendResetOtpEmail } = require('../utils/email');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret_key_12345';
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || 'your-google-client-id.apps.googleusercontent.com';
-const googleClient = new OAuth2Client(GOOGLE_CLIENT_ID);
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+    console.error('FATAL: JWT_SECRET is not defined in environment variables!');
+    process.exit(1);
+}
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const googleClient = GOOGLE_CLIENT_ID ? new OAuth2Client(GOOGLE_CLIENT_ID) : null;
 
 // Generate JWT Helper
 const generateToken = (id) => {
@@ -115,26 +119,24 @@ router.get('/google-client-id', (req, res) => {
 // POST /api/auth/google-login
 router.post('/google-login', async (req, res) => {
     try {
-        const { idToken } = req.body;
-        
-        // Skip actual verification if it's a mock token for testing purposes
-        let email, name, googleId;
-        
-        if (idToken === 'mock_google_token_123') {
-            email = 'mockuser@gmail.com';
-            name = 'Mock User';
-            googleId = 'google_123';
-        } else {
-            // Verify real Google Token
-            const ticket = await googleClient.verifyIdToken({
-                idToken: idToken,
-                audience: GOOGLE_CLIENT_ID,
-            });
-            const payload = ticket.getPayload();
-            email = payload.email;
-            name = payload.name;
-            googleId = payload.sub;
+        if (!googleClient || !GOOGLE_CLIENT_ID) {
+            return res.status(503).json({ error: 'Google Login is not configured on this server' });
         }
+
+        const { idToken } = req.body;
+        if (!idToken) {
+            return res.status(400).json({ error: 'idToken is required' });
+        }
+
+        // Verify real Google Token
+        const ticket = await googleClient.verifyIdToken({
+            idToken: idToken,
+            audience: GOOGLE_CLIENT_ID,
+        });
+        const payload = ticket.getPayload();
+        const email = payload.email;
+        const name = payload.name;
+        const googleId = payload.sub;
 
         // Check if user already exists
         let user = await User.findOne({ email });
@@ -151,8 +153,8 @@ router.post('/google-login', async (req, res) => {
                 username: name,
                 email: email,
                 googleId: googleId,
-                role: idToken === 'mock_google_token_123' ? 'admin' : 'user', // Auto-admin for testing
-                password: '' // No password for OAuth users
+                role: 'user',
+                password: ''
             });
         }
 
