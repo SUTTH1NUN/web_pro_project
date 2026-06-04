@@ -5,70 +5,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Language Certificate</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/app.css">
     <style>
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-family: inherit;
-        }
-        .card {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        .upload-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
             max-width: 600px;
             margin: 2rem auto;
+            border: 1px solid var(--border-light);
         }
+
+        .upload-card h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .upload-card > p {
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+        }
+
         .result-box {
             margin-top: 2rem;
-            padding: 1rem;
-            border-radius: 4px;
-            background: #f8f9fa;
-            border-left: 4px solid #007bff;
+            padding: 1.25rem;
+            border-radius: var(--radius-md);
+            background: var(--bg-light);
+            border-left: 4px solid #435eea;
         }
         .result-box.verified {
-            border-left-color: #28a745;
-            background: #d4edda;
+            border-left-color: #48bb78;
+            background: #f0fff4;
         }
         .result-box.rejected {
-            border-left-color: #dc3545;
-            background: #f8d7da;
+            border-left-color: #e53e3e;
+            background: #fff5f5;
         }
+        .result-box h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .result-box p {
+            margin-bottom: 0.25rem;
+            color: var(--text-gray);
+        }
+
         .loading {
             display: none;
             margin-top: 1rem;
             text-align: center;
-            font-weight: bold;
-            color: #007bff;
+            font-weight: 600;
+            color: #435eea;
         }
     </style>
 </head>
 
 <body>
     <nav class="navbar">
-        <div class="nav-brand">SkillWallet</div>
+        <div class="nav-brand">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" />
+                <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Zentry
+        </div>
         <div class="nav-links">
-            <a href="index.html">Dashboard</a>
-            <a href="#" class="active">Evidence</a>
-            <a href="#">Tests</a>
-            <a href="#">Settings</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="test.html">Tests</a>
+            <a href="profile.html">Profile</a>
+            <a href="#" onclick="logout()">Logout</a>
         </div>
     </nav>
 
     <main class="container">
-        <div class="card">
+        <div class="upload-card">
             <h2>Upload Language Certificate</h2>
             <p>Upload your English proficiency certificate for automatic verification.</p>
             
@@ -92,7 +105,7 @@
                     <input type="file" id="file" name="file" accept=".pdf,.jpg,.jpeg,.png" required>
                 </div>
 
-                <button type="submit" class="btn-primary" style="width: 100%">Upload and Verify</button>
+                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">Upload and Verify</button>
             </form>
 
             <div id="loadingIndicator" class="loading">
@@ -109,6 +122,11 @@
         const token = localStorage.getItem('token');
         if (!token) {
             window.location.href = 'login.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = 'index.html';
         }
 
         document.getElementById('uploadForm').addEventListener('submit', async (e) => {
@@ -153,7 +171,7 @@
                     <div class="result-box ${statusClass}">
                         <h3>Verification Result</h3>
                         <p><strong>Status:</strong> ${statusText}</p>
-                        <hr style="margin: 10px 0; border: 0; border-top: 1px solid #ccc;">
+                        <hr style="margin: 10px 0; border: 0; border-top: 1px solid var(--border-medium);">
                         <p><strong>Provided Name:</strong> ${ev.providedName}</p>
                         <p><strong>Extracted Name:</strong> ${ev.extractedData.fullName || 'Not found'}</p>
                         <p><strong>Test Date:</strong> ${ev.extractedData.testDate ? new Date(ev.extractedData.testDate).toLocaleDateString() : 'Not found'}</p>

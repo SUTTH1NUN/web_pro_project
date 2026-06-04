@@ -3,16 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - SkillWallet</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Login - Zentry</title>
+    <link rel="stylesheet" href="css/landing.css">
     <style>
-        .auth-container {
-            max-width: 400px;
-            margin: 4rem auto;
-            padding: 2rem;
-            text-align: center;
+        body {
+            /* Use the same hero background as landing */
+            background: radial-gradient(circle at 80% 20%, #3051ff 0%, transparent 40%),
+                        radial-gradient(circle at 20% 50%, #1c32b5 0%, transparent 40%),
+                        linear-gradient(135deg, #08123e 0%, #112bb1 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            font-family: var(--font-body);
         }
+        
+        .auth-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 440px;
+            background: #ffffff;
+            border: none;
+            padding: 3rem 2.5rem;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .auth-title {
+            font-family: var(--font-heading);
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+            color: #1e293b;
+        }
+
         .form-group {
             margin-bottom: 1.5rem;
             text-align: left;
@@ -20,128 +56,203 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+            color: #475569;
+            font-size: 0.95rem;
+            font-weight: 600;
         }
         .form-group input {
             width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid var(--glass-border);
-            color: white;
+            padding: 14px 16px;
+            border-radius: 12px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            color: #1e293b;
             font-size: 1rem;
+            font-family: var(--font-body);
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+        .form-group input::placeholder {
+            color: #94a3b8;
         }
         .form-group input:focus {
             outline: none;
-            border-color: var(--accent-primary);
+            border-color: #6b46f2;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(107, 70, 242, 0.15);
         }
+        
         .btn-full {
             width: 100%;
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
         }
-        .btn-google {
-            background: white;
-            color: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+        
+        .btn-submit {
+            background: linear-gradient(90deg, #6b46f2 0%, #4a5cf6 100%);
+            color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
+            padding: 14px 24px;
+            border-radius: 9999px;
+            font-family: var(--font-body);
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 8px 20px rgba(107, 70, 242, 0.3);
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(107, 70, 242, 0.5);
+        }
+
+        .btn-google {
+            background: white;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: 1px solid #e2e8f0;
+            padding: 14px 24px;
+            border-radius: 9999px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             width: 100%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
         .btn-google:hover {
             transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
         }
         .btn-google img {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
         }
+        
         .divider {
             display: flex;
             align-items: center;
             text-align: center;
-            margin: 1.5rem 0;
-            color: var(--text-secondary);
+            margin: 2rem 0;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
         .divider::before, .divider::after {
             content: '';
             flex: 1;
-            border-bottom: 1px solid var(--glass-border);
+            border-bottom: 1px solid #e2e8f0;
         }
-        .divider:not(:empty)::before {
-            margin-right: .25em;
-        }
-        .divider:not(:empty)::after {
-            margin-left: .25em;
-        }
+        .divider:not(:empty)::before { margin-right: 1rem; }
+        .divider:not(:empty)::after { margin-left: 1rem; }
+        
         .auth-links {
-            margin-top: 1rem;
-            font-size: 0.9rem;
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+            color: #64748b;
         }
         .auth-links a {
-            color: var(--accent-primary);
+            color: #6b46f2;
             text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
         }
         .auth-links a:hover {
-            text-decoration: underline;
-        }
-        #alertBox {
-            margin-bottom: 1rem;
-            padding: 10px;
-            border-radius: 8px;
-            display: none;
-            font-size: 0.9rem;
-        }
-        .alert-error {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid #ef4444;
-            color: #fca5a5;
-        }
-        .alert-success {
-            background: rgba(34, 197, 94, 0.2);
-            border: 1px solid #22c55e;
-            color: #86efac;
+            color: #4a5cf6;
         }
         
-        /* Modal for specific actions like Forgot Password */
+        #alertBox {
+            margin-bottom: 1.5rem;
+            padding: 12px 16px;
+            border-radius: 12px;
+            display: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-align: left;
+        }
+        .alert-error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+        .alert-success {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+        }
+        
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
             align-items: center;
             justify-content: center;
             z-index: 1000;
         }
         .modal-content {
-            background: var(--bg-color);
-            padding: 2rem;
-            border-radius: 12px;
+            background: linear-gradient(135deg, #0b154a 0%, #162fbd 100%);
+            padding: 2.5rem;
+            border-radius: 24px;
             width: 90%;
-            max-width: 400px;
-            border: 1px solid var(--glass-border);
+            max-width: 440px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .modal-content h3 {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .modal-content .btn-submit {
+            margin-top: 1rem;
+        }
+        .modal-content .btn-cancel {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 14px 24px;
+            border-radius: 9999px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background 0.2s;
+        }
+        .modal-content .btn-cancel:hover {
+            background: rgba(255,255,255,0.15);
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-brand">SkillWallet</div>
+    <!-- Decorative background elements -->
+    <div class="decor-circle decor-1" style="z-index: 0;"></div>
+    <div class="decor-circle decor-2" style="z-index: 0;"></div>
+
+    <nav class="navbar container">
+        <div class="nav-brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
+                <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Zentry
+        </div>
         <div class="nav-links">
-            <a href="/index.html">Home</a>
-            <a href="/login.html">Login</a>
+            <a href="index.html" class="btn-login" style="background: transparent; box-shadow: none;">Home</a>
         </div>
     </nav>
 
-    <main class="container">
-        <div class="glass-panel auth-container">
-            <h2 style="margin-bottom: 1.5rem; font-size: 2rem;">Welcome Back</h2>
+
+    <main class="auth-wrapper container">
+        <div class="auth-container">
+            <h2 class="auth-title">Welcome Back</h2>
             
             <div id="alertBox"></div>
 
@@ -162,18 +273,19 @@
                     <label>Password</label>
                     <input type="password" id="password" required placeholder="••••••••">
                 </div>
-                <button type="submit" class="btn-primary btn-full">Sign In</button>
-            </form>
+                
+                <div class="auth-links" style="margin-top: -0.5rem; margin-bottom: 1.5rem; text-align: right;">
+                    <a href="#" id="forgotBtn">Forgot password?</a>
+                </div>
 
-            <div class="auth-links">
-                <a href="#" id="forgotBtn">Forgot your password?</a>
-            </div>
+                <button type="submit" class="btn-submit btn-full">Sign In</button>
+            </form>
 
             <div class="divider">OR</div>
 
             <button class="btn-google" id="googleLoginBtn">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
-                Sign in with Google (Mock)
+                Sign in with Google
             </button>
 
             <div class="auth-links" style="margin-top: 2rem;">
@@ -185,13 +297,13 @@
     <!-- Forgot Password Modal -->
     <div class="modal" id="forgotModal">
         <div class="modal-content">
-            <h3 style="margin-bottom: 1rem;">Reset Password</h3>
-            <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">Enter your email and we will send a reset link.</p>
+            <h3>Reset Password</h3>
+            <p style="color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; font-size: 0.95rem;">Enter your email and we will send a reset link.</p>
             <div class="form-group">
-                <input type="email" id="resetEmail" placeholder="Enter email" required>
+                <input type="email" id="resetEmail" placeholder="Enter your email" required>
             </div>
-            <button class="btn-primary btn-full" id="sendResetBtn">Send Link</button>
-            <button class="btn-google" style="margin-top: 10px;" id="closeModalBtn">Cancel</button>
+            <button class="btn-submit btn-full" id="sendResetBtn">Send Link</button>
+            <button class="btn-cancel" id="closeModalBtn">Cancel</button>
         </div>
     </div>
 
@@ -209,16 +321,23 @@
 
             // Toggle Signup/Signin mode visually
             const signupToggle = document.getElementById('signupToggle');
+            const forgotBtnContainer = document.getElementById('forgotBtn').parentElement;
+            
             signupToggle.addEventListener('click', (e) => {
                 e.preventDefault();
                 isLoginMode = !isLoginMode;
-                document.querySelector('h2').textContent = isLoginMode ? 'Welcome Back' : 'Create Account';
+                document.querySelector('.auth-title').textContent = isLoginMode ? 'Welcome Back' : 'Create Account';
                 loginForm.querySelector('button[type="submit"]').textContent = isLoginMode ? 'Sign In' : 'Sign Up';
-                signupToggle.textContent = isLoginMode ? 'Sign up here' : 'Sign in instead';
+                signupToggle.textContent = isLoginMode ? 'Sign in instead' : 'Sign up here';
+                const googleBtn = document.querySelector('.divider').nextElementSibling;
+                googleBtn.innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google"> ' + (isLoginMode ? 'Sign in' : 'Sign up') + ' with Google';
                 
                 // Toggle extra fields
                 const signupOnlyFields = document.querySelectorAll('.signup-only');
                 signupOnlyFields.forEach(el => el.style.display = isLoginMode ? 'none' : 'block');
+                
+                // Hide forgot password in signup mode
+                forgotBtnContainer.style.display = isLoginMode ? 'block' : 'none';
             });
 
             // Handle Form Submission
@@ -264,6 +383,7 @@
                     
                     showAlert('Google login successful!', 'success');
                     localStorage.setItem('token', data.token);
+                    setTimeout(() => window.location.href = 'dashboard.html', 1000);
                 } catch (err) {
                     showAlert(err.message);
                 }

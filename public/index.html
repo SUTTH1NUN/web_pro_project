@@ -5,35 +5,146 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Language Skill Wallet</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/landing.css">
 </head>
 
 <body>
-    <nav class="navbar">
-        <div class="nav-brand">SkillWallet</div>
-        <div class="nav-links">
-            <a href="login.html">Login</a>
-        </div>
-    </nav>
+    <div class="hero-section">
+        <div class="decor-circle decor-1"></div>
+        <div class="decor-circle decor-2"></div>
 
-    <main class="container">
-        <div class="hero">
-            <h1>Prove Your <span class="text-gradient">Language Skills</span></h1>
-            <p>The modern platform to collect evidence, take interactive tests, and showcase your verified portfolio.
-            </p>
-            <div class="actions">
-                <button class="btn-primary" onclick="window.location.href='login.html'">Login to Get Started</button>
+        <nav class="navbar container">
+            <div class="nav-brand">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" />
+                    <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                Zentry
+            </div>
+            <div class="nav-links">
+                <a href="login.html" class="btn-login">Login <span class="arrow">→</span></a>
+            </div>
+        </nav>
+
+        <div class="hero-content container">
+            <div class="hero-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+                Your English Credentials, All in One Place
+            </div>
+            <h1 class="hero-title">
+                Build Your<br>
+                <span class="hero-gradient-text">language Portfolio</span>
+            </h1>
+            <button class="btn-get-started" onclick="window.location.href='login.html'">Get Started <span
+                    class="arrow">→</span></button>
+        </div>
+
+    </div>
+
+    <section class="features-section container">
+        <h2 class="section-title">Everything You Need</h2>
+        <p class="section-subtitle">Simple, powerful tools to manage your English credentials.</p>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                </div>
+                <h3>Secure Storage</h3>
+                <p>Your credentials are safely stored and accessible anywhere, anytime.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                </div>
+                <h3>PDF Portfolio</h3>
+                <p>Generate a two-column professional portfolio document in one click.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="8" r="7"></circle>
+                        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                    </svg>
+                </div>
+                <h3>All Major Tests</h3>
+                <p>Full support for IELTS, TOEFL, TOEIC, and Duolingo certifications.</p>
             </div>
         </div>
-    </main>
+    </section>
+
+    <section class="how-it-works-section">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+
+            <div class="steps-list">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h3>Add Your Scores</h3>
+                        <p>Enter your test type, score, and date. Optionally upload your certificate.</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h3>View as Credential Cards</h3>
+                        <p>Each score is displayed as a premium digital card in your wallet.</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h3>Generate PDF Portfolio</h3>
+                        <p>Click one button to create a professional two-column downloadable portfolio.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container text-center">
+            <h2 class="cta-title">Ready to Show Your Skills?</h2>
+            <p class="cta-subtitle">Build your English proficiency portfolio today.</p>
+            <button class="btn-start-now" onclick="window.location.href='login.html'">Start Now <span
+                    class="arrow">→</span></button>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-brand">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" />
+                    <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                Zentry
+            </div>
+        </div>
+    </footer>
 
     <script>
         if (localStorage.getItem('token')) {
             window.location.href = 'dashboard.html';
         }
     </script>
-    <script src="js/main.js"></script>
 </body>
 
 </html>
