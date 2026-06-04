@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile - Zentry</title>
+    <title>Profile - Zentry</title>
     <link rel="stylesheet" href="css/app.css">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -296,6 +296,70 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(107, 70, 242, 0.4);
         }
+
+        /* Badge Box Styles */
+        .badge-box {
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-light);
+            padding-top: 1.5rem;
+            text-align: left;
+        }
+
+        .badge-box h3 {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            font-family: var(--font-heading);
+        }
+
+        .badge-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .draggable-badge {
+            background: #f8fafc;
+            border: 1px dashed var(--border-medium);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-md);
+            cursor: grab;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s;
+        }
+
+        .draggable-badge:active {
+            cursor: grabbing;
+        }
+
+        .draggable-badge:hover {
+            border-color: #435eea;
+            background: #f0f4ff;
+        }
+
+        .draggable-badge span {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .draggable-badge .icon {
+            color: #435eea;
+        }
+        
+        .evidence-grid.drag-over {
+            background: #f0f4ff;
+            border: 2px dashed #435eea;
+            border-radius: var(--radius-md);
+            min-height: 120px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 
@@ -336,7 +400,26 @@
                 <span id="uiJobOrg">Job at Organization</span>
             </div>
 
-            <button class="btn-edit" onclick="openEditModal()">Edit Profile</button>
+            <button class="btn-edit" id="btnEditProfile" onclick="openEditModal()">Edit Profile</button>
+            
+            <div class="badge-box">
+                <h3>Web Test Badges</h3>
+                <p style="font-size: 0.85rem; color: var(--text-gray); margin-bottom: 1rem;">Click or drag to add to Verified Credentials.</p>
+                <div class="badge-list" id="badgeList">
+                    <div class="draggable-badge" draggable="true" id="badge-1" onclick="moveBadgeToEvidence(this)">
+                        <span>English Reading Test</span>
+                        <svg class="icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <div class="draggable-badge" draggable="true" id="badge-2" onclick="moveBadgeToEvidence(this)">
+                        <span>English Listening Test</span>
+                        <svg class="icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <div class="draggable-badge" draggable="true" id="badge-3" onclick="moveBadgeToEvidence(this)">
+                        <span>English Speaking Test</span>
+                        <svg class="icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                </div>
+            </div>
         </aside>
 
         <!-- Main Content -->
@@ -425,8 +508,24 @@
 
     <script>
         const token = localStorage.getItem('token');
-        if (!token) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const viewUsername = urlParams.get('user'); // null if own profile
+        const isGuestView = !!viewUsername;
+
+        // If guest view: don't require login
+        if (!isGuestView && !token) {
             window.location.href = 'login.html';
+        }
+
+        // Hide owner-only elements in guest mode
+        if (isGuestView) {
+            document.addEventListener('DOMContentLoaded', () => {
+                const editBtn = document.getElementById('btnEditProfile');
+                if (editBtn) editBtn.style.display = 'none';
+                const badgeBox = document.querySelector('.badge-box');
+                if (badgeBox) badgeBox.style.display = 'none';
+                document.querySelectorAll('.nav-links a[href="admin.html"]').forEach(el => el.style.display = 'none');
+            });
         }
 
         let chartInstance = null;
@@ -447,31 +546,45 @@
         // Fetch User Profile
         async function fetchProfile() {
             try {
-                const res = await fetch('/api/users/me', {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                
-                if (res.ok) {
-                    const data = await res.json();
-                    const user = data.user;
-                    
-                    // Update UI Sidebar
-                    const fullName = `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.username || 'User';
-                    document.getElementById('uiName').innerText = fullName;
-                    document.getElementById('uiUsername').innerText = `@${user.username}`;
-                    
-                    if(user.bio) {
-                        document.getElementById('uiBio').innerText = user.bio;
-                    }
+                let res, data, user;
 
-                    if(user.jobTitle || user.organization) {
-                        document.getElementById('uiJobOrg').innerText = `${user.jobTitle || 'Professional'} @ ${user.organization || 'Independent'}`;
-                        document.getElementById('uiWork').style.display = 'flex';
-                    } else {
-                        document.getElementById('uiWork').style.display = 'none';
+                if (isGuestView) {
+                    // Guest: use public API
+                    res = await fetch(`/api/public/user/${encodeURIComponent(viewUsername)}`);
+                    if (!res.ok) {
+                        document.getElementById('uiName').innerText = 'User not found';
+                        return;
                     }
+                    data = await res.json();
+                    user = data.user;
+                    document.title = `${user.firstName || user.username}'s Profile - Zentry`;
+                } else {
+                    // Owner: use authenticated API
+                    res = await fetch('/api/users/me', {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    if (!res.ok) return;
+                    data = await res.json();
+                    user = data.user;
+                }
 
-                    // Populate Form
+                const fullName = `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.username || 'User';
+                document.getElementById('uiName').innerText = fullName;
+                document.getElementById('uiUsername').innerText = `@${user.username}`;
+
+                if (user.bio) {
+                    document.getElementById('uiBio').innerText = user.bio;
+                }
+
+                if (user.jobTitle || user.organization) {
+                    document.getElementById('uiJobOrg').innerText = `${user.jobTitle || 'Professional'} @ ${user.organization || 'Independent'}`;
+                    document.getElementById('uiWork').style.display = 'flex';
+                } else {
+                    document.getElementById('uiWork').style.display = 'none';
+                }
+
+                if (!isGuestView) {
+                    // Populate edit form only for owner
                     document.getElementById('username').value = user.username || '';
                     document.getElementById('firstName').value = user.firstName || '';
                     document.getElementById('lastName').value = user.lastName || '';
@@ -480,14 +593,12 @@
                     document.getElementById('bio').value = user.bio || '';
                     document.getElementById('linkedinUrl').value = user.linkedinUrl || '';
                     document.getElementById('portfolioUrl').value = user.portfolioUrl || '';
-
-                    // Ensure stats object exists
-                    const stats = user.stats || { speaking: 0, listening: 0, reading: 0, writing: 0 };
-                    const webStats = user.webStats || { speaking: 0, listening: 0, reading: 0, writing: 0 };
-
-                    // Render Chart
-                    renderChart(stats, webStats);
                 }
+
+                const stats = user.stats || { speaking: 0, listening: 0, reading: 0, writing: 0 };
+                const webStats = user.webStats || { speaking: 0, listening: 0, reading: 0, writing: 0 };
+                renderChart(stats, webStats);
+
             } catch (err) {
                 console.error('Error fetching profile:', err);
             }
@@ -496,21 +607,50 @@
         // Fetch Evidences for the bottom section
         async function fetchEvidences() {
             try {
-                const res = await fetch('/api/evidence', {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                if (res.ok) {
-                    const data = await res.json();
-                    const evidences = data.evidences;
-                    const grid = document.getElementById('evidenceGrid');
-                    
-                    if (evidences.length === 0) {
-                        grid.innerHTML = '<p style="color: var(--text-muted); grid-column: 1/-1;">No credentials yet. Add some on your dashboard!</p>';
-                        return;
-                    }
+                let evidences = [];
 
-                    grid.innerHTML = '';
-                    evidences.forEach(ev => {
+                if (isGuestView) {
+                    // Guest: fetch public evidences
+                    const res = await fetch(`/api/public/user/${encodeURIComponent(viewUsername)}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        evidences = data.evidences;
+                    }
+                } else {
+                    // Owner: fetch own evidences
+                    const res = await fetch('/api/evidence', {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        evidences = data.evidences;
+                    }
+                }
+
+                const grid = document.getElementById('evidenceGrid');
+                const savedBadges = isGuestView ? [] : JSON.parse(localStorage.getItem('addedBadges') || '[]');
+
+                // For guests, filter out private scores up front
+                const visibleEvidences = isGuestView ? evidences.filter(ev => !ev.isPrivate) : evidences;
+
+                if (visibleEvidences.length === 0 && savedBadges.length === 0) {
+                    grid.innerHTML = isGuestView
+                        ? '<p style="color: var(--text-muted); grid-column: 1/-1;">This user has no public verified credentials.</p>'
+                        : '<p style="color: var(--text-muted); grid-column: 1/-1;">No credentials yet. Add some on your dashboard!</p>';
+                    return;
+                }
+
+                grid.innerHTML = '';
+                visibleEvidences.forEach(ev => {
+                    if (isGuestView) {
+                        grid.innerHTML += `
+                            <div class="evidence-item">
+                                <h4>${ev.testType}</h4>
+                                <p>Score: ${ev.extractedScore || 'N/A'}</p>
+                                <span class="badge-verified">✓ Verified</span>
+                            </div>`;
+                    } else {
+                        // Owner view: show all with status
                         let statusHtml = '';
                         if (ev.verificationStatus === 'verified') {
                             statusHtml = '<span class="badge-verified">✓ Verified</span>';
@@ -525,10 +665,33 @@
                                 <h4>${ev.testType}</h4>
                                 <p>Score: ${ev.extractedScore || 'N/A'}</p>
                                 ${statusHtml}
+                            </div>`;
+                    }
+                });
+
+                // Render locally added badges (owner only)
+                if (!isGuestView) {
+                    savedBadges.forEach(badge => {
+                        const badgeHtml = `
+                            <div class="evidence-item" style="animation: fadeIn 0.5s; position: relative;">
+                                <button onclick="removeBadgeFromEvidence(this, '${badge.title}')" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #e53e3e; cursor: pointer; font-size: 1.5rem; line-height: 1;">&times;</button>
+                                <h4>${badge.title}</h4>
+                                <p>Score: 95/100 (Web Test)</p>
+                                <span class="badge-verified">✓ Verified</span>
+                                <p style="font-size: 0.75rem; color: #435eea; margin-top: 0.5rem; font-weight: 500;">✓ Added to Portfolio PDF</p>
                             </div>
                         `;
+                        grid.insertAdjacentHTML('beforeend', badgeHtml);
+
+                        const sidebars = document.querySelectorAll('.draggable-badge');
+                        sidebars.forEach(s => {
+                            if (s.querySelector('span') && s.querySelector('span').innerText === badge.title) {
+                                s.remove();
+                            }
+                        });
                     });
                 }
+
             } catch (err) {
                 console.error(err);
             }
@@ -717,6 +880,103 @@
         // Init
         fetchProfile();
         fetchEvidences();
+
+        // Drag and Drop: owner only
+        const evidenceGrid = document.getElementById('evidenceGrid');
+
+        document.querySelectorAll('.draggable-badge').forEach(badge => {
+            badge.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', e.target.id);
+                e.target.style.opacity = '0.5';
+            });
+            badge.addEventListener('dragend', (e) => {
+                e.target.style.opacity = '1';
+            });
+        });
+
+        evidenceGrid.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            evidenceGrid.classList.add('drag-over');
+        });
+
+        evidenceGrid.addEventListener('dragleave', (e) => {
+            evidenceGrid.classList.remove('drag-over');
+        });
+
+        evidenceGrid.addEventListener('drop', (e) => {
+            e.preventDefault();
+            evidenceGrid.classList.remove('drag-over');
+            const badgeId = e.dataTransfer.getData('text/plain');
+            const badge = document.getElementById(badgeId);
+            if (badge) {
+                moveBadgeToEvidence(badge);
+            }
+        });
+
+        function moveBadgeToEvidence(badgeElement) {
+            const title = badgeElement.querySelector('span').innerText;
+            badgeElement.remove(); // Remove from sidebar
+
+            // Remove the "Loading credentials..." or empty message if it's the first one
+            const emptyMsg = evidenceGrid.querySelector('p');
+            if (emptyMsg) emptyMsg.remove();
+
+            // Add to evidence grid visually
+            const evidenceHtml = `
+                <div class="evidence-item" style="animation: fadeIn 0.5s; position: relative;">
+                    <button onclick="removeBadgeFromEvidence(this, '${title}')" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #e53e3e; cursor: pointer; font-size: 1.5rem; line-height: 1;">&times;</button>
+                    <h4>${title}</h4>
+                    <p>Score: 95/100 (Web Test)</p>
+                    <span class="badge-verified">✓ Verified</span>
+                    <p style="font-size: 0.75rem; color: #435eea; margin-top: 0.5rem; font-weight: 500;">✓ Added to Portfolio PDF</p>
+                </div>
+            `;
+            evidenceGrid.insertAdjacentHTML('beforeend', evidenceHtml);
+            
+            // Save to localStorage for the PDF page
+            let savedBadges = JSON.parse(localStorage.getItem('addedBadges') || '[]');
+            if (!savedBadges.some(b => b.title === title)) {
+                savedBadges.push({ title: title, score: "95 / 100", date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) });
+                localStorage.setItem('addedBadges', JSON.stringify(savedBadges));
+            }
+        }
+
+        function removeBadgeFromEvidence(btnElement, title) {
+            // Remove from DOM
+            const item = btnElement.closest('.evidence-item');
+            if (item) item.remove();
+            
+            // Remove from localStorage
+            let savedBadges = JSON.parse(localStorage.getItem('addedBadges') || '[]');
+            savedBadges = savedBadges.filter(b => b.title !== title);
+            localStorage.setItem('addedBadges', JSON.stringify(savedBadges));
+            
+            // Show empty state if needed
+            if (evidenceGrid.querySelectorAll('.evidence-item').length === 0) {
+                evidenceGrid.innerHTML = '<p style="color: var(--text-muted); grid-column: 1/-1;">No credentials yet. Add some on your dashboard!</p>';
+            }
+            
+            // Add back to sidebar
+            const badgeList = document.getElementById('badgeList');
+            const newBadge = document.createElement('div');
+            newBadge.className = 'draggable-badge';
+            newBadge.draggable = true;
+            newBadge.id = 'badge-' + Date.now();
+            newBadge.innerHTML = `
+                <span>${title}</span>
+                <svg class="icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            `;
+            newBadge.onclick = function() { moveBadgeToEvidence(this); };
+            newBadge.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', newBadge.id);
+                e.target.style.opacity = '0.5';
+            });
+            newBadge.addEventListener('dragend', (e) => {
+                e.target.style.opacity = '1';
+            });
+            badgeList.appendChild(newBadge);
+        }
+
     </script>
 </body>
 </html>

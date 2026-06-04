@@ -44,6 +44,10 @@ const EvidenceSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    isPrivate: {
+        type: Boolean,
+        default: false
+    },
     uploadedAt: {
         type: Date,
         default: Date.now
