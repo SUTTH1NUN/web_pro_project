@@ -1,9 +1,10 @@
 {
   "name": "web_pro_project",
   "version": "1.0.0",
-  "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).",
+  "description": "Skill Wallet - English proficiency assessment and certificate management platform",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,6 +30,7 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.6.3",
     "multer": "^2.1.1",
-    "nodemailer": "^8.0.10"
+    "nodemailer": "^8.0.10",
+    "resend": "^6.12.4"
   }
 }

@@ -20,3 +20,6 @@ Thumbs.db
 
 # Docker
 mongo-data/
+
+#mongo backup
+mongo-backup/

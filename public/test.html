@@ -31,7 +31,7 @@
         /* Test Grid */
         .test-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 2rem;
             padding-bottom: 3rem;
         }
@@ -178,19 +178,37 @@
         .test-card.listening .btn-start {
             background: linear-gradient(90deg, #9f7aea, #805ad5);
         }
+
+        .adaptive-option-label {
+            display: block; 
+            margin-bottom: 0.75rem; 
+            cursor: pointer; 
+            padding: 0.75rem 1rem; 
+            border: 1px solid rgba(0, 0, 0, 0.08); 
+            border-radius: 8px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            background: #ffffff;
+            font-size: 1rem;
+        }
+
+        .adaptive-option-label:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-color: #cbd5e0;
+        }
     </style>
 </head>
 
 <body>
     <nav class="navbar">
-        <div class="nav-brand">
+        <a href="index.html" class="nav-brand" style="text-decoration: none; color: inherit;">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" />
                 <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round" />
             </svg>
             Zentry
-        </div>
+        </a>
         <div class="nav-links">
             <a href="dashboard.html">Dashboard</a>
             <a href="test.html" class="active">Tests</a>
@@ -199,7 +217,7 @@
         </div>
     </nav>
 
-    <main class="container" style="max-width: 1200px;">
+    <main class="container" style="max-width: 1650px; padding: 2rem 4rem;">
         <div class="test-header">
             <h1>Assess Your Skills</h1>
             <p>Take interactive AI-powered tests to prove your language proficiency. Once passed, credentials will
@@ -227,19 +245,11 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        15 Mins
-                    </div>
-                    <div class="meta-item">
-                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z">
-                            </path>
-                        </svg>
-                        Intermediate
+                        2 Mins
                     </div>
                 </div>
 
-                <button class="btn-start" onclick="alert('Feature coming soon!')">
+                <button class="btn-start" onclick="openSpeakingTestModal()">
                     Start Speaking Test
                 </button>
             </div>
@@ -263,15 +273,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        20 Mins
-                    </div>
-                    <div class="meta-item">
-                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z">
-                            </path>
-                        </svg>
-                        Beginner
+                        15 Mins
                     </div>
                 </div>
 
@@ -299,19 +301,11 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        30 Mins
-                    </div>
-                    <div class="meta-item">
-                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z">
-                            </path>
-                        </svg>
-                        Advanced
+                        10 Mins
                     </div>
                 </div>
 
-                <button class="btn-start" onclick="alert('Feature coming soon!')">
+                <button class="btn-start" onclick="openWritingTestModal()">
                     Start Writing Test
                 </button>
             </div>
@@ -335,15 +329,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        25 Mins
-                    </div>
-                    <div class="meta-item">
-                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z">
-                            </path>
-                        </svg>
-                        Intermediate
+                        15 Mins
                     </div>
                 </div>
 
@@ -355,6 +341,92 @@
         </div>
     </main>
 
+    <!-- Speaking Test Modal -->
+    <div id="speakingTestModal" class="modal-overlay"
+        style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+        <div class="modal-content"
+            style="background: white; border-radius: 12px; width: 100%; max-width: 600px; padding: 2rem; position: relative; max-height: 90vh; overflow-y: auto;">
+            <button onclick="closeSpeakingTestModal()"
+                style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            <h2 style="margin-bottom: 1rem;">Speaking Test</h2>
+
+            <div id="speakingPromptContainer"
+                style="background: #f7fafc; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #e2e8f0;">
+                <p style="font-weight: 600; color: #2d3748; margin-bottom: 0.5rem;">Prompt:</p>
+                <p id="speakingPromptText"
+                    style="color: #4a5568; line-height: 1.6; font-size: 1.1rem; text-align: center;">Loading scenario...
+                </p>
+            </div>
+
+            <div id="speakingTestForm" style="text-align: center;">
+                <div style="margin-bottom: 2rem;">
+                    <div id="recordingStatus" style="font-size: 1.1rem; color: #718096; margin-bottom: 1rem;">Ready to
+                        record. Maximum 2 minutes.</div>
+
+                    <button id="recordBtn" onclick="toggleRecording()"
+                        style="width: 80px; height: 80px; border-radius: 50%; border: none; background: #e53e3e; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; margin: 0 auto; transition: transform 0.2s; box-shadow: 0 4px 10px rgba(229,62,62,0.3);">
+                        <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z">
+                            </path>
+                        </svg>
+                    </button>
+                    <p id="recordBtnLabel" style="margin-top: 1rem; font-weight: 600; color: #2d3748;">Click to Start
+                    </p>
+                </div>
+
+                <div id="audioPreviewContainer" style="display: none; margin-bottom: 1.5rem;">
+                    <audio id="audioPlayback" controls style="width: 100%;"></audio>
+                </div>
+
+                <button id="submitSpeakingBtn" class="btn-start" onclick="submitSpeakingTest()" disabled
+                    style="background: linear-gradient(90deg, #435eea, #6b46f2); color: white; width: 100%; opacity: 0.5;">
+                    Submit Recording
+                </button>
+            </div>
+
+            <div id="speakingLoading" style="display: none; text-align: center; padding: 3rem 0;">
+                <div class="loadingSpinner"
+                    style="width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #6b46f2; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem auto;">
+                </div>
+                <p style="color: #4a5568; font-weight: 500;">AI is evaluating your speaking...</p>
+            </div>
+
+            <div id="speakingResult" style="display: none; text-align: center; padding: 2rem 0;">
+                <div style="font-size: 4rem; margin-bottom: 1rem;">🎙️</div>
+                <h2 style="margin-bottom: 1rem; color: #2d3748;">Evaluation Complete!</h2>
+                <div
+                    style="display: flex; justify-content: space-around; background: #f7fafc; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 1.5rem;">
+                    <div>
+                        <p style="font-size: 0.9rem; color: #718096; margin-bottom: 0.25rem;">Score</p>
+                        <div id="speakingScoreDisplay" style="font-size: 2rem; font-weight: 700; color: #6b46f2;"></div>
+                    </div>
+                    <div>
+                        <p style="font-size: 0.9rem; color: #718096; margin-bottom: 0.25rem;">CEFR Level</p>
+                        <div id="speakingCefrDisplay" style="font-size: 2rem; font-weight: 700; color: #3182ce;"></div>
+                    </div>
+                </div>
+
+                <div
+                    style="text-align: left; background: #fffaf0; padding: 1.5rem; border-radius: 8px; border: 1px solid #feebc8; margin-bottom: 1.5rem;">
+                    <p style="font-weight: 600; color: #c05621; margin-bottom: 0.5rem;">Transcription:</p>
+                    <p id="speakingTranscriptionDisplay" style="color: #7b341e; line-height: 1.6; font-style: italic;">
+                    </p>
+                </div>
+
+                <div
+                    style="text-align: left; background: #ebf4ff; padding: 1.5rem; border-radius: 8px; border: 1px solid #bee3f8; margin-bottom: 2rem;">
+                    <p style="font-weight: 600; color: #2b6cb0; margin-bottom: 0.5rem;">AI Feedback:</p>
+                    <p id="speakingFeedbackDisplay" style="color: #2c5282; line-height: 1.6;"></p>
+                </div>
+                <button onclick="window.location.href='profile.html'" class="btn-start"
+                    style="background: #2d3748; color: white; width: 100%;">
+                    View Profile Dashboard
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Reading Test Modal (Adaptive) -->
     <div id="testModal" class="modal-overlay"
         style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
@@ -364,7 +436,7 @@
                 style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
 
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h2 id="modalTitle">Reading Test <span style="font-size: 0.8rem; color: #a0aec0;">(v4)</span></h2>
+                <h2 id="modalTitle">Reading Test</h2>
                 <span id="adaptiveProgress"
                     style="font-weight: 600; color: #3182ce; background: #ebf8ff; padding: 4px 12px; border-radius: 20px;">Question
                     1 of 15</span>
@@ -415,7 +487,7 @@
                 </div>
 
                 <div id="articleContainer"
-                    style="background: #f7fafc; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #e2e8f0; font-size: 1.05rem; line-height: 1.6;">
+                    style="background: #f7fafc; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #e2e8f0; font-size: 1.05rem; line-height: 1.6; max-height: 35vh; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;">
                     <!-- Article text will go here -->
                 </div>
 
@@ -436,6 +508,71 @@
                     style="font-size: 3rem; font-weight: 800; color: #3182ce; margin-bottom: 2rem;">B2</div>
                 <button onclick="window.location.href='profile.html'" class="btn-start"
                     style="background: #38a169; color: white;">View My Profile</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Writing Test Modal -->
+    <div id="writingTestModal" class="modal-overlay"
+        style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+        <div class="modal-content"
+            style="background: white; border-radius: 12px; width: 100%; max-width: 800px; padding: 2rem; position: relative; max-height: 90vh; overflow-y: auto;">
+            <button onclick="closeWritingTestModal()"
+                style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            <h2 style="margin-bottom: 1rem;">Business Writing Test</h2>
+
+            <div id="writingPromptContainer"
+                style="background: #f7fafc; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #e2e8f0;">
+                <p style="font-weight: 600; color: #2d3748; margin-bottom: 0.5rem;">Scenario:</p>
+                <p id="writingPromptText" style="color: #4a5568; line-height: 1.6;">You are a project manager. Write a
+                    professional email to your client apologizing for a 2-day delay in delivering the final report.
+                    Ensure you maintain a polite and professional tone.</p>
+            </div>
+
+            <form id="writingTestForm">
+                <textarea id="writingTextarea" name="text" rows="10"
+                    style="width: 100%; padding: 1rem; border: 1px solid #cbd5e0; border-radius: 8px; font-family: inherit; font-size: 1rem; resize: vertical; margin-bottom: 1rem;"
+                    placeholder="Write your email here..." required></textarea>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <span id="wordCountDisplay" style="font-size: 0.9rem; color: #718096;">Word count: 0</span>
+                </div>
+                <button type="submit" id="submitWritingBtn" class="btn-start"
+                    style="background: linear-gradient(90deg, #ed8936, #dd6b20); color: white; width: 100%;">
+                    Submit Writing
+                </button>
+            </form>
+
+            <div id="writingLoading" style="display: none; text-align: center; padding: 3rem 0;">
+                <div class="loadingSpinner"
+                    style="width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #dd6b20; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem auto;">
+                </div>
+                <p style="color: #4a5568; font-weight: 500;">AI is evaluating your writing...</p>
+            </div>
+
+            <div id="writingResult" style="display: none; text-align: center; padding: 2rem 0;">
+                <div style="font-size: 4rem; margin-bottom: 1rem;">📝</div>
+                <h2 style="margin-bottom: 1rem; color: #2d3748;">Evaluation Complete!</h2>
+                <div
+                    style="display: flex; justify-content: space-around; background: #f7fafc; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 1.5rem;">
+                    <div>
+                        <p style="font-size: 0.9rem; color: #718096; margin-bottom: 0.25rem;">Score</p>
+                        <div id="writingScoreDisplay" style="font-size: 2rem; font-weight: 700; color: #dd6b20;">8.5/10
+                        </div>
+                    </div>
+                    <div>
+                        <p style="font-size: 0.9rem; color: #718096; margin-bottom: 0.25rem;">CEFR Level</p>
+                        <div id="writingCefrDisplay" style="font-size: 2rem; font-weight: 700; color: #3182ce;">B2</div>
+                    </div>
+                </div>
+                <div
+                    style="text-align: left; background: #ebf4ff; padding: 1.5rem; border-radius: 8px; border: 1px solid #bee3f8; margin-bottom: 2rem;">
+                    <p style="font-weight: 600; color: #2b6cb0; margin-bottom: 0.5rem;">AI Feedback:</p>
+                    <p id="writingFeedbackDisplay" style="color: #2c5282; line-height: 1.6;"></p>
+                </div>
+                <button onclick="window.location.href='profile.html'" class="btn-start"
+                    style="background: #2d3748; color: white; width: 100%;">
+                    View Profile Dashboard
+                </button>
             </div>
         </div>
     </div>
@@ -471,23 +608,17 @@
 
             <form id="listeningTestForm">
                 <div style="margin-bottom: 1.5rem;">
-                    <p style="font-weight: 600; margin-bottom: 0.5rem;">1. Where does the conversation take place?</p>
-                    <label style="display: block; margin-bottom: 0.5rem;"><input type="radio" name="l1" value="A"> A) At
-                        a hospital</label>
-                    <label style="display: block; margin-bottom: 0.5rem;"><input type="radio" name="l1" value="B"> B) At
-                        a train station</label>
-                    <label style="display: block; margin-bottom: 0.5rem;"><input type="radio" name="l1" value="C"> C) At
-                        a restaurant</label>
+                    <p style="font-weight: 600; margin-bottom: 0.5rem; color: #2d3748; font-size: 1.05rem;">1. Where does the conversation take place?</p>
+                    <label class="adaptive-option-label"><input type="radio" name="l1" value="A" style="margin-right: 0.75rem; transform: scale(1.1);"> <strong>A)</strong> <span style="color: #4a5568;">At a hospital</span></label>
+                    <label class="adaptive-option-label"><input type="radio" name="l1" value="B" style="margin-right: 0.75rem; transform: scale(1.1);"> <strong>B)</strong> <span style="color: #4a5568;">At a train station</span></label>
+                    <label class="adaptive-option-label"><input type="radio" name="l1" value="C" style="margin-right: 0.75rem; transform: scale(1.1);"> <strong>C)</strong> <span style="color: #4a5568;">At a restaurant</span></label>
                 </div>
 
                 <div style="margin-bottom: 1.5rem;">
-                    <p style="font-weight: 600; margin-bottom: 0.5rem;">2. What does the man want to buy?</p>
-                    <label style="display: block; margin-bottom: 0.5rem;"><input type="radio" name="l2" value="A"> A) A
-                        ticket to London</label>
-                    <label style="display: block; margin-bottom: 0.5rem;"><input type="radio" name="l2" value="B"> B) A
-                        cup of coffee</label>
-                    <label style="display: block; margin-bottom: 0.5rem;"><input type="radio" name="l2" value="C"> C) A
-                        newspaper</label>
+                    <p style="font-weight: 600; margin-bottom: 0.5rem; color: #2d3748; font-size: 1.05rem;">2. What does the man want to buy?</p>
+                    <label class="adaptive-option-label"><input type="radio" name="l2" value="A" style="margin-right: 0.75rem; transform: scale(1.1);"> <strong>A)</strong> <span style="color: #4a5568;">A ticket to London</span></label>
+                    <label class="adaptive-option-label"><input type="radio" name="l2" value="B" style="margin-right: 0.75rem; transform: scale(1.1);"> <strong>B)</strong> <span style="color: #4a5568;">A cup of coffee</span></label>
+                    <label class="adaptive-option-label"><input type="radio" name="l2" value="C" style="margin-right: 0.75rem; transform: scale(1.1);"> <strong>C)</strong> <span style="color: #4a5568;">A newspaper</span></label>
                 </div>
 
                 <button type="submit" id="submitListeningTestBtn" class="btn-start"
@@ -523,7 +654,7 @@
             try {
                 console.log("Start button clicked for type:", type);
                 currentTestType = type;
-                
+
                 const testModal = document.getElementById('testModal');
                 // Force visibility and prevent CSS trapping
                 document.body.appendChild(testModal); // Move to end of body
@@ -533,21 +664,21 @@
                 testModal.style.setProperty('z-index', '999999', 'important');
                 testModal.style.setProperty('background', 'rgba(0,0,0,0.7)', 'important');
                 testModal.style.setProperty('pointer-events', 'auto', 'important');
-                
+
                 // Ensure all children are clickable
                 const allChildren = testModal.querySelectorAll('*');
                 allChildren.forEach(child => {
                     child.style.setProperty('pointer-events', 'auto', 'important');
                 });
-                
+
                 document.getElementById('adaptiveResult').style.display = 'none';
                 document.getElementById('adaptiveTestForm').style.display = 'none';
-                
+
                 const titleEl = document.getElementById('modalTitle');
                 if (titleEl) {
-                    titleEl.innerHTML = `${type === 'reading' ? 'Reading' : 'Listening'} Test <span style="font-size: 0.8rem; color: #a0aec0;">(v4)</span>`;
+                    titleEl.innerHTML = `${type === 'reading' ? 'Reading' : 'Listening'} Test`;
                 }
-                
+
                 // Reset state
                 adaptiveState = {
                     currentScore: 0.0,
@@ -556,11 +687,11 @@
                     maxSteps: type === 'reading' ? 10 : 15,
                     currentQuestionData: null
                 };
-                
+
                 timeLeft = 600; // Reset timer to 10 mins
                 updateTimerDisplay('timerDisplay');
                 startTimer('adaptiveTestForm', 'timerDisplay');
-                
+
                 fetchNextAdaptiveQuestion();
             } catch (err) {
                 console.error("Error in startAdaptiveTest:", err);
@@ -658,15 +789,15 @@
                 subQ.options.forEach((opt, index) => {
                     const letter = String.fromCharCode(65 + index); // A, B, C...
                     optionsHtml += `
-                        <label style="display: block; margin-bottom: 0.75rem; cursor: pointer; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 8px;">
-                            <input type="radio" name="adaptiveOption" value="${opt}" required style="margin-right: 0.5rem;"> 
-                            <strong>${letter})</strong> ${opt}
+                        <label class="adaptive-option-label">
+                            <input type="radio" name="adaptiveOption" value="${opt}" required style="margin-right: 0.75rem; transform: scale(1.1);"> 
+                            <strong>${letter})</strong> <span style="color: #4a5568;">${opt}</span>
                         </label>
                     `;
                 });
             } else {
                 // Fallback for Fill-in-the-blank
-                optionsHtml = `<input type="text" name="adaptiveOption" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #cbd5e0;">`;
+                optionsHtml = `<input type="text" name="adaptiveOption" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #cbd5e0; font-size: 1rem;">`;
             }
 
             document.getElementById('questionContainer').innerHTML = `
@@ -813,6 +944,102 @@
 
 
 
+        // --- Writing Test Logic --- //
+        const writingTextarea = document.getElementById('writingTextarea');
+        const wordCountDisplay = document.getElementById('wordCountDisplay');
+        const promptText = "You are a project manager. Write a professional email to your client apologizing for a 2-day delay in delivering the final report. Ensure you maintain a polite and professional tone.";
+
+        if (writingTextarea) {
+            writingTextarea.addEventListener('input', () => {
+                const words = writingTextarea.value.trim().split(/\s+/).filter(w => w.length > 0).length;
+                wordCountDisplay.innerText = `Word count: ${words}`;
+                if (words < 30) {
+                    wordCountDisplay.style.color = '#e53e3e';
+                } else {
+                    wordCountDisplay.style.color = '#38a169';
+                }
+            });
+        }
+
+        async function openWritingTestModal() {
+            const modal = document.getElementById('writingTestModal');
+            document.body.appendChild(modal);
+
+            // Force visibility
+            modal.style.setProperty('display', 'flex', 'important');
+            modal.style.setProperty('visibility', 'visible', 'important');
+            modal.style.setProperty('opacity', '1', 'important');
+            modal.style.setProperty('z-index', '999999', 'important');
+            modal.style.setProperty('pointer-events', 'auto', 'important');
+
+            document.getElementById('writingTestForm').style.display = 'block';
+            document.getElementById('writingLoading').style.display = 'none';
+            document.getElementById('writingResult').style.display = 'none';
+            writingTextarea.value = '';
+            wordCountDisplay.innerText = 'Word count: 0';
+            wordCountDisplay.style.color = '#718096';
+
+            document.getElementById('writingPromptText').innerText = "Loading scenario...";
+            try {
+                const res = await fetch(`/api/tests/writing/scenario?t=${new Date().getTime()}`, { cache: 'no-store' });
+                if (res.ok) {
+                    const data = await res.json();
+                    currentWritingPrompt = data.prompt;
+                    document.getElementById('writingPromptText').innerText = currentWritingPrompt;
+                }
+            } catch (err) {
+                console.error("Failed to load scenario:", err);
+                document.getElementById('writingPromptText').innerText = currentWritingPrompt;
+            }
+        }
+
+        function closeWritingTestModal() {
+            document.getElementById('writingTestModal').style.display = 'none';
+        }
+
+        document.getElementById('writingTestForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const words = writingTextarea.value.trim().split(/\s+/).filter(w => w.length > 0).length;
+            if (words < 30) {
+                alert('Please write at least 30 words to accurately assess your skills.');
+                return;
+            }
+
+            document.getElementById('writingTestForm').style.display = 'none';
+            document.getElementById('writingLoading').style.display = 'block';
+
+            try {
+                const res = await fetch(`/api/tests/writing/submit?t=${new Date().getTime()}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        text: writingTextarea.value,
+                        prompt: currentWritingPrompt
+                    })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('writingLoading').style.display = 'none';
+                    document.getElementById('writingResult').style.display = 'block';
+
+                    document.getElementById('writingScoreDisplay').innerText = `${data.score}/10`;
+                    document.getElementById('writingCefrDisplay').innerText = data.cefrLevel;
+                    document.getElementById('writingFeedbackDisplay').innerText = data.feedback;
+                } else {
+                    throw new Error('Failed to submit test');
+                }
+            } catch (error) {
+                console.error(error);
+                alert('An error occurred while evaluating the writing test.');
+                document.getElementById('writingLoading').style.display = 'none';
+                document.getElementById('writingTestForm').style.display = 'block';
+            }
+        });
+
         function startTimer(formId, displayId) {
             clearInterval(timerInterval);
             timerInterval = setInterval(() => {
@@ -884,6 +1111,163 @@
         }
 
         document.getElementById('listeningTestForm').addEventListener('submit', (e) => handleTestSubmit(e, 'listening', 'submitListeningTestBtn', 'listeningTestForm'));
+
+        // --- Speaking Test Logic --- //
+        let currentSpeakingPrompt = "";
+        let mediaRecorder;
+        let audioChunks = [];
+        let audioBlob = null;
+        let isRecording = false;
+
+        async function openSpeakingTestModal() {
+            const modal = document.getElementById('speakingTestModal');
+            document.body.appendChild(modal);
+            modal.style.setProperty('display', 'flex', 'important');
+            modal.style.setProperty('visibility', 'visible', 'important');
+            modal.style.setProperty('opacity', '1', 'important');
+            modal.style.setProperty('z-index', '999999', 'important');
+            modal.style.setProperty('pointer-events', 'auto', 'important');
+
+            document.getElementById('speakingTestForm').style.display = 'block';
+            document.getElementById('speakingLoading').style.display = 'none';
+            document.getElementById('speakingResult').style.display = 'none';
+            document.getElementById('audioPreviewContainer').style.display = 'none';
+            document.getElementById('submitSpeakingBtn').disabled = true;
+            document.getElementById('submitSpeakingBtn').style.opacity = '0.5';
+
+            audioBlob = null;
+            audioChunks = [];
+            isRecording = false;
+            document.getElementById('recordBtn').style.background = '#e53e3e';
+            document.getElementById('recordBtn').style.animation = 'none';
+            document.getElementById('recordBtnLabel').innerText = 'Click to Start';
+            document.getElementById('recordingStatus').innerText = 'Ready to record. Maximum 2 minutes.';
+
+            document.getElementById('speakingPromptText').innerText = "Loading scenario...";
+            try {
+                const res = await fetch(`/api/tests/speaking/scenario?t=${new Date().getTime()}`, { cache: 'no-store' });
+                if (res.ok) {
+                    const data = await res.json();
+                    currentSpeakingPrompt = data.prompt;
+                    document.getElementById('speakingPromptText').innerText = currentSpeakingPrompt;
+                }
+            } catch (err) {
+                console.error("Failed to load speaking scenario:", err);
+            }
+        }
+
+        function closeSpeakingTestModal() {
+            if (isRecording && mediaRecorder) {
+                mediaRecorder.stop();
+            }
+            document.getElementById('speakingTestModal').style.display = 'none';
+        }
+
+        async function toggleRecording() {
+            const btn = document.getElementById('recordBtn');
+            const label = document.getElementById('recordBtnLabel');
+            const status = document.getElementById('recordingStatus');
+
+            if (!isRecording) {
+                // Start Recording
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+
+                    mediaRecorder.ondataavailable = e => {
+                        if (e.data.size > 0) audioChunks.push(e.data);
+                    };
+
+                    mediaRecorder.onstop = () => {
+                        const mimeType = mediaRecorder.mimeType || 'audio/webm';
+                        audioBlob = new Blob(audioChunks, { type: mimeType });
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        const playback = document.getElementById('audioPlayback');
+                        playback.src = audioUrl;
+                        document.getElementById('audioPreviewContainer').style.display = 'block';
+
+                        document.getElementById('submitSpeakingBtn').disabled = false;
+                        document.getElementById('submitSpeakingBtn').style.opacity = '1';
+
+                        // Stop all tracks to release mic
+                        stream.getTracks().forEach(track => track.stop());
+                    };
+
+                    mediaRecorder.start();
+                    isRecording = true;
+                    btn.style.background = '#48bb78';
+                    btn.style.animation = 'pulse 1.5s infinite';
+                    label.innerText = 'Click to Stop';
+                    status.innerText = 'Recording... Speak now!';
+
+                    // Pulse animation keyframes if not exists
+                    if (!document.getElementById('pulseAnim')) {
+                        const style = document.createElement('style');
+                        style.id = 'pulseAnim';
+                        style.innerHTML = `
+                            @keyframes pulse {
+                                0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(72, 187, 120, 0.7); }
+                                70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(72, 187, 120, 0); }
+                                100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(72, 187, 120, 0); }
+                            }
+                        `;
+                        document.head.appendChild(style);
+                    }
+
+                } catch (err) {
+                    console.error("Mic error:", err);
+                    alert("Microphone access denied or not available. Please allow microphone permissions.");
+                }
+            } else {
+                // Stop Recording
+                mediaRecorder.stop();
+                isRecording = false;
+                btn.style.background = '#e53e3e';
+                btn.style.animation = 'none';
+                label.innerText = 'Rerecord';
+                status.innerText = 'Recording saved. You can listen or submit.';
+            }
+        }
+
+        async function submitSpeakingTest() {
+            if (!audioBlob) return;
+
+            document.getElementById('speakingTestForm').style.display = 'none';
+            document.getElementById('speakingLoading').style.display = 'block';
+
+            const formData = new FormData();
+            formData.append('audio', audioBlob, 'recording.webm');
+            formData.append('prompt', currentSpeakingPrompt);
+
+            try {
+                const res = await fetch('/api/tests/speaking/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('speakingLoading').style.display = 'none';
+                    document.getElementById('speakingResult').style.display = 'block';
+
+                    document.getElementById('speakingScoreDisplay').innerText = `${data.score}/10`;
+                    document.getElementById('speakingCefrDisplay').innerText = data.cefrLevel;
+                    document.getElementById('speakingFeedbackDisplay').innerText = data.feedback;
+                    document.getElementById('speakingTranscriptionDisplay').innerText = `"${data.transcription}"`;
+                } else {
+                    throw new Error('Failed to submit test');
+                }
+            } catch (error) {
+                console.error(error);
+                alert('An error occurred while evaluating the speaking test.');
+                document.getElementById('speakingLoading').style.display = 'none';
+                document.getElementById('speakingTestForm').style.display = 'block';
+            }
+        }
     </script>
 </body>
 

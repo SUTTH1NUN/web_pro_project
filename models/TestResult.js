@@ -8,7 +8,7 @@ const TestResultSchema = new mongoose.Schema({
     },
     moduleType: {
         type: String,
-        enum: ['chatbot', 'gamification', 'quiz', 'speaking'],
+        enum: ['chatbot', 'gamification', 'quiz', 'speaking', 'writing'],
         required: true
     },
     score: {

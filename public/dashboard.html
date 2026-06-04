@@ -36,7 +36,7 @@
         /* Credential Grid */
         .credential-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 2rem;
         }
 
@@ -68,9 +68,17 @@
             background: #e53e3e;
         }
 
-        .credential-card.IELTS::before { background: #e53e3e; }
-        .credential-card.TOEIC::before { background: #435eea; }
-        .credential-card.TOEFL::before { background: #d69e2e; }
+        .credential-card.IELTS::before {
+            background: #e53e3e;
+        }
+
+        .credential-card.TOEIC::before {
+            background: #435eea;
+        }
+
+        .credential-card.TOEFL::before {
+            background: #d69e2e;
+        }
 
         .card-type-badge {
             display: inline-block;
@@ -83,8 +91,24 @@
             margin-bottom: 0.5rem;
         }
 
-        .credential-card.TOEIC .card-type-badge { background: #f0f4ff; color: #435eea; }
-        .credential-card.TOEFL .card-type-badge { background: #fffff0; color: #b7791f; }
+        .credential-card.TOEIC .card-type-badge {
+            background: #f0f4ff;
+            color: #435eea;
+        }
+
+        .credential-card.TOEFL .card-type-badge {
+            background: #fffff0;
+            color: #b7791f;
+        }
+
+        .credential-card.Web::before {
+            background: #6b46f2;
+        }
+
+        .credential-card.Web .card-type-badge {
+            background: #f3f0ff;
+            color: #6b46f2;
+        }
 
         .card-subtitle {
             color: var(--text-muted);
@@ -108,6 +132,35 @@
             color: #e53e3e;
         }
 
+        .sub-scores {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--bg-light);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            border: 1px solid var(--border-light);
+        }
+
+        .sub-score-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sub-score-label {
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+        
+        .sub-score-value {
+            font-weight: 700;
+            color: #435eea;
+        }
+
         .card-footer {
             border-top: 1px solid var(--border-light);
             padding-top: 1rem;
@@ -117,7 +170,7 @@
             flex-direction: column;
             gap: 0.5rem;
         }
-        
+
         .card-footer .date {
             display: flex;
             align-items: center;
@@ -159,13 +212,14 @@
 
 <body>
     <nav class="navbar">
-        <div class="nav-brand">
+        <a href="index.html" class="nav-brand" style="text-decoration: none; color: inherit;">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" />
-                <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" />
             </svg>
             Zentry
-        </div>
+        </a>
         <div class="nav-links">
             <a href="dashboard.html" class="active">Dashboard</a>
             <a href="test.html">Tests</a>
@@ -175,19 +229,29 @@
         </div>
     </nav>
 
-    <main class="container" style="max-width: 1200px;">
+    <main class="container" style="max-width: 1650px; padding: 2rem 4rem;">
         <div class="dashboard-header">
             <div class="welcome-text">
                 <h1 id="welcomeTitle">Welcome back 👋</h1>
                 <p id="credentialCount">0 credentials in your wallet</p>
             </div>
             <div class="header-actions">
+                <button class="btn-outline" onclick="shareProfile()" id="shareBtn">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+                    Share Profile
+                </button>
                 <button class="btn-outline" onclick="window.location.href='portfolio.html'">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                        </path>
+                    </svg>
                     Generate PDF
                 </button>
                 <button class="btn-primary" onclick="openModal()">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
                     Add Score
                 </button>
             </div>
@@ -225,13 +289,46 @@
                     <input type="file" id="file" name="file" accept=".pdf,.jpg,.jpeg,.png" required>
                 </div>
 
-                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;" id="submitBtn">Upload and Verify</button>
+                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;"
+                    id="submitBtn">Upload and Verify</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Details Modal -->
+    <div class="modal-overlay" id="detailsModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2>Certificate Details</h2>
+                <button class="close-btn" onclick="closeDetailsModal()">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 1.5rem; overflow-y: auto; max-height: 70vh;">
+                <img id="detailImage" src="" alt="Certificate Image" style="width: 100%; max-height: 300px; object-fit: contain; background: var(--bg-light); border-radius: var(--radius-md); border: 1px solid var(--border-medium); margin-bottom: 1.5rem;">
+                
+                <h3 style="margin-top: 0; font-size: 1.1rem; color: var(--text-dark);">Information</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div><span style="color: var(--text-gray); font-size: 0.85rem;">Test Type</span><div id="detailType" style="font-weight: 600;"></div></div>
+                    <div><span style="color: var(--text-gray); font-size: 0.85rem;">Test Date</span><div id="detailDate" style="font-weight: 600;"></div></div>
+                    <div><span style="color: var(--text-gray); font-size: 0.85rem;">Verification Code</span><div id="detailCode" style="font-weight: 600;"></div></div>
+                    <div><span style="color: var(--text-gray); font-size: 0.85rem;">Status</span><div id="detailStatus" style="font-weight: 600; text-transform: capitalize;"></div></div>
+                </div>
+
+                <h3 style="margin-top: 0; font-size: 1.1rem; color: var(--text-dark);">Scores</h3>
+                <div style="background: var(--bg-light); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;"><span style="color: var(--text-gray);">Reading:</span> <strong id="detailReading">N/A</strong></div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;"><span style="color: var(--text-gray);">Listening:</span> <strong id="detailListening">N/A</strong></div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;"><span style="color: var(--text-gray);">Speaking:</span> <strong id="detailSpeaking">N/A</strong></div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;"><span style="color: var(--text-gray);">Writing:</span> <strong id="detailWriting">N/A</strong></div>
+                    <hr style="border: 0; border-top: 1px solid var(--border-medium); margin: 1rem 0;">
+                    <div style="display: flex; justify-content: space-between; font-size: 1.25rem;"><span style="color: #435eea; font-weight: 700;">Total Score:</span> <strong id="detailTotal" style="color: #435eea; font-weight: 800;">N/A</strong></div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
         const token = localStorage.getItem('token');
+        let currentEvidences = [];
         const username = localStorage.getItem('username');
         if (!token) {
             window.location.href = 'login.html';
@@ -251,20 +348,75 @@
             document.getElementById('uploadForm').reset();
         }
 
+        function openDetailsModal(index) {
+            const ev = currentEvidences[index];
+            document.getElementById('detailImage').src = `/uploads/${ev.filename}`;
+            document.getElementById('detailType').innerText = ev.testType || 'N/A';
+            
+            const ed = ev.extractedData || {};
+            document.getElementById('detailDate').innerText = ed.testDate || 'N/A';
+            document.getElementById('detailCode').innerText = ed.verificationCode || 'N/A';
+            document.getElementById('detailStatus').innerText = ev.verificationStatus || 'N/A';
+            
+            document.getElementById('detailReading').innerText = ed.rawReading || 'N/A';
+            document.getElementById('detailListening').innerText = ed.rawListening || 'N/A';
+            document.getElementById('detailSpeaking').innerText = ed.rawSpeaking || 'N/A';
+            document.getElementById('detailWriting').innerText = ed.rawWriting || 'N/A';
+            
+            document.getElementById('detailTotal').innerText = ed.totalScore || ev.extractedScore || 'N/A';
+            
+            document.getElementById('detailsModal').classList.add('active');
+        }
+
+        function closeDetailsModal() {
+            document.getElementById('detailsModal').classList.remove('active');
+        }
+
         let pollingTimer = null;
         async function fetchEvidences() {
             try {
+                let userWebStats = null;
+                try {
+                    const userRes = await fetch('/api/users/me', { headers: { 'Authorization': `Bearer ${token}` } });
+                    if (userRes.ok) {
+                        const userData = await userRes.json();
+                        userWebStats = userData.user.webStats || null;
+                    }
+                } catch (e) { console.error(e); }
+
                 const res = await fetch('/api/evidence', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
-                
+
                 if (res.status === 401) {
                     logout();
                     return;
                 }
 
                 const data = await res.json();
-                renderEvidences(data.evidences);
+                let allEvidences = data.evidences;
+
+                if (userWebStats) {
+                    ['reading', 'listening', 'speaking', 'writing'].forEach(skill => {
+                        if (userWebStats[skill] > 0) {
+                            allEvidences.push({
+                                isWebBadge: true,
+                                testType: 'Web ' + skill.charAt(0).toUpperCase() + skill.slice(1) + ' Test',
+                                extractedScore: `${userWebStats[skill]*10}/100`,
+                                extractedData: { testDate: new Date().toISOString() },
+                                verificationStatus: 'verified'
+                            });
+                        }
+                    });
+                }
+
+                allEvidences.sort((a, b) => {
+                    const dateA = new Date((a.extractedData && a.extractedData.testDate) || a.createdAt || 0);
+                    const dateB = new Date((b.extractedData && b.extractedData.testDate) || b.createdAt || 0);
+                    return dateB - dateA; // Descending (newest first)
+                });
+
+                renderEvidences(allEvidences);
 
                 // Polling logic
                 if (pollingTimer) clearTimeout(pollingTimer);
@@ -283,19 +435,23 @@
 
             document.getElementById('credentialCount').innerText = `${evidences.length} credential${evidences.length !== 1 ? 's' : ''} in your wallet`;
 
-            evidences.forEach(ev => {
+            currentEvidences = evidences;
+            evidences.forEach((ev, index) => {
                 const isProcessing = ev.verificationStatus === 'processing';
                 const isPending = ev.verificationStatus === 'pending';
                 const isRejected = ev.verificationStatus === 'rejected';
-                
+
                 const score = ev.extractedScore || 'N/A';
-                const dateStr = (ev.extractedData && ev.extractedData.testDate) 
-                    ? new Date(ev.extractedData.testDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) 
+                const dateStr = (ev.extractedData && ev.extractedData.testDate)
+                    ? new Date(ev.extractedData.testDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
                     : 'Unknown Date';
                 const code = (ev.extractedData && ev.extractedData.verificationCode) ? ev.extractedData.verificationCode : 'No Code';
 
                 const card = document.createElement('div');
                 card.className = `credential-card ${ev.testType.split(' ')[0]} ${isPending || isProcessing || isRejected ? 'pending' : ''}`;
+                
+                card.style.cursor = 'pointer';
+                card.onclick = () => openDetailsModal(index);
                 
                 let pendingHTML = '';
                 if (isProcessing) {
@@ -335,9 +491,19 @@
                     <div>
                         <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                             <span class="card-type-badge">${ev.testType}</span>
-                            <button onclick="deleteEvidence('${ev._id}')" style="background:none; border:none; color:#4a5568; cursor:pointer; position: relative; z-index: 20;" title="Delete Score">
-                                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                            </button>
+                            ${!ev.isWebBadge ? `
+                            <div style="display: flex; gap: 0.5rem; position: relative; z-index: 20;">
+                                <button onclick="event.stopPropagation(); togglePrivacy('${ev._id}', ${!ev.isPrivate})" style="background:none; border:none; color:${ev.isPrivate ? '#e53e3e' : '#4a5568'}; cursor:pointer;" title="${ev.isPrivate ? 'Make Public' : 'Make Private'}">
+                                    ${ev.isPrivate 
+                                        ? '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg>'
+                                        : '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>'
+                                    }
+                                </button>
+                                <button onclick="event.stopPropagation(); deleteEvidence('${ev._id}')" style="background:none; border:none; color:#4a5568; cursor:pointer;" title="Delete Score">
+                                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                </button>
+                            </div>
+                            ` : ''}
                         </div>
                         <div class="card-subtitle">English Proficiency</div>
                         <div class="card-score">
@@ -350,7 +516,6 @@
                             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                             ${dateStr}
                         </div>
-                        <div>${code}</div>
                     </div>
                 `;
                 grid.appendChild(card);
@@ -414,6 +579,59 @@
             }
         }
 
+        // Toggle Privacy
+        async function togglePrivacy(id, newStatus) {
+            try {
+                const res = await fetch(`/api/evidence/${id}/privacy`, {
+                    method: 'PUT',
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ isPrivate: newStatus })
+                });
+
+                if (!res.ok) {
+                    alert('Failed to update privacy status');
+                    return;
+                }
+
+                fetchEvidences(); // refresh list
+            } catch (err) {
+                console.error(err);
+                alert('An error occurred');
+            }
+        }
+
+        // Share public profile link
+        async function shareProfile() {
+            try {
+                const userRes = await fetch('/api/users/me', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!userRes.ok) return;
+                const userData = await userRes.json();
+                const uname = userData.user.username;
+                const shareUrl = `${window.location.origin}/profile.html?user=${uname}`;
+                await navigator.clipboard.writeText(shareUrl);
+                const btn = document.getElementById('shareBtn');
+                const original = btn.innerHTML;
+                btn.innerHTML = `<svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Link Copied!`;
+                btn.style.background = '#48bb78';
+                btn.style.color = 'white';
+                btn.style.borderColor = '#48bb78';
+                setTimeout(() => {
+                    btn.innerHTML = original;
+                    btn.style.background = '';
+                    btn.style.color = '';
+                    btn.style.borderColor = '';
+                }, 2500);
+            } catch (err) {
+                console.error(err);
+                alert('Could not copy link. Try again.');
+            }
+        }
+
         // Initial Load
         async function initDashboard() {
             try {
@@ -423,7 +641,7 @@
                 });
                 if (userRes.ok) {
                     const userData = await userRes.json();
-                    const displayName = userData.user.username || userData.user.firstName || 'User';
+                    const displayName = userData.user.username || 'User';
                     document.getElementById('welcomeTitle').innerText = `Welcome back, ${displayName} 👋`;
                 }
 
@@ -437,4 +655,5 @@
         initDashboard();
     </script>
 </body>
+
 </html>
