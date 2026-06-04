@@ -1,0 +1,57 @@
+ฟีเจอร์ของแพลตฟอร์มรวบรวมและทดสอบทักษะภาษา
+
+1. ฟีเจอร์หลักด้านการจัดการข้อมูล (Functional Requirements)
+- ระบบรวบรวมหลักฐาน: รองรับการเก็บใบคะแนนและใบประกาศ (ไฟล์ PDF, JPG, MP3, MP4)
+- ระบบแนบคลิปวิดีโอ/เสียง: สำหรับพิสูจน์ทักษะการพูด (Speaking) ความยาวไม่เกิน 60 วินาที
+- ระบบออกป้ายรับรอง (Verified Badge): ออกป้ายรับรองทักษะภาษา พร้อม URL ถาวรสำหรับแชร์
+- แดชบอร์ดแสดงผล (Dashboard): แสดงสถิติและภาพรวมทักษะ ฟัง/พูด/อ่าน/เขียน ในรูปแบบ Radar Chart
+- ระบบ Export Portfolio: สร้างและส่งออกพอร์ตโฟลิโอเป็นไฟล์ PDF รูปแบบ Professional ขนาดไม่เกิน 10 MB
+
+2. ฟีเจอร์ด้านการทดสอบและประเมินผลทักษะ
+- การทดสอบแบบ Interactive (41%): พิมพ์โต้ตอบกับ Chatbot
+- การทดสอบแบบ Gamification (20%): เล่นมินิเกมภาษา
+- การทดสอบแบบปรนัย Quiz (20%): ทำข้อสอบแบบตัวเลือก
+- การทดสอบการพูด Speaking Test (19%): อัดเสียงพูดตามโจทย์ที่กำหนด
+- ระบบจับเวลา: รองรับการทดสอบในระยะเวลา 5-10 นาที ซึ่งเป็นเวลาที่ผู้ใช้งานยอมรับได้มากที่สุด
+
+3. ฟีเจอร์ด้านความเป็นส่วนตัว (Privacy Settings)
+- ระดับ Public: เปิดเป็นสาธารณะ
+- ระดับ Link Only: เข้าดูได้เฉพาะผู้ที่มีลิงก์
+- ระดับ Request: ต้องกดขออนุญาตก่อนเข้าถึงข้อมูล
+
+
+# Features and Characteristics of the Language Skills Verification System
+
+## A. Functional Requirements
+
+The Language Skills Verification System is designed to provide a comprehensive platform for collecting evidence, assessing language abilities, and verifying skills through standardized tests and portfolio management.
+
+### 1. Evidence Collection System
+- **Document Repository**: The system allows users to upload and store various forms of language proficiency evidence, including test score reports (PDF) and certificates (JPEG/PNG).
+- **Audio/Video Upload**: Users can submit audio or video recordings as proof of their speaking skills. These submissions have a maximum duration of 60 seconds to ensure conciseness and focus on oral communication.
+
+### 2. Verification and Credentialing
+- **Verified Badge Issuance**: Upon successful verification of submitted evidence and test results, the system issues a "Verified Badge." This badge is assigned a permanent URL, enabling easy sharing of the user's validated language skills on social media platforms and professional networks.
+- **Skill Endorsement**: The system supports a peer-to-peer skill endorsement mechanism, allowing users to vouch for the language proficiency of their contacts, thereby enhancing the credibility of the verification process.
+
+### 3. Portfolio Management
+- **Dashboard Display**: The system features a dashboard that visually represents the user's language skills (Listening, Speaking, Reading, and Writing) using a Radar Chart. This visualization allows for a quick and intuitive assessment of overall proficiency.
+- **Portfolio Export**: Users can generate and export a professional-grade portfolio document in PDF format. This feature is particularly valuable for job seekers as it allows them to present their verified language skills in a formal and structured manner.
+
+## B. Non-Functional Requirements
+
+The Language Skills Verification System must adhere to several critical non-functional requirements to ensure optimal user experience and system performance.
+
+### 1. Performance and Efficiency
+- **Test Duration**: The system is designed to support test durations of 5 to 10 minutes. This timeframe was identified as the most acceptable duration by the majority of users surveyed, balancing the need for comprehensive assessment with user time constraints.
+- **Content Processing**: The system ensures the smooth processing and display of various media types, including high-resolution images and video clips, without compromising the user experience.
+
+### 2. Security and Privacy
+- **Access Control**: To protect user data, the system implements a multi-layered privacy control system. Users can manage access to their profiles through three distinct permission levels:
+    - **Public**: The profile is visible to all users on the platform.
+    - **Link Only**: The profile can only be accessed by individuals who possess the unique profile link.
+    - **Request**: Users must explicitly request access to view the profile, and the profile owner must approve the request before access is granted.
+
+## C. System Integration and Data Flow
+
+The system integrates various modules to facilitate a seamless user journey from skill assessment to portfolio creation. The verification process involves the submission of certificates and test results, which are then validated through standardized testing modules. The integration of AI-powered chatbots and gamified learning environments further enriches the user experience by providing interactive and engaging assessment methods. The final output, a professional PDF portfolio, serves as a tangible testament to the user's verified language proficiency.

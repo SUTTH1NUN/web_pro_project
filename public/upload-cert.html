@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Language Certificate</title>
+    <link rel="stylesheet" href="css/app.css">
+    <style>
+        .upload-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+            max-width: 600px;
+            margin: 2rem auto;
+            border: 1px solid var(--border-light);
+        }
+
+        .upload-card h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .upload-card > p {
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+        }
+
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.25rem;
+            border-radius: var(--radius-md);
+            background: var(--bg-light);
+            border-left: 4px solid #435eea;
+        }
+        .result-box.verified {
+            border-left-color: #48bb78;
+            background: #f0fff4;
+        }
+        .result-box.rejected {
+            border-left-color: #e53e3e;
+            background: #fff5f5;
+        }
+        .result-box h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .result-box p {
+            margin-bottom: 0.25rem;
+            color: var(--text-gray);
+        }
+
+        .loading {
+            display: none;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 600;
+            color: #435eea;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" />
+                <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Zentry
+        </div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="test.html">Tests</a>
+            <a href="profile.html">Profile</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="upload-card">
+            <h2>Upload Language Certificate</h2>
+            <p>Upload your English proficiency certificate for automatic verification.</p>
+            
+            <form id="uploadForm">
+                <div class="form-group">
+                    <label for="testType">Certificate Type</label>
+                    <select id="testType" name="testType" required>
+                        <option value="">Select a certificate type...</option>
+                        <option value="TOEIC">TOEIC</option>
+                        <option value="Linguaskill">Linguaskill</option>
+                        <option value="IELTS">IELTS</option>
+                        <option value="TOEFL">TOEFL</option>
+                        <option value="Duolingo English Test">Duolingo English Test</option>
+                        <option value="TETET">TETET</option>
+                        <option value="CU-TEP">CU-TEP</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="file">Upload Certificate (PDF, JPG, PNG)</label>
+                    <input type="file" id="file" name="file" accept=".pdf,.jpg,.jpeg,.png" required>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">Upload and Verify</button>
+            </form>
+
+            <div id="loadingIndicator" class="loading">
+                Analyzing certificate with AI... Please wait.
+            </div>
+
+            <div id="resultContainer" style="display: none;">
+                <!-- Results will be injected here -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = 'login.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = 'index.html';
+        }
+
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const form = e.target;
+            const formData = new FormData(form);
+            const loading = document.getElementById('loadingIndicator');
+            const resultContainer = document.getElementById('resultContainer');
+            const submitBtn = form.querySelector('button[type="submit"]');
+
+            // Reset UI
+            loading.style.display = 'block';
+            resultContainer.style.display = 'none';
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch('/api/evidence/upload-cert', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to upload certificate');
+                }
+
+                // Display result
+                const ev = data.evidence;
+                const statusClass = ev.verificationStatus === 'verified' ? 'verified' : 
+                                  (ev.verificationStatus === 'rejected' ? 'rejected' : '');
+                
+                let statusText = 'Pending Manual Review';
+                if (ev.verificationStatus === 'verified') statusText = '✅ Verified (Name Matches)';
+                if (ev.verificationStatus === 'rejected') statusText = '❌ Rejected (Name Mismatch)';
+
+                resultContainer.innerHTML = `
+                    <div class="result-box ${statusClass}">
+                        <h3>Verification Result</h3>
+                        <p><strong>Status:</strong> ${statusText}</p>
+                        <hr style="margin: 10px 0; border: 0; border-top: 1px solid var(--border-medium);">
+                        <p><strong>Provided Name:</strong> ${ev.providedName}</p>
+                        <p><strong>Extracted Name:</strong> ${ev.extractedData.fullName || 'Not found'}</p>
+                        <p><strong>Test Date:</strong> ${ev.extractedData.testDate ? new Date(ev.extractedData.testDate).toLocaleDateString() : 'Not found'}</p>
+                        <p><strong>Verification Code:</strong> ${ev.extractedData.verificationCode || 'Not found'}</p>
+                    </div>
+                `;
+                resultContainer.style.display = 'block';
+                form.reset();
+            } catch (error) {
+                resultContainer.innerHTML = `
+                    <div class="result-box rejected">
+                        <h3>Error</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+                resultContainer.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
