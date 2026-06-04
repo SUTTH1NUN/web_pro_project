@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Zentry</title>
     <link rel="stylesheet" href="css/landing.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
         body {
-            /* Use the same hero background as landing */
-            background: radial-gradient(circle at 80% 20%, #3051ff 0%, transparent 40%),
+            /* Use the same hero background as landing + bg.png overlay */
+            background: url('uploads/bg.png') no-repeat center center / cover,
+                        radial-gradient(circle at 80% 20%, #3051ff 0%, transparent 40%),
                         radial-gradient(circle at 20% 50%, #1c32b5 0%, transparent 40%),
                         linear-gradient(135deg, #08123e 0%, #112bb1 100%);
             color: white;
@@ -24,20 +26,45 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            padding: 1rem;
             position: relative;
             z-index: 10;
+            width: 50%;
         }
 
         .auth-container {
+            margin: 0 0;
             width: 100%;
-            max-width: 440px;
+            max-width: 550px;
             background: #ffffff;
             border: none;
-            padding: 3rem 2.5rem;
+            padding: 2rem;
             border-radius: 24px;
             text-align: center;
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+            overflow: hidden; /* Prevent horizontal spill during animation */
+        }
+
+        .auth-content-wrapper {
+            width: 100%;
+        }
+
+        .back-to-login {
+            text-align: left;
+        }
+        .back-to-login a {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+        .back-to-login a:hover {
+            color: #6b46f2;
+            transform: translateX(-3px);
         }
 
         .auth-title {
@@ -117,7 +144,7 @@
             border-radius: 9999px;
             font-family: var(--font-body);
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 60;
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             width: 100%;
@@ -136,7 +163,7 @@
             display: flex;
             align-items: center;
             text-align: center;
-            margin: 2rem 0;
+            margin: 1rem 0 2rem 0;
             color: #94a3b8;
             font-size: 0.9rem;
             font-weight: 500;
@@ -229,6 +256,34 @@
         .modal-content .btn-cancel:hover {
             background: rgba(255,255,255,0.15);
         }
+        @media (max-width: 1000px) {
+            .auth-wrapper {
+                width: 85%;
+
+            }
+        }
+        @media (max-width: 480px) {
+            .auth-wrapper {
+                width: 90%;
+
+            }
+        }
+
+        /* Slide-in animation from right */
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-in-right {
+            animation: slideInRight 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+        }
     </style>
 </head>
 <body>
@@ -244,52 +299,51 @@
             </svg>
             Zentry
         </div>
-        <div class="nav-links">
-            <a href="index.html" class="btn-login" style="background: transparent; box-shadow: none;">Home</a>
-        </div>
     </nav>
 
 
     <main class="auth-wrapper container">
         <div class="auth-container">
-            <h2 class="auth-title">Welcome Back</h2>
-            
-            <div id="alertBox"></div>
-
-            <form id="loginForm">
-                <div class="form-group signup-only" style="display: none;">
-                    <label>First Name</label>
-                    <input type="text" id="firstName" placeholder="John">
-                </div>
-                <div class="form-group signup-only" style="display: none;">
-                    <label>Last Name</label>
-                    <input type="text" id="lastName" placeholder="Doe">
-                </div>
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" id="email" required placeholder="you@example.com">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="password" required placeholder="••••••••">
-                </div>
+            <div class="back-to-login" id="backToLoginBtn" style="display: none;">
+                <a href="#">← back</a>
+            </div>
+            <div class="auth-content-wrapper">
+                <h2 class="auth-title">Welcome Back</h2>
                 
-                <div class="auth-links" style="margin-top: -0.5rem; margin-bottom: 1.5rem; text-align: right;">
-                    <a href="#" id="forgotBtn">Forgot password?</a>
+                <div id="alertBox"></div>
+
+                <form id="loginForm">
+                    <div class="form-group signup-only" style="display: none;">
+                        <label>First Name</label>
+                        <input type="text" id="firstName" placeholder="John">
+                    </div>
+                    <div class="form-group signup-only" style="display: none;">
+                        <label>Last Name</label>
+                        <input type="text" id="lastName" placeholder="Doe">
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="email" required placeholder="you@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="password" required placeholder="••••••••">
+                    </div>
+                    
+                    <div class="auth-links" style="margin-top: -0.5rem; margin-bottom: 1.5rem; text-align: right;">
+                        <a href="#" id="forgotBtn">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn-submit btn-full">Sign In</button>
+                </form>
+
+                <div class="divider">OR</div>
+
+                <div id="googleLoginBtnContainer" style="display: flex; justify-content: center; margin-top: 1rem; width: 100%;"></div>
+
+                <div class="auth-links" style="margin-top: 2rem;">
+                    Don't have an account? <a href="#" id="signupToggle">Sign up here</a>
                 </div>
-
-                <button type="submit" class="btn-submit btn-full">Sign In</button>
-            </form>
-
-            <div class="divider">OR</div>
-
-            <button class="btn-google" id="googleLoginBtn">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
-                Sign in with Google
-            </button>
-
-            <div class="auth-links" style="margin-top: 2rem;">
-                Don't have an account? <a href="#" id="signupToggle">Sign up here</a>
             </div>
         </div>
     </main>
@@ -298,12 +352,47 @@
     <div class="modal" id="forgotModal">
         <div class="modal-content">
             <h3>Reset Password</h3>
-            <p style="color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; font-size: 0.95rem;">Enter your email and we will send a reset link.</p>
-            <div class="form-group">
-                <input type="email" id="resetEmail" placeholder="Enter your email" required>
+            
+            <!-- Step 1: Send OTP -->
+            <div id="forgotStep1">
+                <p style="color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; font-size: 0.95rem;">Enter your email and we will send you a verification code (OTP).</p>
+                <div class="form-group">
+                    <input type="email" id="resetEmail" placeholder="Enter your email" required style="text-align: left; padding: 14px 16px;">
+                </div>
+                <button class="btn-submit btn-full" id="sendResetBtn">Send OTP</button>
             </div>
-            <button class="btn-submit btn-full" id="sendResetBtn">Send Link</button>
+
+            <!-- Step 2: Verify OTP & Enter New Password -->
+            <div id="forgotStep2" style="display: none;">
+                <p style="color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; font-size: 0.95rem;">We've sent an OTP to <strong id="resetTargetEmail"></strong>. Enter the code and your new password below.</p>
+                <div class="form-group">
+                    <label>OTP Code</label>
+                    <input type="text" id="resetOtpCode" placeholder="Enter 6-digit code" required maxlength="6" style="text-align: center; font-size: 1.5rem; letter-spacing: 6px; font-weight: bold; padding: 14px 16px;">
+                </div>
+                <div class="form-group">
+                    <label>New Password</label>
+                    <input type="password" id="resetNewPassword" placeholder="••••••••" required style="text-align: left; padding: 14px 16px;">
+                </div>
+                <button class="btn-submit btn-full" id="confirmResetBtn">Reset Password</button>
+            </div>
+
             <button class="btn-cancel" id="closeModalBtn">Cancel</button>
+        </div>
+    </div>
+
+    <!-- OTP Verification Modal -->
+    <div class="modal" id="otpModal">
+        <div class="modal-content">
+            <h3>Email Verification</h3>
+            <p style="color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; font-size: 0.95rem;">
+                We've sent a 6-digit OTP code to <strong id="otpTargetEmail"></strong>. Please enter it below to complete your registration.
+            </p>
+            <div class="form-group">
+                <label>Verification Code (OTP)</label>
+                <input type="text" id="otpCodeInput" placeholder="Enter 6-digit code" required maxlength="6" style="text-align: center; font-size: 1.5rem; letter-spacing: 6px; font-weight: bold;">
+            </div>
+            <button class="btn-submit btn-full" id="verifyOtpBtn">Verify & Register</button>
+            <button class="btn-cancel" id="closeOtpModalBtn">Cancel</button>
         </div>
     </div>
 
@@ -322,15 +411,24 @@
             // Toggle Signup/Signin mode visually
             const signupToggle = document.getElementById('signupToggle');
             const forgotBtnContainer = document.getElementById('forgotBtn').parentElement;
+            const authContentWrapper = document.querySelector('.auth-content-wrapper');
+            const backToLoginBtn = document.getElementById('backToLoginBtn');
             
             signupToggle.addEventListener('click', (e) => {
                 e.preventDefault();
                 isLoginMode = !isLoginMode;
+
+                // Trigger slide-in animation from right only on internal content
+                authContentWrapper.classList.remove('slide-in-right');
+                void authContentWrapper.offsetWidth; // Force reflow to restart animation
+                authContentWrapper.classList.add('slide-in-right');
+
+                // Toggle back button visibility (only show in Signup mode)
+                backToLoginBtn.style.display = isLoginMode ? 'none' : 'block';
+
                 document.querySelector('.auth-title').textContent = isLoginMode ? 'Welcome Back' : 'Create Account';
                 loginForm.querySelector('button[type="submit"]').textContent = isLoginMode ? 'Sign In' : 'Sign Up';
                 signupToggle.textContent = isLoginMode ? 'Sign in instead' : 'Sign up here';
-                const googleBtn = document.querySelector('.divider').nextElementSibling;
-                googleBtn.innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google"> ' + (isLoginMode ? 'Sign in' : 'Sign up') + ' with Google';
                 
                 // Toggle extra fields
                 const signupOnlyFields = document.querySelectorAll('.signup-only');
@@ -340,6 +438,21 @@
                 forgotBtnContainer.style.display = isLoginMode ? 'block' : 'none';
             });
 
+            // Back to Login click handler
+            backToLoginBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (!isLoginMode) {
+                    signupToggle.click();
+                }
+            });
+
+            const otpModal = document.getElementById('otpModal');
+            const otpTargetEmail = document.getElementById('otpTargetEmail');
+            const otpCodeInput = document.getElementById('otpCodeInput');
+            const verifyOtpBtn = document.getElementById('verifyOtpBtn');
+            const closeOtpModalBtn = document.getElementById('closeOtpModalBtn');
+            let pendingSignupData = null;
+
             // Handle Form Submission
             loginForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
@@ -347,73 +460,276 @@
                 const password = document.getElementById('password').value;
                 const firstName = document.getElementById('firstName').value;
                 const lastName = document.getElementById('lastName').value;
-                
-                const endpoint = isLoginMode ? '/api/auth/signin' : '/api/auth/signup';
-                const body = isLoginMode ? { email, password } : { username: firstName, email, password, firstName, lastName };
+                if (isLoginMode) {
+                    try {
+                        const res = await fetch('/api/auth/signin', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email, password })
+                        });
+                        const data = await res.json();
 
-                try {
-                    const res = await fetch(endpoint, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(body)
-                    });
-                    const data = await res.json();
+                        if (!res.ok) throw new Error(data.error || 'Request failed');
+                        
+                        showAlert('Login successful!', 'success');
+                        localStorage.setItem('token', data.token);
+                        setTimeout(() => window.location.href = 'dashboard.html', 1000);
+                    } catch (err) {
+                        showAlert(err.message);
+                    }
+                } else {
+                    // Signup Mode - Send OTP first
+                    pendingSignupData = {
+                        username: email.split('@')[0],
+                        email,
+                        password,
+                        firstName,
+                        lastName
+                    };
 
-                    if (!res.ok) throw new Error(data.error || 'Request failed');
-                    
-                    showAlert(isLoginMode ? 'Login successful!' : 'Account created!', 'success');
-                    localStorage.setItem('token', data.token);
-                    setTimeout(() => window.location.href = 'dashboard.html', 1000);
-                } catch (err) {
-                    showAlert(err.message);
+                    try {
+                        showAlert('Sending OTP to your email...', 'success');
+                        const res = await fetch('/api/auth/send-otp', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email })
+                        });
+                        const data = await res.json();
+
+                        if (!res.ok) throw new Error(data.error || 'Failed to send OTP');
+                        
+                        // Show OTP modal
+                        otpTargetEmail.textContent = email;
+                        otpCodeInput.value = '';
+                        otpModal.style.display = 'flex';
+                        alertBox.style.display = 'none'; // hide sending message
+                    } catch (err) {
+                        showAlert(err.message);
+                    }
                 }
             });
 
-            // Handle Google Login (Mock)
-            document.getElementById('googleLoginBtn').addEventListener('click', async () => {
+            // Handle OTP Verification and actual registration
+            verifyOtpBtn.addEventListener('click', async () => {
+                const otpCode = otpCodeInput.value.trim();
+                if (!otpCode || otpCode.length !== 6) {
+                    alert('Please enter a valid 6-digit OTP code');
+                    return;
+                }
+
+                if (!pendingSignupData) return;
+
                 try {
+                    verifyOtpBtn.disabled = true;
+                    verifyOtpBtn.textContent = 'Verifying...';
+
+                    const signupBody = { ...pendingSignupData, otpCode };
+                    const res = await fetch('/api/auth/signup', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(signupBody)
+                    });
+                    const data = await res.json();
+
+                    if (!res.ok) throw new Error(data.error || 'Registration failed');
+
+                    otpModal.style.display = 'none';
+                    showAlert('Registration and Verification successful!', 'success');
+                    localStorage.setItem('token', data.token);
+                    setTimeout(() => window.location.href = 'dashboard.html', 1000);
+                } catch (err) {
+                    alert(err.message);
+                } finally {
+                    verifyOtpBtn.disabled = false;
+                    verifyOtpBtn.textContent = 'Verify & Register';
+                }
+            });
+
+            closeOtpModalBtn.addEventListener('click', () => {
+                otpModal.style.display = 'none';
+                pendingSignupData = null;
+            });
+
+            // Initialize Real Google Sign-In
+            async function initGoogleSignIn() {
+                try {
+                    // 1. Fetch Client ID from backend config
+                    const configRes = await fetch('/api/auth/google-client-id');
+                    const configData = await configRes.json();
+                    const clientId = configData.clientId;
+
+                    if (!clientId || clientId.includes('your-google-client-id')) {
+                        console.warn('Google Client ID is not configured on the server. Falling back to mock login helper.');
+                        renderMockGoogleBtn();
+                        return;
+                    }
+
+                    // 2. Initialize Google Identity Services
+                    google.accounts.id.initialize({
+                        client_id: clientId,
+                        callback: handleGoogleCredentialResponse
+                    });
+
+                    // 3. Render Google Sign-In Button
+                    google.accounts.id.renderButton(
+                        document.getElementById('googleLoginBtnContainer'),
+                        { 
+                            theme: 'outline', 
+                            size: 'large', 
+                            width: '380', 
+                            shape: 'pill',
+                            logo_alignment: 'left'
+                        }
+                    );
+
+                    // 4. Prompt Google One Tap
+                    google.accounts.id.prompt();
+
+                } catch (err) {
+                    console.error('Failed to initialize Google Sign-In:', err);
+                    renderMockGoogleBtn(); // Fallback to mock helper if backend fails
+                }
+            }
+
+            // Handler for the ID Token returned by Google
+            async function handleGoogleCredentialResponse(response) {
+                try {
+                    showAlert('Logging in with Google...', 'success');
                     const res = await fetch('/api/auth/google-login', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ idToken: 'mock_google_token_123' })
+                        body: JSON.stringify({ idToken: response.credential })
                     });
                     const data = await res.json();
-                    
-                    if (!res.ok) throw new Error(data.error || 'Google login failed');
-                    
+
+                    if (!res.ok) throw new Error(data.error || 'Google authentication failed');
+
                     showAlert('Google login successful!', 'success');
                     localStorage.setItem('token', data.token);
                     setTimeout(() => window.location.href = 'dashboard.html', 1000);
                 } catch (err) {
                     showAlert(err.message);
                 }
-            });
+            }
+
+            // Fallback helper to allow testing with mock token if no client ID is set
+            function renderMockGoogleBtn() {
+                const container = document.getElementById('googleLoginBtnContainer');
+                container.innerHTML = `
+                    <button class="btn-google" style="margin-top: 0.5rem;" id="mockGoogleBtn">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
+                        Sign in with Google (Mock)
+                    </button>
+                `;
+                document.getElementById('mockGoogleBtn').addEventListener('click', async () => {
+                    try {
+                        const res = await fetch('/api/auth/google-login', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ idToken: 'mock_google_token_123' })
+                        });
+                        const data = await res.json();
+                        if (!res.ok) throw new Error(data.error);
+                        showAlert('Mock Google Login Successful!', 'success');
+                        localStorage.setItem('token', data.token);
+                        setTimeout(() => window.location.href = 'dashboard.html', 1000);
+                    } catch (err) {
+                        showAlert(err.message);
+                    }
+                });
+            }
+
+            // Run Google Sign-In Initialization
+            initGoogleSignIn();
 
             // Handle Forgot Password
             const forgotModal = document.getElementById('forgotModal');
+            const forgotStep1 = document.getElementById('forgotStep1');
+            const forgotStep2 = document.getElementById('forgotStep2');
+            const resetEmailInput = document.getElementById('resetEmail');
+            const resetTargetEmail = document.getElementById('resetTargetEmail');
+            const resetOtpCodeInput = document.getElementById('resetOtpCode');
+            const resetNewPasswordInput = document.getElementById('resetNewPassword');
+            const sendResetBtn = document.getElementById('sendResetBtn');
+            const confirmResetBtn = document.getElementById('confirmResetBtn');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+
             document.getElementById('forgotBtn').addEventListener('click', (e) => {
                 e.preventDefault();
+                // Reset inputs & states
+                resetEmailInput.value = '';
+                resetOtpCodeInput.value = '';
+                resetNewPasswordInput.value = '';
+                forgotStep1.style.display = 'block';
+                forgotStep2.style.display = 'none';
                 forgotModal.style.display = 'flex';
             });
-            document.getElementById('closeModalBtn').addEventListener('click', () => {
+
+            closeModalBtn.addEventListener('click', () => {
                 forgotModal.style.display = 'none';
             });
             
-            document.getElementById('sendResetBtn').addEventListener('click', async () => {
-                const email = document.getElementById('resetEmail').value;
-                if(!email) return alert('Enter email');
+            // Step 1: Request Password Reset OTP
+            sendResetBtn.addEventListener('click', async () => {
+                const email = resetEmailInput.value.trim();
+                if (!email) return alert('Please enter your email');
+                
                 try {
+                    sendResetBtn.disabled = true;
+                    sendResetBtn.textContent = 'Sending...';
+
                     const res = await fetch('/api/auth/forgot-password', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ email })
                     });
                     const data = await res.json();
-                    if (!res.ok) throw new Error(data.error);
-                    alert(data.message);
+                    if (!res.ok) throw new Error(data.error || 'Failed to request password reset');
+                    
+                    // Move to Step 2
+                    resetTargetEmail.textContent = email;
+                    forgotStep1.style.display = 'none';
+                    forgotStep2.style.display = 'block';
+                } catch (err) {
+                    alert(err.message);
+                } finally {
+                    sendResetBtn.disabled = false;
+                    sendResetBtn.textContent = 'Send OTP';
+                }
+            });
+
+            // Step 2: Submit Reset OTP and New Password
+            confirmResetBtn.addEventListener('click', async () => {
+                const email = resetEmailInput.value.trim();
+                const otpCode = resetOtpCodeInput.value.trim();
+                const newPassword = resetNewPasswordInput.value.trim();
+
+                if (!otpCode || otpCode.length !== 6) {
+                    return alert('Please enter a valid 6-digit OTP code');
+                }
+                if (!newPassword || newPassword.length < 6) {
+                    return alert('Password must be at least 6 characters long');
+                }
+
+                try {
+                    confirmResetBtn.disabled = true;
+                    confirmResetBtn.textContent = 'Resetting...';
+
+                    const res = await fetch('/api/auth/reset-password', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, otpCode, newPassword })
+                    });
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data.error || 'Failed to reset password');
+
+                    alert('Password reset successful! You can now log in.');
                     forgotModal.style.display = 'none';
                 } catch (err) {
                     alert(err.message);
+                } finally {
+                    confirmResetBtn.disabled = false;
+                    confirmResetBtn.textContent = 'Reset Password';
                 }
             });
         });
