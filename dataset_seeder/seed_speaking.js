@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const Question = require('../models/Question');
-const MONGO_URI = 'mongodb://mongo:27017/skill_wallet';
+const Question = require('./models/Question');
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/skill_wallet';
 
 const speakingPrompts = [
     "Describe a memorable vacation you took. Where did you go, who did you go with, and why was it special?",
