@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,9 +11,9 @@
         body {
             /* Use the same hero background as landing + bg.png overlay */
             background: url('uploads/bg.png') no-repeat center center / cover,
-                        radial-gradient(circle at 80% 20%, #3051ff 0%, transparent 40%),
-                        radial-gradient(circle at 20% 50%, #1c32b5 0%, transparent 40%),
-                        linear-gradient(135deg, #08123e 0%, #112bb1 100%);
+                radial-gradient(circle at 80% 20%, #3051ff 0%, transparent 40%),
+                radial-gradient(circle at 20% 50%, #1c32b5 0%, transparent 40%),
+                linear-gradient(135deg, #08123e 0%, #112bb1 100%);
             color: white;
             min-height: 100vh;
             display: flex;
@@ -20,7 +21,7 @@
             margin: 0;
             font-family: var(--font-body);
         }
-        
+
         .auth-wrapper {
             flex: 1;
             display: flex;
@@ -42,7 +43,8 @@
             border-radius: 24px;
             text-align: center;
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
-            overflow: hidden; /* Prevent horizontal spill during animation */
+            overflow: hidden;
+            /* Prevent horizontal spill during animation */
         }
 
         .auth-content-wrapper {
@@ -52,6 +54,7 @@
         .back-to-login {
             text-align: left;
         }
+
         .back-to-login a {
             color: #64748b;
             text-decoration: none;
@@ -62,6 +65,7 @@
             gap: 6px;
             transition: all 0.2s ease;
         }
+
         .back-to-login a:hover {
             color: #6b46f2;
             transform: translateX(-3px);
@@ -80,6 +84,7 @@
             margin-bottom: 1.5rem;
             text-align: left;
         }
+
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
@@ -87,6 +92,7 @@
             font-size: 0.95rem;
             font-weight: 600;
         }
+
         .form-group input {
             width: 100%;
             padding: 14px 16px;
@@ -99,21 +105,23 @@
             transition: all 0.2s ease;
             box-sizing: border-box;
         }
+
         .form-group input::placeholder {
             color: #94a3b8;
         }
+
         .form-group input:focus {
             outline: none;
             border-color: #6b46f2;
             background: #ffffff;
             box-shadow: 0 0 0 3px rgba(107, 70, 242, 0.15);
         }
-        
+
         .btn-full {
             width: 100%;
             margin-bottom: 1.25rem;
         }
-        
+
         .btn-submit {
             background: linear-gradient(90deg, #6b46f2 0%, #4a5cf6 100%);
             color: white;
@@ -127,6 +135,7 @@
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             box-shadow: 0 8px 20px rgba(107, 70, 242, 0.3);
         }
+
         .btn-submit:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(107, 70, 242, 0.5);
@@ -150,15 +159,17 @@
             width: 100%;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
+
         .btn-google:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
         }
+
         .btn-google img {
             width: 22px;
             height: 22px;
         }
-        
+
         .divider {
             display: flex;
             align-items: center;
@@ -168,29 +179,39 @@
             font-size: 0.9rem;
             font-weight: 500;
         }
-        .divider::before, .divider::after {
+
+        .divider::before,
+        .divider::after {
             content: '';
             flex: 1;
             border-bottom: 1px solid #e2e8f0;
         }
-        .divider:not(:empty)::before { margin-right: 1rem; }
-        .divider:not(:empty)::after { margin-left: 1rem; }
-        
+
+        .divider:not(:empty)::before {
+            margin-right: 1rem;
+        }
+
+        .divider:not(:empty)::after {
+            margin-left: 1rem;
+        }
+
         .auth-links {
             margin-top: 1.5rem;
             font-size: 0.95rem;
             color: #64748b;
         }
+
         .auth-links a {
             color: #6b46f2;
             text-decoration: none;
             font-weight: 600;
             transition: color 0.2s ease;
         }
+
         .auth-links a:hover {
             color: #4a5cf6;
         }
-        
+
         #alertBox {
             margin-bottom: 1.5rem;
             padding: 12px 16px;
@@ -200,28 +221,34 @@
             font-weight: 500;
             text-align: left;
         }
+
         .alert-error {
             background: rgba(239, 68, 68, 0.15);
             border: 1px solid rgba(239, 68, 68, 0.3);
             color: #ef4444;
         }
+
         .alert-success {
             background: rgba(34, 197, 94, 0.15);
             border: 1px solid rgba(34, 197, 94, 0.3);
             color: #22c55e;
         }
-        
+
         /* Modal */
         .modal {
             display: none;
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.6);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(8px);
             align-items: center;
             justify-content: center;
             z-index: 1000;
         }
+
         .modal-content {
             background: linear-gradient(135deg, #0b154a 0%, #162fbd 100%);
             padding: 2.5rem;
@@ -230,21 +257,24 @@
             max-width: 440px;
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: white;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
             text-align: center;
         }
+
         .modal-content h3 {
             font-family: var(--font-heading);
             font-size: 1.75rem;
             margin-bottom: 1rem;
         }
+
         .modal-content .btn-submit {
             margin-top: 1rem;
         }
+
         .modal-content .btn-cancel {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             color: white;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 14px 24px;
             border-radius: 9999px;
             font-weight: 600;
@@ -253,15 +283,18 @@
             margin-top: 1rem;
             transition: background 0.2s;
         }
+
         .modal-content .btn-cancel:hover {
-            background: rgba(255,255,255,0.15);
+            background: rgba(255, 255, 255, 0.15);
         }
+
         @media (max-width: 1000px) {
             .auth-wrapper {
                 width: 85%;
 
             }
         }
+
         @media (max-width: 480px) {
             .auth-wrapper {
                 width: 90%;
@@ -275,6 +308,7 @@
                 opacity: 0;
                 transform: translateX(40px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -286,6 +320,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Decorative background elements -->
     <div class="decor-circle decor-1" style="z-index: 0;"></div>
@@ -294,8 +329,9 @@
     <nav class="navbar container">
         <div class="nav-brand">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
-                <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" />
+                <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" />
             </svg>
             Zentry
         </div>
@@ -309,7 +345,7 @@
             </div>
             <div class="auth-content-wrapper">
                 <h2 class="auth-title">Welcome Back</h2>
-                
+
                 <div id="alertBox"></div>
 
                 <form id="loginForm">
@@ -329,7 +365,7 @@
                         <label>Password</label>
                         <input type="password" id="password" required placeholder="••••••••">
                     </div>
-                    
+
                     <div class="auth-links" style="margin-top: -0.5rem; margin-bottom: 1.5rem; text-align: right;">
                         <a href="#" id="forgotBtn">Forgot password?</a>
                     </div>
@@ -339,7 +375,8 @@
 
                 <div class="divider">OR</div>
 
-                <div id="googleLoginBtnContainer" style="display: flex; justify-content: center; margin-top: 1rem; width: 100%;"></div>
+                <div id="googleLoginBtnContainer"
+                    style="display: flex; justify-content: center; margin-top: 1rem; width: 100%;"></div>
 
                 <div class="auth-links" style="margin-top: 2rem;">
                     Don't have an account? <a href="#" id="signupToggle">Sign up here</a>
@@ -352,26 +389,31 @@
     <div class="modal" id="forgotModal">
         <div class="modal-content">
             <h3>Reset Password</h3>
-            
+
             <!-- Step 1: Send OTP -->
             <div id="forgotStep1">
-                <p style="color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; font-size: 0.95rem;">Enter your email and we will send you a verification code (OTP).</p>
+                <p style="color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; font-size: 0.95rem;">Enter your email and
+                    we will send you a verification code (OTP).</p>
                 <div class="form-group">
-                    <input type="email" id="resetEmail" placeholder="Enter your email" required style="text-align: left; padding: 14px 16px;">
+                    <input type="email" id="resetEmail" placeholder="Enter your email" required
+                        style="text-align: left; padding: 14px 16px;">
                 </div>
                 <button class="btn-submit btn-full" id="sendResetBtn">Send OTP</button>
             </div>
 
             <!-- Step 2: Verify OTP & Enter New Password -->
             <div id="forgotStep2" style="display: none;">
-                <p style="color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; font-size: 0.95rem;">We've sent an OTP to <strong id="resetTargetEmail"></strong>. Enter the code and your new password below.</p>
+                <p style="color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; font-size: 0.95rem;">We've sent an OTP to
+                    <strong id="resetTargetEmail"></strong>. Enter the code and your new password below.</p>
                 <div class="form-group">
                     <label>OTP Code</label>
-                    <input type="text" id="resetOtpCode" placeholder="Enter 6-digit code" required maxlength="6" style="text-align: center; font-size: 1.5rem; letter-spacing: 6px; font-weight: bold; padding: 14px 16px;">
+                    <input type="text" id="resetOtpCode" placeholder="Enter 6-digit code" required maxlength="6"
+                        style="text-align: center; font-size: 1.5rem; letter-spacing: 6px; font-weight: bold; padding: 14px 16px;">
                 </div>
                 <div class="form-group">
                     <label>New Password</label>
-                    <input type="password" id="resetNewPassword" placeholder="••••••••" required style="text-align: left; padding: 14px 16px;">
+                    <input type="password" id="resetNewPassword" placeholder="••••••••" required
+                        style="text-align: left; padding: 14px 16px;">
                 </div>
                 <button class="btn-submit btn-full" id="confirmResetBtn">Reset Password</button>
             </div>
@@ -385,11 +427,13 @@
         <div class="modal-content">
             <h3>Email Verification</h3>
             <p style="color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; font-size: 0.95rem;">
-                We've sent a 6-digit OTP code to <strong id="otpTargetEmail"></strong>. Please enter it below to complete your registration.
+                We've sent a 6-digit OTP code to <strong id="otpTargetEmail"></strong>. Please enter it below to
+                complete your registration.
             </p>
             <div class="form-group">
                 <label>Verification Code (OTP)</label>
-                <input type="text" id="otpCodeInput" placeholder="Enter 6-digit code" required maxlength="6" style="text-align: center; font-size: 1.5rem; letter-spacing: 6px; font-weight: bold;">
+                <input type="text" id="otpCodeInput" placeholder="Enter 6-digit code" required maxlength="6"
+                    style="text-align: center; font-size: 1.5rem; letter-spacing: 6px; font-weight: bold;">
             </div>
             <button class="btn-submit btn-full" id="verifyOtpBtn">Verify & Register</button>
             <button class="btn-cancel" id="closeOtpModalBtn">Cancel</button>
@@ -401,7 +445,7 @@
             const loginForm = document.getElementById('loginForm');
             const alertBox = document.getElementById('alertBox');
             let isLoginMode = true;
-            
+
             const showAlert = (msg, type = 'error') => {
                 alertBox.style.display = 'block';
                 alertBox.className = `alert-${type}`;
@@ -413,7 +457,7 @@
             const forgotBtnContainer = document.getElementById('forgotBtn').parentElement;
             const authContentWrapper = document.querySelector('.auth-content-wrapper');
             const backToLoginBtn = document.getElementById('backToLoginBtn');
-            
+
             signupToggle.addEventListener('click', (e) => {
                 e.preventDefault();
                 isLoginMode = !isLoginMode;
@@ -429,11 +473,11 @@
                 document.querySelector('.auth-title').textContent = isLoginMode ? 'Welcome Back' : 'Create Account';
                 loginForm.querySelector('button[type="submit"]').textContent = isLoginMode ? 'Sign In' : 'Sign Up';
                 signupToggle.textContent = isLoginMode ? 'Sign in instead' : 'Sign up here';
-                
+
                 // Toggle extra fields
                 const signupOnlyFields = document.querySelectorAll('.signup-only');
                 signupOnlyFields.forEach(el => el.style.display = isLoginMode ? 'none' : 'block');
-                
+
                 // Hide forgot password in signup mode
                 forgotBtnContainer.style.display = isLoginMode ? 'block' : 'none';
             });
@@ -470,7 +514,7 @@
                         const data = await res.json();
 
                         if (!res.ok) throw new Error(data.error || 'Request failed');
-                        
+
                         showAlert('Login successful!', 'success');
                         localStorage.setItem('token', data.token);
                         setTimeout(() => window.location.href = 'dashboard.html', 1000);
@@ -497,7 +541,7 @@
                         const data = await res.json();
 
                         if (!res.ok) throw new Error(data.error || 'Failed to send OTP');
-                        
+
                         // Show OTP modal
                         otpTargetEmail.textContent = email;
                         otpCodeInput.value = '';
@@ -573,10 +617,10 @@
                     // 3. Render Google Sign-In Button
                     google.accounts.id.renderButton(
                         document.getElementById('googleLoginBtnContainer'),
-                        { 
-                            theme: 'outline', 
-                            size: 'large', 
-                            width: '380', 
+                        {
+                            theme: 'outline',
+                            size: 'large',
+                            width: '380',
                             shape: 'pill',
                             logo_alignment: 'left'
                         }
@@ -668,12 +712,12 @@
             closeModalBtn.addEventListener('click', () => {
                 forgotModal.style.display = 'none';
             });
-            
+
             // Step 1: Request Password Reset OTP
             sendResetBtn.addEventListener('click', async () => {
                 const email = resetEmailInput.value.trim();
                 if (!email) return alert('Please enter your email');
-                
+
                 try {
                     sendResetBtn.disabled = true;
                     sendResetBtn.textContent = 'Sending...';
@@ -685,7 +729,7 @@
                     });
                     const data = await res.json();
                     if (!res.ok) throw new Error(data.error || 'Failed to request password reset');
-                    
+
                     // Move to Step 2
                     resetTargetEmail.textContent = email;
                     forgotStep1.style.display = 'none';
@@ -735,4 +779,5 @@
         });
     </script>
 </body>
+
 </html>
