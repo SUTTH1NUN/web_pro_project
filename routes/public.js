@@ -42,7 +42,11 @@ router.get('/user/:username', async (req, res) => {
                 jobTitle: user.jobTitle,
                 organization: user.organization,
                 bio: user.bio,
+                linkedinUrl: user.linkedinUrl,
+                portfolioUrl: user.portfolioUrl,
                 portfolioBadges: user.portfolioBadges || [],
+                stats: user.stats || { speaking: 0, listening: 0, reading: 0, writing: 0 },
+                webStats: user.webStats || { speaking: 0, listening: 0, reading: 0, writing: 0 }
             },
             evidences: publicEvidences
         });

@@ -178,6 +178,24 @@
         .test-card.listening .btn-start {
             background: linear-gradient(90deg, #9f7aea, #805ad5);
         }
+
+        .adaptive-option-label {
+            display: block; 
+            margin-bottom: 0.75rem; 
+            cursor: pointer; 
+            padding: 0.75rem 1rem; 
+            border: 1px solid rgba(0, 0, 0, 0.08); 
+            border-radius: 8px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            background: #ffffff;
+            font-size: 1rem;
+        }
+
+        .adaptive-option-label:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-color: #cbd5e0;
+        }
     </style>
 </head>
 
@@ -469,7 +487,7 @@
                 </div>
 
                 <div id="articleContainer"
-                    style="background: #f7fafc; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #e2e8f0; font-size: 1.05rem; line-height: 1.6;">
+                    style="background: #f7fafc; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #e2e8f0; font-size: 1.05rem; line-height: 1.6; max-height: 35vh; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;">
                     <!-- Article text will go here -->
                 </div>
 
@@ -590,23 +608,17 @@
 
             <form id="listeningTestForm">
                 <div style="margin-bottom: 1.5rem;">
-                    <p style="font-weight: 600; margin-bottom: 0.5rem;">1. Where does the conversation take place?</p>
-                    <label style="display: block; margin-bottom: 0.5rem;"><input type="radio" name="l1" value="A"> A) At
-                        a hospital</label>
-                    <label style="display: block; margin-bottom: 0.5rem;"><input type="radio" name="l1" value="B"> B) At
-                        a train station</label>
-                    <label style="display: block; margin-bottom: 0.5rem;"><input type="radio" name="l1" value="C"> C) At
-                        a restaurant</label>
+                    <p style="font-weight: 600; margin-bottom: 0.5rem; color: #2d3748; font-size: 1.05rem;">1. Where does the conversation take place?</p>
+                    <label class="adaptive-option-label"><input type="radio" name="l1" value="A" style="margin-right: 0.75rem; transform: scale(1.1);"> <strong>A)</strong> <span style="color: #4a5568;">At a hospital</span></label>
+                    <label class="adaptive-option-label"><input type="radio" name="l1" value="B" style="margin-right: 0.75rem; transform: scale(1.1);"> <strong>B)</strong> <span style="color: #4a5568;">At a train station</span></label>
+                    <label class="adaptive-option-label"><input type="radio" name="l1" value="C" style="margin-right: 0.75rem; transform: scale(1.1);"> <strong>C)</strong> <span style="color: #4a5568;">At a restaurant</span></label>
                 </div>
 
                 <div style="margin-bottom: 1.5rem;">
-                    <p style="font-weight: 600; margin-bottom: 0.5rem;">2. What does the man want to buy?</p>
-                    <label style="display: block; margin-bottom: 0.5rem;"><input type="radio" name="l2" value="A"> A) A
-                        ticket to London</label>
-                    <label style="display: block; margin-bottom: 0.5rem;"><input type="radio" name="l2" value="B"> B) A
-                        cup of coffee</label>
-                    <label style="display: block; margin-bottom: 0.5rem;"><input type="radio" name="l2" value="C"> C) A
-                        newspaper</label>
+                    <p style="font-weight: 600; margin-bottom: 0.5rem; color: #2d3748; font-size: 1.05rem;">2. What does the man want to buy?</p>
+                    <label class="adaptive-option-label"><input type="radio" name="l2" value="A" style="margin-right: 0.75rem; transform: scale(1.1);"> <strong>A)</strong> <span style="color: #4a5568;">A ticket to London</span></label>
+                    <label class="adaptive-option-label"><input type="radio" name="l2" value="B" style="margin-right: 0.75rem; transform: scale(1.1);"> <strong>B)</strong> <span style="color: #4a5568;">A cup of coffee</span></label>
+                    <label class="adaptive-option-label"><input type="radio" name="l2" value="C" style="margin-right: 0.75rem; transform: scale(1.1);"> <strong>C)</strong> <span style="color: #4a5568;">A newspaper</span></label>
                 </div>
 
                 <button type="submit" id="submitListeningTestBtn" class="btn-start"
@@ -777,15 +789,15 @@
                 subQ.options.forEach((opt, index) => {
                     const letter = String.fromCharCode(65 + index); // A, B, C...
                     optionsHtml += `
-                        <label style="display: block; margin-bottom: 0.75rem; cursor: pointer; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 8px;">
-                            <input type="radio" name="adaptiveOption" value="${opt}" required style="margin-right: 0.5rem;"> 
-                            <strong>${letter})</strong> ${opt}
+                        <label class="adaptive-option-label">
+                            <input type="radio" name="adaptiveOption" value="${opt}" required style="margin-right: 0.75rem; transform: scale(1.1);"> 
+                            <strong>${letter})</strong> <span style="color: #4a5568;">${opt}</span>
                         </label>
                     `;
                 });
             } else {
                 // Fallback for Fill-in-the-blank
-                optionsHtml = `<input type="text" name="adaptiveOption" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #cbd5e0;">`;
+                optionsHtml = `<input type="text" name="adaptiveOption" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #cbd5e0; font-size: 1rem;">`;
             }
 
             document.getElementById('questionContainer').innerHTML = `

@@ -357,11 +357,19 @@
             const wrapper = document.querySelector('.preview-wrapper');
             const preview = document.querySelector('.a4-preview');
             if (wrapper && preview) {
-                // Determine scale based on wrapper height vs preview height (leaving a little margin)
-                const scaleY = (wrapper.clientHeight - 20) / 1131;
-                // Don't scale up past 1
-                const scale = Math.min(scaleY, 1);
+                // Determine scale based on window height (leave room for navbar and header)
+                const availableHeight = window.innerHeight - 220; 
+                const availableWidth = window.innerWidth - 40;
+                
+                const scaleY = availableHeight / 1131;
+                const scaleX = availableWidth / 800;
+                
+                // Don't scale up past 1, pick smallest scale to fit both height and width
+                const scale = Math.min(scaleY, scaleX, 1);
                 preview.style.transform = `scale(${scale})`;
+                
+                // Adjust wrapper height to match the scaled preview to eliminate page scrolling
+                wrapper.style.height = `${1131 * scale}px`;
             }
         }
 
