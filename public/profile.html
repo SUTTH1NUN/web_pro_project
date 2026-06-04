@@ -360,18 +360,37 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
+        body.guest-mode {
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        body.guest-mode .profile-layout {
+            width: 100%;
+            flex: 1;
+            overflow-y: hidden;
+            align-items: stretch;
+            padding-top: 1rem;
+        }
+        body.guest-mode .main-content {
+            overflow-y: auto;
+            max-height: 100%;
+            padding-right: 10px;
+        }
     </style>
 </head>
 
 <body>
     <nav class="navbar">
-        <div class="nav-brand">
+        <a href="index.html" class="nav-brand" style="text-decoration: none; color: inherit;">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" />
                 <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
             Zentry
-        </div>
+        </a>
         <div class="nav-links">
             <a href="dashboard.html">Dashboard</a>
             <a href="test.html">Tests</a>
@@ -517,14 +536,36 @@
             window.location.href = 'login.html';
         }
 
-        // Hide owner-only elements in guest mode
+        // Hide owner-only elements and adjust navbar in guest mode
         if (isGuestView) {
-            document.addEventListener('DOMContentLoaded', () => {
+            document.addEventListener('DOMContentLoaded', async () => {
+                document.body.classList.add('guest-mode');
                 const editBtn = document.getElementById('btnEditProfile');
                 if (editBtn) editBtn.style.display = 'none';
                 const badgeBox = document.querySelector('.badge-box');
                 if (badgeBox) badgeBox.style.display = 'none';
-                document.querySelectorAll('.nav-links a[href="admin.html"]').forEach(el => el.style.display = 'none');
+
+                const navLinks = document.querySelector('.nav-links');
+                if (token) {
+                    try {
+                        const res = await fetch('/api/users/me', { headers: { 'Authorization': `Bearer ${token}` } });
+                        if (res.ok) {
+                            const data = await res.json();
+                            const name = data.user.firstName || data.user.username;
+                            navLinks.innerHTML = `
+                                <a href="dashboard.html">My Dashboard</a>
+                                <a href="profile.html">My Profile (${name})</a>
+                                <a href="#" onclick="logout()">Logout</a>
+                            `;
+                        } else {
+                            navLinks.innerHTML = `<a href="login.html" style="background: #435eea; color: white; padding: 0.4rem 1.25rem; border-radius: 99px; font-weight: 600;">Login</a>`;
+                        }
+                    } catch (err) {
+                        navLinks.innerHTML = `<a href="login.html" style="background: #435eea; color: white; padding: 0.4rem 1.25rem; border-radius: 99px; font-weight: 600;">Login</a>`;
+                    }
+                } else {
+                    navLinks.innerHTML = `<a href="login.html" style="background: #435eea; color: white; padding: 0.4rem 1.25rem; border-radius: 99px; font-weight: 600;">Login</a>`;
+                }
             });
         }
 
