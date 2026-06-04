@@ -522,9 +522,10 @@
 
                     // Ensure stats object exists
                     const stats = user.stats || { speaking: 0, listening: 0, reading: 0, writing: 0 };
+                    const webStats = user.webStats || { speaking: 0, listening: 0, reading: 0, writing: 0 };
 
                     // Render Chart
-                    renderChart(stats);
+                    renderChart(stats, webStats);
                 }
             } catch (err) {
                 console.error('Error fetching profile:', err);
@@ -573,7 +574,7 @@
         }
 
         // Render Radar Chart using Chart.js
-        function renderChart(stats) {
+        function renderChart(stats, webStats = {}) {
             const ctx = document.getElementById('skillsChart').getContext('2d');
             
             if (chartInstance) {
@@ -584,17 +585,30 @@
                 type: 'radar',
                 data: {
                     labels: ['Speaking', 'Listening', 'Reading', 'Writing'],
-                    datasets: [{
-                        label: 'Proficiency Score',
-                        data: [stats.speaking || 0, stats.listening || 0, stats.reading || 0, stats.writing || 0],
-                        backgroundColor: 'rgba(49, 130, 206, 0.2)',
-                        borderColor: '#3182ce',
-                        pointBackgroundColor: '#3182ce',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: '#3182ce',
-                        borderWidth: 2,
-                    }]
+                    datasets: [
+                        {
+                            label: 'External Certificate Score',
+                            data: [stats.speaking || 0, stats.listening || 0, stats.reading || 0, stats.writing || 0],
+                            backgroundColor: 'rgba(49, 130, 206, 0.2)',
+                            borderColor: '#3182ce',
+                            pointBackgroundColor: '#3182ce',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#3182ce',
+                            borderWidth: 2,
+                        },
+                        {
+                            label: 'Website Test Score',
+                            data: [webStats.speaking || 0, webStats.listening || 0, webStats.reading || 0, webStats.writing || 0],
+                            backgroundColor: 'rgba(236, 72, 153, 0.2)',
+                            borderColor: '#ec4899',
+                            pointBackgroundColor: '#ec4899',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#ec4899',
+                            borderWidth: 2,
+                        }
+                    ]
                 },
                 options: {
                     responsive: true,
@@ -619,7 +633,7 @@
                         }
                     },
                     plugins: {
-                        legend: { display: false }
+                        legend: { display: true, position: 'bottom' }
                     }
                 }
             });
