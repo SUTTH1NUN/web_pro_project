@@ -43,5 +43,39 @@ const sendOtpEmail = async (email, otp) => {
     }
 };
 
-module.exports = { sendOtpEmail };
+const sendResetOtpEmail = async (email, otp) => {
+    if (resend) {
+        try {
+            await resend.emails.send({
+                from: 'onboarding@resend.dev',
+                to: email,
+                subject: 'Zentry - Reset Password OTP',
+                html: `
+                    <div style="font-family: sans-serif; padding: 20px; color: #333;">
+                        <h2>Password Reset Request</h2>
+                        <p>We received a request to reset your password. Please use the following One-Time Password (OTP) to complete the reset:</p>
+                        <div style="font-size: 24px; font-weight: bold; background-color: #f3f4f6; padding: 15px; text-align: center; border-radius: 8px; margin: 20px 0; color: #ef4444; letter-spacing: 2px;">
+                            ${otp}
+                        </div>
+                        <p>This code will expire in 10 minutes.</p>
+                        <p>If you did not request this, you can safely ignore this email.</p>
+                    </div>
+                `
+            });
+            console.log(`[Email Service] Reset OTP successfully sent to ${email} via Resend`);
+        } catch (error) {
+            console.error('[Email Service] Resend reset error:', error);
+            console.log(`\n==================================================`);
+            console.log(`[Email Service] (Resend Error Fallback)`);
+            console.log(`[Email Service] Reset OTP for ${email}: ${otp}`);
+            console.log(`==================================================\n`);
+        }
+    } else {
+        console.log(`\n==================================================`);
+        console.log(`[Email Service] (Resend API Key Not Set in .env)`);
+        console.log(`[Email Service] Reset OTP for ${email}: ${otp}`);
+        console.log(`==================================================\n`);
+    }
+};
 
+module.exports = { sendOtpEmail, sendResetOtpEmail };
