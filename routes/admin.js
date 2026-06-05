@@ -284,21 +284,21 @@ router.delete('/questions/:id', async (req, res) => {
 // Inject cheat scores for Demo purposes
 router.put('/users/:id/cheat', async (req, res) => {
     try {
-        const { external, web } = req.body;
+        const { extStats, webStats } = req.body;
         const user = await User.findById(req.params.id);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        if (external) {
-            user.stats.listening = external.listening || 0;
-            user.stats.reading = external.reading || 0;
-            user.stats.speaking = external.speaking || 0;
-            user.stats.writing = external.writing || 0;
+        if (extStats) {
+            user.stats.listening = extStats.listening || 0;
+            user.stats.reading = extStats.reading || 0;
+            user.stats.speaking = extStats.speaking || 0;
+            user.stats.writing = extStats.writing || 0;
             user.stats.overallScore = Math.round((user.stats.listening + user.stats.reading + user.stats.speaking + user.stats.writing) / 4);
         }
 
-        if (web) {
+        if (webStats) {
             user.webStats.listening = web.listening || 0;
             user.webStats.reading = web.reading || 0;
             user.webStats.speaking = web.speaking || 0;

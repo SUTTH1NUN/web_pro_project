@@ -171,7 +171,7 @@ async function main() {
         await mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/skill_wallet');
         console.log("🚀 Connected to MongoDB successfully. Starting...");
 
-        await seedRace();
+        // await seedRace();
         await seedCloth();
 
         console.log("\n🎉 Success! Loaded all 120 questions (A1-C2).");
