@@ -49,12 +49,37 @@ function convertTo10PointScale(rawScores, testType) {
             standardized.writing = rWrt > 0 ? (rWrt / 30) * 10 : 0;
             break;
 
+        case 'DUOLINGO ENGLISH TEST':
         case 'DUOLINGO':
             // Duolingo English Test max is 160.
             standardized.speaking = rSpk > 0 ? (rSpk / 160) * 10 : 0;
             standardized.listening = rLis > 0 ? (rLis / 160) * 10 : 0;
             standardized.reading = rRdn > 0 ? (rRdn / 160) * 10 : 0;
             standardized.writing = rWrt > 0 ? (rWrt / 160) * 10 : 0;
+            break;
+
+        case 'LINGUASKILL':
+            // Linguaskill max is 180+.
+            standardized.speaking = rSpk > 0 ? (rSpk / 180) * 10 : 0;
+            standardized.listening = rLis > 0 ? (rLis / 180) * 10 : 0;
+            standardized.reading = rRdn > 0 ? (rRdn / 180) * 10 : 0;
+            standardized.writing = rWrt > 0 ? (rWrt / 180) * 10 : 0;
+            break;
+
+        case 'TETET':
+            // TETET is on a 1-7 band scale.
+            standardized.speaking = rSpk > 0 ? (rSpk / 7.0) * 10 : 0;
+            standardized.listening = rLis > 0 ? (rLis / 7.0) * 10 : 0;
+            standardized.reading = rRdn > 0 ? (rRdn / 7.0) * 10 : 0;
+            standardized.writing = rWrt > 0 ? (rWrt / 7.0) * 10 : 0;
+            break;
+
+        case 'CU-TEP':
+            // CU-TEP max scores: Listening 30, Reading 60, Writing 30. (Speaking is optional, max 30)
+            standardized.speaking = rSpk > 0 ? (rSpk / 30) * 10 : 0;
+            standardized.listening = rLis > 0 ? (rLis / 30) * 10 : 0;
+            standardized.reading = rRdn > 0 ? (rRdn / 60) * 10 : 0;
+            standardized.writing = rWrt > 0 ? (rWrt / 30) * 10 : 0;
             break;
 
         default:
