@@ -2,6 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const swaggerUi = require('swagger-ui-express');
+const yaml = require('yamljs');
+const swaggerDocument = yaml.load(path.join(__dirname, 'docs', 'swagger.yaml'));
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,6 +20,9 @@ connectDB();
 
 // Serve static frontend files (Required for PaaS deployment like Railway)
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Swagger API Documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // API Routes
 const authRoutes = require('./routes/auth');
