@@ -15,7 +15,8 @@ app.use(express.urlencoded({ extended: true }));
 const connectDB = require('./config/db');
 connectDB();
 
-// Frontend is now served by Nginx, so we don't serve static files here anymore
+// Serve static frontend files (Required for PaaS deployment like Railway)
+app.use(express.static(path.join(__dirname, 'public')));
 
 // API Routes
 const authRoutes = require('./routes/auth');

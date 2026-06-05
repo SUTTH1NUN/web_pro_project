@@ -446,10 +446,16 @@
             <a href="dashboard.html">Dashboard</a>
             <a href="test.html">Tests</a>
             <a href="profile.html" class="active">Profile</a>
-            <a href="admin.html" class="nav-admin">Admin</a>
+            <a href="admin.html" class="nav-admin" id="adminNavLink" style="display: none;">Admin</a>
             <a href="#" onclick="logout()">Logout</a>
         </div>
     </nav>
+    <script>
+        if (localStorage.getItem('role') === 'admin') {
+            const adminLink = document.getElementById('adminNavLink');
+            if (adminLink) adminLink.style.display = 'inline-block';
+        }
+    </script>
 
     <div class="profile-layout">
         

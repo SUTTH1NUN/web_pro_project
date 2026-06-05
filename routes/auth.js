@@ -82,6 +82,7 @@ router.post('/signup', async (req, res) => {
             _id: user._id,
             username: user.username,
             email: user.email,
+            role: user.role,
             token: generateToken(user._id)
         });
     } catch (err) {
@@ -101,6 +102,7 @@ router.post('/signin', async (req, res) => {
                 _id: user._id,
                 username: user.username,
                 email: user.email,
+                role: user.role,
                 token: generateToken(user._id)
             });
         } else {
@@ -162,6 +164,7 @@ router.post('/google-login', async (req, res) => {
             _id: user._id,
             username: user.username,
             email: user.email,
+            role: user.role,
             token: generateToken(user._id)
         });
 

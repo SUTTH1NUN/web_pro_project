@@ -1,14 +1,17 @@
 const fs = require('fs');
 const mongoose = require('mongoose');
 const Question = require('./models/Question');
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '../.env') });
 
 async function seedListeningFromJson() {
     await mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/skill_wallet');
     console.log("Connected to MongoDB");
 
     try {
-        const fileContent = fs.readFileSync('listening_data.json', 'utf8');
+        const path = require('path');
+        const filePath = path.join(__dirname, 'listening_data.json');
+        const fileContent = fs.readFileSync(filePath, 'utf8');
         
         // Extract blocks of JSON array using a regular expression
         // It looks for /* LEVEL */ followed by an array [...]
