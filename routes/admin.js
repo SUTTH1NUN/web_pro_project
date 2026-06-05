@@ -308,9 +308,6 @@ router.put('/users/:id/cheat', async (req, res) => {
 
         await user.save();
         
-        // Recalculate and trigger stats update if necessary
-        await updateUserStats(user._id);
-
         res.json({ message: 'Cheat scores injected successfully', user });
     } catch (error) {
         console.error('Error injecting cheat scores:', error);
