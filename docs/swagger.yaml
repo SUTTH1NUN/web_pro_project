@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Skill Wallet API
   version: 1.0.0
-  description: API documentation for Skill Wallet - English proficiency assessment platform.
+  description: Full API documentation for Skill Wallet - English proficiency assessment platform.
 servers:
   - url: http://localhost:3000
     description: Local server
@@ -26,15 +26,45 @@ components:
           type: string
         token:
           type: string
-    Error:
+    Evidence:
       type: object
       properties:
-        error:
+        _id:
           type: string
+        userId:
+          type: string
+        type:
+          type: string
+        testType:
+          type: string
+        providedName:
+          type: string
+        filename:
+          type: string
+        verificationStatus:
+          type: string
+        isPrivate:
+          type: boolean
+    Question:
+      type: object
+      properties:
+        _id:
+          type: string
+        type:
+          type: string
+        cefrLevel:
+          type: string
+        article:
+          type: string
+        questions:
+          type: array
+          items:
+            type: object
 security:
   - bearerAuth: []
 
 paths:
+  # --- AUTH ROUTES ---
   /api/auth/send-otp:
     post:
       summary: Send OTP for registration
@@ -53,9 +83,7 @@ paths:
       responses:
         '200':
           description: OTP sent successfully
-        '400':
-          description: Email is required or already exists
-          
+
   /api/auth/signup:
     post:
       summary: Register a new user
@@ -84,12 +112,6 @@ paths:
       responses:
         '201':
           description: User created successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        '400':
-          description: Invalid OTP or Email already exists
 
   /api/auth/signin:
     post:
@@ -111,12 +133,6 @@ paths:
       responses:
         '200':
           description: Logged in successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        '401':
-          description: Invalid email or password
 
   /api/auth/google-login:
     post:
@@ -136,13 +152,59 @@ paths:
       responses:
         '200':
           description: Logged in successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        '401':
-          description: Invalid Google Token
 
+  /api/auth/google-client-id:
+    get:
+      summary: Get Google Client ID
+      tags: [Auth]
+      security: []
+      responses:
+        '200':
+          description: Returns Google Client ID
+
+  /api/auth/forgot-password:
+    post:
+      summary: Request password reset OTP
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email:
+                  type: string
+      responses:
+        '200':
+          description: OTP sent to your email
+
+  /api/auth/reset-password:
+    post:
+      summary: Reset password with OTP
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, otpCode, newPassword]
+              properties:
+                email:
+                  type: string
+                otpCode:
+                  type: string
+                newPassword:
+                  type: string
+      responses:
+        '200':
+          description: Password reset successful
+
+  # --- USERS ROUTES ---
   /api/users/me:
     get:
       summary: Get current user profile
@@ -150,15 +212,6 @@ paths:
       responses:
         '200':
           description: Success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  user:
-                    type: object
-        '401':
-          description: Unauthorized
     put:
       summary: Update current user profile
       tags: [Users]
@@ -182,3 +235,551 @@ paths:
       responses:
         '200':
           description: Profile updated successfully
+
+  /api/users/{userId}/stats:
+    get:
+      summary: Get user statistics
+      tags: [Users]
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+
+  /api/users/{userId}/privacy:
+    get:
+      summary: Get privacy settings
+      tags: [Users]
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+    put:
+      summary: Update privacy settings
+      tags: [Users]
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                visibility:
+                  type: string
+      responses:
+        '200':
+          description: Success
+
+  /api/users/{userId}/portfolio/export:
+    get:
+      summary: Export portfolio as PDF
+      tags: [Users]
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: PDF File
+
+  # --- TESTS ROUTES ---
+  /api/tests/chatbot/interact:
+    post:
+      summary: Interact with mock chatbot
+      tags: [Tests]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                sessionId:
+                  type: string
+      responses:
+        '200':
+          description: Success
+
+  /api/tests/quiz:
+    get:
+      summary: Get mock quiz questions
+      tags: [Tests]
+      responses:
+        '200':
+          description: List of questions
+
+  /api/tests/quiz/submit:
+    post:
+      summary: Submit mock quiz answers
+      tags: [Tests]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                answers:
+                  type: object
+                testType:
+                  type: string
+      responses:
+        '200':
+          description: Success
+
+  /api/tests/writing/scenario:
+    get:
+      summary: Get random writing prompt
+      tags: [Tests]
+      responses:
+        '200':
+          description: Success
+
+  /api/tests/writing/submit:
+    post:
+      summary: Submit writing answer
+      tags: [Tests]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                prompt:
+                  type: string
+      responses:
+        '200':
+          description: Evaluated response
+
+  /api/tests/speaking/scenario:
+    get:
+      summary: Get speaking prompt
+      tags: [Tests]
+      responses:
+        '200':
+          description: Success
+
+  /api/tests/speaking/submit:
+    post:
+      summary: Submit audio for speaking test
+      tags: [Tests]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                audio:
+                  type: string
+                  format: binary
+                prompt:
+                  type: string
+      responses:
+        '200':
+          description: Evaluated response
+
+  /api/tests/adaptive/next:
+    post:
+      summary: Get next adaptive question
+      tags: [Tests]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                testType:
+                  type: string
+                currentScore:
+                  type: number
+                seenQuestionIds:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Success
+
+  /api/tests/adaptive/submit:
+    post:
+      summary: Submit adaptive answer
+      tags: [Tests]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                questionId:
+                  type: string
+                subQuestionId:
+                  type: string
+                userAnswer:
+                  type: string
+                currentScore:
+                  type: number
+                step:
+                  type: number
+      responses:
+        '200':
+          description: Score updated
+
+  /api/tests/adaptive/finish:
+    post:
+      summary: Finish adaptive test
+      tags: [Tests]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                testType:
+                  type: string
+                finalScore:
+                  type: number
+                details:
+                  type: object
+      responses:
+        '200':
+          description: Success
+
+  # --- EVIDENCE ROUTES ---
+  /api/evidence/upload-cert:
+    post:
+      summary: Upload certificate
+      tags: [Evidence]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                testType:
+                  type: string
+      responses:
+        '202':
+          description: Upload processing started
+
+  /api/evidence:
+    get:
+      summary: Get user evidences
+      tags: [Evidence]
+      responses:
+        '200':
+          description: Success
+
+  /api/evidence/{id}:
+    delete:
+      summary: Delete evidence
+      tags: [Evidence]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Deleted
+
+  /api/evidence/{id}/privacy:
+    put:
+      summary: Toggle evidence privacy
+      tags: [Evidence]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isPrivate:
+                  type: boolean
+      responses:
+        '200':
+          description: Updated
+
+  # --- ADMIN ROUTES ---
+  /api/admin/stats:
+    get:
+      summary: Get platform stats
+      tags: [Admin]
+      responses:
+        '200':
+          description: Success
+
+  /api/admin/queue:
+    get:
+      summary: Get pending evidence queue
+      tags: [Admin]
+      responses:
+        '200':
+          description: Success
+
+  /api/admin/queue/{id}:
+    put:
+      summary: Approve or reject evidence
+      tags: [Admin]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: [verified, rejected]
+                extractedData:
+                  type: object
+                rejectionReason:
+                  type: string
+      responses:
+        '200':
+          description: Success
+
+  /api/admin/settings:
+    get:
+      summary: Get platform settings
+      tags: [Admin]
+      responses:
+        '200':
+          description: Success
+    put:
+      summary: Update platform settings
+      tags: [Admin]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Success
+
+  /api/admin/questions:
+    get:
+      summary: Get questions list
+      tags: [Admin]
+      parameters:
+        - in: query
+          name: type
+          schema:
+            type: string
+        - in: query
+          name: cefrLevel
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+    post:
+      summary: Create new question
+      tags: [Admin]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Question'
+      responses:
+        '201':
+          description: Success
+
+  /api/admin/questions/batch:
+    post:
+      summary: Batch create questions
+      tags: [Admin]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                questions:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Question'
+      responses:
+        '201':
+          description: Success
+
+  /api/admin/questions/{id}:
+    put:
+      summary: Update question
+      tags: [Admin]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Question'
+      responses:
+        '200':
+          description: Success
+    delete:
+      summary: Delete question
+      tags: [Admin]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+
+  /api/admin/users:
+    get:
+      summary: Get all users
+      tags: [Admin]
+      responses:
+        '200':
+          description: Success
+
+  /api/admin/users/{id}:
+    delete:
+      summary: Delete user
+      tags: [Admin]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+
+  /api/admin/users/{id}/role:
+    put:
+      summary: Update user role
+      tags: [Admin]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role:
+                  type: string
+                  enum: [user, admin]
+      responses:
+        '200':
+          description: Success
+
+  /api/admin/users/{id}/cheat:
+    put:
+      summary: Inject cheat scores
+      tags: [Admin]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                extStats:
+                  type: object
+                webStats:
+                  type: object
+      responses:
+        '200':
+          description: Success
+
+  # --- BADGES ROUTES ---
+  /api/badges/{badgeId}:
+    get:
+      summary: Get badge details
+      tags: [Badges]
+      security: []
+      parameters:
+        - in: path
+          name: badgeId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+
+  # --- PUBLIC ROUTES ---
+  /api/public/user/{username}:
+    get:
+      summary: Get public user profile
+      tags: [Public]
+      security: []
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
