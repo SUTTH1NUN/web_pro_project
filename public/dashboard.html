@@ -224,10 +224,16 @@
             <a href="dashboard.html" class="active">Dashboard</a>
             <a href="test.html">Tests</a>
             <a href="profile.html">Profile</a>
-            <a href="admin.html" class="nav-admin">Admin</a>
+            <a href="admin.html" class="nav-admin" id="adminNavLink" style="display: none;">Admin</a>
             <a href="#" onclick="logout()">Logout</a>
         </div>
     </nav>
+    <script>
+        if (localStorage.getItem('role') === 'admin') {
+            const adminLink = document.getElementById('adminNavLink');
+            if (adminLink) adminLink.style.display = 'inline-block';
+        }
+    </script>
 
     <main class="container" style="max-width: 1650px; padding: 2rem 4rem;">
         <div class="dashboard-header">

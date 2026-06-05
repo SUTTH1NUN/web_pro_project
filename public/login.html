@@ -517,7 +517,9 @@
 
                         showAlert('Login successful!', 'success');
                         localStorage.setItem('token', data.token);
-                        setTimeout(() => window.location.href = 'dashboard.html', 1000);
+                        localStorage.setItem('role', data.role);
+                        const redirectUrl = data.role === 'admin' ? 'admin.html' : 'dashboard.html';
+                        setTimeout(() => window.location.href = redirectUrl, 1000);
                     } catch (err) {
                         showAlert(err.message);
                     }
@@ -580,7 +582,9 @@
                     otpModal.style.display = 'none';
                     showAlert('Registration and Verification successful!', 'success');
                     localStorage.setItem('token', data.token);
-                    setTimeout(() => window.location.href = 'dashboard.html', 1000);
+                    localStorage.setItem('role', data.role);
+                    const redirectUrl = data.role === 'admin' ? 'admin.html' : 'dashboard.html';
+                    setTimeout(() => window.location.href = redirectUrl, 1000);
                 } catch (err) {
                     alert(err.message);
                 } finally {
@@ -650,7 +654,9 @@
 
                     showAlert('Google login successful!', 'success');
                     localStorage.setItem('token', data.token);
-                    setTimeout(() => window.location.href = 'dashboard.html', 1000);
+                    localStorage.setItem('role', data.role);
+                    const redirectUrl = data.role === 'admin' ? 'admin.html' : 'dashboard.html';
+                    setTimeout(() => window.location.href = redirectUrl, 1000);
                 } catch (err) {
                     showAlert(err.message);
                 }
@@ -676,7 +682,9 @@
                         if (!res.ok) throw new Error(data.error);
                         showAlert('Mock Google Login Successful!', 'success');
                         localStorage.setItem('token', data.token);
-                        setTimeout(() => window.location.href = 'dashboard.html', 1000);
+                        localStorage.setItem('role', data.role);
+                        const redirectUrl = data.role === 'admin' ? 'admin.html' : 'dashboard.html';
+                        setTimeout(() => window.location.href = redirectUrl, 1000);
                     } catch (err) {
                         showAlert(err.message);
                     }

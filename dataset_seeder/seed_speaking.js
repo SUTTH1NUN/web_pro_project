@@ -1,3 +1,5 @@
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const mongoose = require('mongoose');
 const Question = require('./models/Question');
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/skill_wallet';

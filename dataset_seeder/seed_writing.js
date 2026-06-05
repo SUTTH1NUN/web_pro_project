@@ -3,9 +3,9 @@ const fs = require('fs');
 const path = require('path');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const Question = require('./models/Question');
-require('dotenv').config({ path: path.join(__dirname, '../.env') });
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
-const MONGO_URI = 'mongodb://127.0.0.1:27017/skill_wallet';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/skill_wallet';
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 async function determineCefrLevel(promptText) {

@@ -280,4 +280,42 @@ router.delete('/questions/:id', async (req, res) => {
     }
 });
 
+// PUT /api/admin/users/:id/cheat
+// Inject cheat scores for Demo purposes
+router.put('/users/:id/cheat', async (req, res) => {
+    try {
+        const { external, web } = req.body;
+        const user = await User.findById(req.params.id);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        if (external) {
+            user.stats.listening = external.listening || 0;
+            user.stats.reading = external.reading || 0;
+            user.stats.speaking = external.speaking || 0;
+            user.stats.writing = external.writing || 0;
+            user.stats.overallScore = Math.round((user.stats.listening + user.stats.reading + user.stats.speaking + user.stats.writing) / 4);
+        }
+
+        if (web) {
+            user.webStats.listening = web.listening || 0;
+            user.webStats.reading = web.reading || 0;
+            user.webStats.speaking = web.speaking || 0;
+            user.webStats.writing = web.writing || 0;
+            user.webStats.overallScore = Math.round((user.webStats.listening + user.webStats.reading + user.webStats.speaking + user.webStats.writing) / 4);
+        }
+
+        await user.save();
+        
+        // Recalculate and trigger stats update if necessary
+        await updateUserStats(user._id);
+
+        res.json({ message: 'Cheat scores injected successfully', user });
+    } catch (error) {
+        console.error('Error injecting cheat scores:', error);
+        res.status(500).json({ error: 'Server Error' });
+    }
+});
+
 module.exports = router;
